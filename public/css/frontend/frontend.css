@@ -1,0 +1,26 @@
+#navbarx {
+    width: 300px !important;
+    height: 100px !important;
+    box-shadow: 0 4px 2px -2px gray !important;
+}
+
+.navbar {
+    width: 300px;
+    height: 100px;
+    /*background-color: yellow;*/
+    background: yellow;
+    box-shadow: 0 4px 2px -2px gray;
+}
+
+.page-heading {
+    margin-left: 5px !important;
+    padding-left: 10px;
+}
+
+#topic-filter {
+    cursor: pointer;
+}
+
+.footer {
+    /*background-color: #000000;*/
+}
