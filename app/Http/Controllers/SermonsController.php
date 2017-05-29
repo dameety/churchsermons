@@ -102,23 +102,22 @@ class SermonsController extends Controller
 
         if($sermon->validate($data)) {
 
-            if(Input::hasFile('sermonImage')) {
+            if(!Input::hasFile('sermonImage')) {
                 $sermon->imageurl = '/uploads/default.jpg';
             }
             $sermon -> title = $request-> title;
             $sermon -> preacher = $request-> preacher;
-            $sermon -> service_id = (int)($request-> service_id);
-            $sermon -> category_id = (int)($request-> category_id);
+            $sermon -> service_id = (int)($request -> service_id);
+            $sermon -> category_id = (int)($request -> category_id);
             $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
             $sermon -> status = $request-> status;
-            $sermon-> size = $stagedsermon ->size;
-            $sermon-> type = $stagedsermon ->type;
-            $sermon -> filename = $stagedsermon-> filename;
-            //save the image to the sermon
+            $sermon-> size = $request -> size;
+            $sermon-> type = $request -> type;
+            $sermon -> filename = $request -> filename;
             $sermon->removeMediaFromSermon();
             $sermon->addMediaToSermon(Sermon::saveSermonImage($request));
             $sermon -> save();
-            Sermon::addImageUrlToSermon();
+            Sermon::addImageUrlToUpdatedSermon();
             return back();
         } else {
             $errors = $sermon->getErrors();
@@ -128,12 +127,6 @@ class SermonsController extends Controller
     }
 
     public function allSermons () {
-
-        // $categories = $this->categories;
-        // $services = $this->services;
-        // $sermons = Sermon::latest('created_at')->paginate(10);
-        // return view('frontend.home', compact('categories', 'services', 'sermons'));
-
 
         $sermons = Sermon::latest('created_at')->paginate(10);
         return view('frontend.home', compact('sermons'));
