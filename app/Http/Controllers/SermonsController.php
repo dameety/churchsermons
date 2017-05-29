@@ -103,7 +103,7 @@ class SermonsController extends Controller
         if($sermon->validate($data)) {
 
             if(!Input::hasFile('sermonImage')) {
-                $sermon->imageurl = '/uploads/default.jpg';
+                $sermon->imageurl = '/uploads/placeholder.jpg';
             }
             $sermon -> title = $request-> title;
             $sermon -> preacher = $request-> preacher;
