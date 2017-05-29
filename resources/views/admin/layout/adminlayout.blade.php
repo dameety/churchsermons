@@ -19,8 +19,6 @@
     <link href="{{ URL::asset('/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/css/simple-line-icons.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Main styles for this application form template-->
-    <link href="{{ URL::asset('/css/imagehover.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/css/uikit.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/css/style.css') }}" rel="stylesheet">
 

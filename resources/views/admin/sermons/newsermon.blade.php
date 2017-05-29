@@ -14,7 +14,6 @@
         <div class="col-sm-7 uk-margin-auto">
             <div class="aanimated fadeIn">
 
-                <!-- the form to fill sermon info -->
                 <div id="newSermonForm">
                     <div class="card">
                         <div class="card-header">
@@ -29,22 +28,11 @@
                                 <div>
 
                                     <div class="sermon-image-container">
-                                        {{-- <imageinputpreview :default-image=" '/img/placeholder.jpg' "></imageinputpreview> --}}
-                                        {{-- <imageinputpreview input-name="sermonImage" :default-image=" '/img/placeholder.jpg' "></imageinputpreview> --}}
-                                        {{-- <imageinputpreview
+                                        <vue-img-preview
                                             input-name="sermonImage"
-                                            default-image="/img/placeholder.jpg"
-                                            bg-color="#037B38"
-                                            text-color="#ffffff"
-                                        ></imageinputpreview> --}}
-
-
-
-                                        {{-- <imageinputpreview></imageinputpreview> --}}
-                                        <vue-img-preview></vue-img-preview>
+                                        ></vue-img-preview>
                                     </div>
 
-                                    <br>
                                     <br>
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                                         <label for="Title">Title</label>
