@@ -9,7 +9,8 @@ Route::get('/sermon/upload', 'SermonsController@uploadPage');
 Route::get('/sermon/{slug}/new', 'SermonsController@newSermonForm');
 Route::post('/sermon/new', 'SermonsController@saveNewSermon');
 Route::get('/sermon/{slug}/edit', 'SermonsController@editSermonPage');
-Route::patch('/sermon/{slug}', 'SermonsController@updateSermon');
+Route::patch('/sermon/{slug}/update', 'SermonsController@updateSermon');
+
 
 
 /*category page routes*/

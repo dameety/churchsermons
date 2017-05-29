@@ -20,7 +20,7 @@
                             Fill in the sermon details
                         </div>
                         <div class="card-block">
-                            <form method="POST" action="{{ url('/admin/sermon/new') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('admin/sermon/' . $sermon->slug .'/'. 'update' ) }}" enctype="multipart/form-data">
                                 {{ method_field('PATCH') }}
                                 {{ csrf_field() }}
 
