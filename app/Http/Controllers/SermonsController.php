@@ -102,23 +102,41 @@ class SermonsController extends Controller
 
         if($sermon->validate($data)) {
 
-            if(!Input::hasFile('sermonImage')) {
-                $sermon->imageurl = '/uploads/placeholder.jpg';
+            if(Input::hasFile('sermonImage')) {
+
+                $sermon -> title = $request-> title;
+                $sermon -> preacher = $request-> preacher;
+                $sermon -> service_id = (int)($request -> service_id);
+                $sermon -> category_id = (int)($request -> category_id);
+                $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
+                $sermon -> status = $request-> status;
+                $sermon -> size = $request -> size;
+                $sermon -> type = $request -> type;
+                $sermon -> filename = $request -> filename;
+                $sermon -> removeMediaFromSermon();
+                $sermon -> addMediaToSermon(Sermon::saveSermonImage($request));
+                $sermon -> save();
+                Sermon::addImageUrlToUpdatedSermon();
+                flash('Update operation successful.')->success();
+                return back();
+                
+            } else {
+                $sermon -> title = $request-> title;
+                $sermon -> preacher = $request-> preacher;
+                $sermon -> service_id = (int)($request -> service_id);
+                $sermon -> category_id = (int)($request -> category_id);
+                $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
+                $sermon -> status = $request-> status;
+                $sermon -> size = $request -> size;
+                $sermon -> type = $request -> type;
+                $sermon -> filename = $request -> filename;
+                $sermon -> removeMediaFromSermon();
+                $sermon -> imageurl = '/uploads/default.jpg'; 
+                $sermon -> save();
+                flash('Update operation successful.')->success();
+                return back();
             }
-            $sermon -> title = $request-> title;
-            $sermon -> preacher = $request-> preacher;
-            $sermon -> service_id = (int)($request -> service_id);
-            $sermon -> category_id = (int)($request -> category_id);
-            $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
-            $sermon -> status = $request-> status;
-            $sermon-> size = $request -> size;
-            $sermon-> type = $request -> type;
-            $sermon -> filename = $request -> filename;
-            $sermon->removeMediaFromSermon();
-            $sermon->addMediaToSermon(Sermon::saveSermonImage($request));
-            $sermon -> save();
-            Sermon::addImageUrlToUpdatedSermon();
-            return back();
+
         } else {
             $errors = $sermon->getErrors();
             return back()->withErrors($errors)->withInput();

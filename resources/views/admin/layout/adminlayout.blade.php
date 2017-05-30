@@ -16,7 +16,6 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('/img/favicon/png') }}">
     <!-- Icons -->
-    <link href="{{ URL::asset('/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/css/simple-line-icons.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ URL::asset('/css/uikit.min.css') }}" rel="stylesheet">
@@ -25,9 +24,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
-    window.Laravel = {!! json_encode([
-        'csrfToken' => csrf_token(),
-    ]) !!};
+        window.Laravel = {!!json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
     </script>
 
 </head>
@@ -37,7 +36,6 @@
 
     <header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
-        {{-- <a class="navbar-brand" style="background:url('../img/logo.png');" href="{{ '/admin/home' }}"></a> --}}
         <a class="navbar-brand" href="{{ '/admin/home' }}"></a>
 
         <ul class="nav navbar-nav hidden-md-down">
@@ -91,29 +89,19 @@
 
     </div>
 
-    {{-- edit this path with your coy website link --}}
+
     <footer class="app-footer">
         <a href="http://pointlogix.io">ChurchAudiox</a> © 2017.
         </span>
     </footer>
 
 
-
     <script src="{{ URL::asset('/js/app.js') }}"></script>
-    {{-- former auth bladee. php, includes boostrap and jquery --}}
     <script src="{{ URL::asset('/js/tether.min.js') }}"></script>
-    {{-- from the template used for progress bar running when loading page ajax --}}
     <script src="{{ URL::asset('/js/pace.js') }}"></script>
-    <!-- GenesisUI main scripts -->
     <script src="{{ URL::asset('/js/genesismain/app.js') }}"></script>   
-
-    <!-- Plugins and scripts required by this views -->
     <script src="{{ URL::asset('/js/validate.js') }}"></script>
     <script src="{{ URL::asset('/js/uikit.min.js') }}"></script>
-
-    <!-- Custom scripts required by this view from template i-->
-    {{-- i chnged it form app.js to auth because the js form laravel is alrady named app.js --}}
-    {{-- i can change the name form auth to whatever i like --}}
     <script src="{{ URL::asset('/js/auth.js') }}"></script>
     @yield('scripts')
     

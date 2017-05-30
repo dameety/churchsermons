@@ -287,7 +287,7 @@
 
             fetchSermonsCount: function () {
                 this.$http.get('/admin/sermon/api/count').then((response) => {
-                      this.sermonsCount = response.body;
+                      this.sermonsCount = response.data;
                   });
             },
 
@@ -316,26 +316,25 @@
             },
 
             editSermon: function (sermon) {
-                // return this.editUrl +'/'+sermon.slug;
                 return `/admin/sermon/${sermon.slug}/edit`;
             }, 
             
             
             deleteSermon: function(sermon) {
-                var vm = this;
+                const vm = this;
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'This sermon will be deleted if you continue',
                     type: 'warning',
                     showCancelButton: true,
-
                 }).then(function() {
+                    vm.$http.delete('/admin/sermon/api/delete/' + sermon.slug).then((response) => {
 
-                    vm.$http.delete('/admin/sermon/api/delete/' + sermon.slug)
-                        .then((response) => {
-                            this.fetchSermons()
-                            this.fetchSermonsCount()
-                        });
+                        let index = vm.sermons.indexOf(sermon); 
+                        vm.$delete(vm.sermons, index);
+                        vm.sermonCount = vm.semonCount - 1;
+                        
+                    });
 
                 });
 
