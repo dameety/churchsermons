@@ -116,7 +116,7 @@ class SermonsController extends Controller
                 $sermon -> removeMediaFromSermon();
                 $sermon -> addMediaToSermon(Sermon::saveSermonImage($request));
                 $sermon -> save();
-                Sermon::addImageUrlToUpdatedSermon();
+                Sermon::addImageUrlToUpdatedSermon($sermon->slug);
                 flash('Update operation successful.')->success();
                 return back();
                 
