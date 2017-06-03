@@ -113,7 +113,7 @@ class Sermon extends Model implements HasMedia
     }
 
     public static function addImageUrlToSermon () {
-        $sermon = Sermon::latest('created_at')->get()->first();
+        $sermon = Sermon::findBySlug($slug);
         if($sermon->imageurl === null) {
             $image = $sermon->getMedia('sermon_image');
             $sermon->imageurl = $image[0]->getUrl();

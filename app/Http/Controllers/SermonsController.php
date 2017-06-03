@@ -75,7 +75,7 @@ class SermonsController extends Controller
             $sermon->addMediaToSermon(Sermon::saveSermonImage($request));
             $sermon -> save();
             $stagedsermon->delete();
-            Sermon::addImageUrlToSermon();
+            Sermon::addImageUrlToSermon($sermon->slug);            
             Category::countUp($request->category_id);
             Service::countUp($request->service_id);
             return redirect('/admin/sermon/upload');
