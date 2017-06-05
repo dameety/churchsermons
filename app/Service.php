@@ -41,7 +41,6 @@ class Service extends Model
         } else {
             $v = Validator::make($data, $this->newRules);
         }
-        // make a new validator object
         if ($v->fails()) {
             $this->errors = $v->errors()->getMessages();;
             return false;
@@ -81,7 +80,6 @@ class Service extends Model
 
     public static function countUp ($servId) {
 
-        // count up the sermons in the chosen service
         $service = Service::whereId((int)($servId))->first();
         event(new ServiceSermonCountEvent($service));
 
