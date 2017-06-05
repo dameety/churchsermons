@@ -26,13 +26,11 @@
 
                                 <div>
 
-                                    <div class="form-group">
-
+                                    <div class="sermon-image-container">
                                         <vue-img-preview
                                             input-name="sermonImage"
                                             default-image="{{ $sermon->imageurl }}"
                                         ></vue-img-preview>
-
                                     </div>
 
                                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">

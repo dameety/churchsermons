@@ -64,24 +64,18 @@
         </ul>
     </header>
 
-
     <div id="app" class="app-body">
         
-        {{-- the side bar --}}
         @include('admin.partials._sidebar');
 
-
-        <!-- Main content -->
         @yield('content')
 
     </div>
-
 
     <footer class="app-footer">
         <a href="http://pointlogix.io">ChurchAudiox</a> © 2017.
         </span>
     </footer>
-
 
     <script src="{{ URL::asset('/js/app.js') }}"></script>
     <script src="{{ URL::asset('/js/tether.min.js') }}"></script>
