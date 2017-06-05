@@ -42,15 +42,6 @@
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
             </li>
-            <li class="nav-item px-1">
-                <a class="nav-link" href="{{ '/admin/sermons' }}">Sermons</a>
-            </li>
-            <li class="nav-item px-1">
-                <a class="nav-link" href="{{ '/admin/services' }}">Services</a>
-            </li>
-            <li class="nav-item px-1">
-                <a class="nav-link" href="{{ '/admin/categories' }}">Categories</a>
-            </li>
         </ul>
         
         <ul class="nav navbar-nav ml-auto">
@@ -62,11 +53,7 @@
                 </a>
             
                 <div class="dropdown-menu dropdown-menu-right">
-
-                    <a class="dropdown-item" href="{{ url('/admin/settings') }}"><i class="fa fa-wrench"></i> Configuration </a>
-                    <div class="divider"></div>
                     <a class="dropdown-item" href="{{ url('/admin/logout') }}"><i class="fa fa-lock"></i> Logout </a>
-                        
                 </div>
 
             </li>
@@ -100,7 +87,6 @@
     <script src="{{ URL::asset('/js/tether.min.js') }}"></script>
     <script src="{{ URL::asset('/js/pace.js') }}"></script>
     <script src="{{ URL::asset('/js/genesismain/app.js') }}"></script>   
-    <script src="{{ URL::asset('/js/validate.js') }}"></script>
     <script src="{{ URL::asset('/js/uikit.min.js') }}"></script>
     <script src="{{ URL::asset('/js/auth.js') }}"></script>
     @yield('scripts')
