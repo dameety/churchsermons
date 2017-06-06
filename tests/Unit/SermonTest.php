@@ -10,16 +10,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SermonTest extends TestCase
 {
-    protected $sermon;
-    protected $faker;
-
-    public function setUp() {
-
-        parent::setUp();
-        $this -> sermon = new Sermon;
-        $this -> faker = Faker::create();
-
-    }
 
     public function testUploadsFolderExists() {
 
