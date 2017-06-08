@@ -13,12 +13,10 @@ abstract class TestCase extends BaseTestCase
     protected $sermon;
     protected $faker;
 
-    public function setUp() {
-
+    public function setUp()
+    {
         parent::setUp();
         $this -> sermon = new Sermon;
         $this -> faker = Faker::create();
-
     }
-
 }
