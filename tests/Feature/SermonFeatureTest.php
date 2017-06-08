@@ -14,4 +14,14 @@ class SermonFeatureTest extends TestCase
     {
         
     }
+
+    public function testSermonCanBeDeleted()
+    {
+        
+    }
+
+    public function testSermonCanBeUpdated()
+    {
+
+    }
 }
