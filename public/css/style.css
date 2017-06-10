@@ -1,42 +1,9 @@
-/**
- * CoreUI - Open Source Bootstrap Admin Template
- * @version v1.0.0-alpha.2
- * @link http://coreui.io
- * Copyright (c) 2017 creativeLabs Łukasz Holeczek
- * @license MIT
- */
-/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /*---- fonts ----*/
 @import url('https://fonts.googleapis.com/css?family=Eczar');
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 /*---- fonts ----*/
 
-
-/*figure.form-image-container {*/
-figure.imghvr-fade {
-    /*background-color: rgba(0, 0, 0, 0.2);*/
-}
-
-figcaption {
-  /*background-color: rgba(0, 0, 0, 0.2);*/
-}
-
-[class^='imghvr-'],
-[class*=' imghvr-'] {
-    /*background-color: rgba(0, 0, 0, 0.2);*/
-}
-
-figure.form-image-container {
-  height: 200px;
-  display: block;
-}
-
-figure.form-image-container img {
-  height: 100%;
-  width: 100%;
-  border-radius: 5px;
-}
 
 .sermon-bg-img {
     height: 250px;

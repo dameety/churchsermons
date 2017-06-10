@@ -1,6 +1,3 @@
-
-
-
 a {
     text-decoration: none !important;
     color: inherit;
@@ -16,7 +13,7 @@ p {
 }
 
 
-.filters:hover { 
+.filters:hover {
     color: #3097d6;
 }
 
@@ -97,95 +94,95 @@ p {
 
 
 /* NEW BOOSTRAPT BLACK BUTTON*/
-.btn-black { 
-  color: #ffffff; 
-  background-color: #0F0C12; 
-  border-color: #fff; 
-} 
- 
-.btn-black:hover, 
-.btn-black:focus, 
-.btn-black:active, 
-.btn-black.active, 
-.open .dropdown-toggle.btn-black { 
-  color: #ffffff; 
-  background-color: #3097D6; 
-  border-color: #fff; 
-} 
- 
-.btn-black:active, 
-.btn-black.active, 
-.open .dropdown-toggle.btn-black { 
-  background-image: none; 
-} 
- 
-.btn-black.disabled, 
-.btn-black[disabled], 
-fieldset[disabled] .btn-black, 
-.btn-black.disabled:hover, 
-.btn-black[disabled]:hover, 
-fieldset[disabled] .btn-black:hover, 
-.btn-black.disabled:focus, 
-.btn-black[disabled]:focus, 
-fieldset[disabled] .btn-black:focus, 
-.btn-black.disabled:active, 
-.btn-black[disabled]:active, 
-fieldset[disabled] .btn-black:active, 
-.btn-black.disabled.active, 
-.btn-black[disabled].active, 
-fieldset[disabled] .btn-black.active { 
-  background-color: #0F0C12; 
-  border-color: #fff; 
-} 
- 
-.btn-black .badge { 
-  color: #0F0C12; 
-  background-color: #ffffff; 
+.btn-black {
+  color: #ffffff;
+  background-color: #0F0C12;
+  border-color: #fff;
+}
+
+.btn-black:hover,
+.btn-black:focus,
+.btn-black:active,
+.btn-black.active,
+.open .dropdown-toggle.btn-black {
+  color: #ffffff;
+  background-color: #3097D6;
+  border-color: #fff;
+}
+
+.btn-black:active,
+.btn-black.active,
+.open .dropdown-toggle.btn-black {
+  background-image: none;
+}
+
+.btn-black.disabled,
+.btn-black[disabled],
+fieldset[disabled] .btn-black,
+.btn-black.disabled:hover,
+.btn-black[disabled]:hover,
+fieldset[disabled] .btn-black:hover,
+.btn-black.disabled:focus,
+.btn-black[disabled]:focus,
+fieldset[disabled] .btn-black:focus,
+.btn-black.disabled:active,
+.btn-black[disabled]:active,
+fieldset[disabled] .btn-black:active,
+.btn-black.disabled.active,
+.btn-black[disabled].active,
+fieldset[disabled] .btn-black.active {
+  background-color: #0F0C12;
+  border-color: #fff;
+}
+
+.btn-black .badge {
+  color: #0F0C12;
+  background-color: #ffffff;
 }
 
 /* NEW BOOSTRAP PRIMARY-NEW BUTTON*/
-.btn-primary-new { 
-  color: #ffffff; 
-  background-color: #3097D6; 
-  border-color: #FFFFFF; 
-} 
- 
-.btn-primary-new:hover, 
-.btn-primary-new:focus, 
-.btn-primary-new:active, 
-.btn-primary-new.active, 
-.open .dropdown-toggle.btn-primary-new { 
-  color: #ffffff; 
-  background-color: #000; 
-  border-color: #FFFFFF; 
-} 
- 
-.btn-primary-new:active, 
-.btn-primary-new.active, 
-.open .dropdown-toggle.btn-primary-new { 
-  background-image: none; 
-} 
- 
-.btn-primary-new.disabled, 
-.btn-primary-new[disabled], 
-fieldset[disabled] .btn-primary-new, 
-.btn-primary-new.disabled:hover, 
-.btn-primary-new[disabled]:hover, 
-fieldset[disabled] .btn-primary-new:hover, 
-.btn-primary-new.disabled:focus, 
-.btn-primary-new[disabled]:focus, 
-fieldset[disabled] .btn-primary-new:focus, 
-.btn-primary-new.disabled:active, 
-.btn-primary-new[disabled]:active, 
-fieldset[disabled] .btn-primary-new:active, 
-.btn-primary-new.disabled.active, 
-.btn-primary-new[disabled].active, 
-fieldset[disabled] .btn-primary-new.active { 
-  background-color: #3097D6; 
-  border-color: #FFFFFF; 
-} 
- 
-.btn-primary-new .badge { 
-  color: #3097D6; 
-  background-color: #ffffff; 
+.btn-primary-new {
+  color: #ffffff;
+  background-color: #3097D6;
+  border-color: #FFFFFF;
+}
+
+.btn-primary-new:hover,
+.btn-primary-new:focus,
+.btn-primary-new:active,
+.btn-primary-new.active,
+.open .dropdown-toggle.btn-primary-new {
+  color: #ffffff;
+  background-color: #000;
+  border-color: #FFFFFF;
+}
+
+.btn-primary-new:active,
+.btn-primary-new.active,
+.open .dropdown-toggle.btn-primary-new {
+  background-image: none;
+}
+
+.btn-primary-new.disabled,
+.btn-primary-new[disabled],
+fieldset[disabled] .btn-primary-new,
+.btn-primary-new.disabled:hover,
+.btn-primary-new[disabled]:hover,
+fieldset[disabled] .btn-primary-new:hover,
+.btn-primary-new.disabled:focus,
+.btn-primary-new[disabled]:focus,
+fieldset[disabled] .btn-primary-new:focus,
+.btn-primary-new.disabled:active,
+.btn-primary-new[disabled]:active,
+fieldset[disabled] .btn-primary-new:active,
+.btn-primary-new.disabled.active,
+.btn-primary-new[disabled].active,
+fieldset[disabled] .btn-primary-new.active {
+  background-color: #3097D6;
+  border-color: #FFFFFF;
+}
+
+.btn-primary-new .badge {
+  color: #3097D6;
+  background-color: #ffffff;
 }
