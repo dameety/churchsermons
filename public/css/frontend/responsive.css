@@ -1,0 +1,274 @@
+@media ( max-width: 1199px ) {
+	
+
+	div.col-xs-2.sermon-box-art {
+
+	    height: 95px;
+	    margin-top: 22.5px;
+	    margin-bottom: 22.5px;
+	}
+
+	.sermon-right-box {
+		height: 70px !important;
+		padding: 0px !important;
+		margin-top: 35px !important;
+		margin-bottom: 35px !important;
+	}
+
+	#download-button {
+		font-size: 13px;
+
+	}
+	
+	#favourite-button {
+		font-size: 13px;
+	}
+	
+
+	.filter-box h4 {
+		font-size: 16px;
+	}
+
+}
+
+
+/* hide the mobile filter here*/
+@media (min-width: 993px) and (max-width: 2000px) {
+
+	#mobile-filter {
+		display: none;
+	}
+
+}
+
+
+/* show the mobile filter here and adjust fonts*/
+@media (max-width: 992px) {
+
+	.filter-box {
+		display: none;
+	}
+
+	#mobile-filter {
+		display: block;
+	}
+
+	#download-button {
+		font-size: 11px;
+		margin-bottom: 0px !important;
+
+	}
+	
+	#favourite-button {
+		font-size: 11px;
+		margin-top: 0px !important;
+	}
+	
+
+	.sermon-box-status {
+		font-size: 12px;
+		text-align: center !important;
+	}
+
+	/*remove padding-right of the image cont*/
+	/* so that the image will not be distorted*/
+	div.col-xs-2.sermon-box-art {
+
+		padding-right: 0px;
+
+	}
+
+	/* crate more room too here and reduce fonts*/
+	.sermon-box-data {
+		padding-left: 20px;
+		font-size: 13px;
+	}
+
+	.sermon-col {
+		width: 100%;
+	}
+}
+
+
+/*remove the sermon status here and float the buttons*/
+@media (max-width: 712px) {
+
+	div.col-xs-2.sermon-box-art {
+
+	    height: 140px;
+	    width: 120px;
+	    margin-top: 0px;
+	    margin-bottom: 0px;
+	    padding-left: 0px;
+	
+	}
+
+	.sermon-art {
+	    box-shadow: 0 !important; 
+	}
+
+	.sermon-box-status {
+		display: none !important;
+	}
+
+	/* all for right box mobile */
+	.sermon-right-box-mobile {
+		display: block;
+	}
+
+	.sermon-box-data p {
+
+		padding-bottom: 10px;
+
+	}
+	/*end of right box mobile*/
+
+
+	.sermon-right-box {
+		display: none;
+	}
+
+}
+
+
+@media (min-width: 712px) and (max-width: 2000px) {
+
+	.sermon-right-box-mobile {
+		display: none;
+	}
+
+}
+
+@media (min-width: 511px) and (max-width: 2000px) {
+
+	.sermon-right-box-mobile2 {
+		display: none;
+	}
+
+}
+
+/* make content full the viewport*/
+@media (max-width: 619px) {
+
+	.sermon-col {
+	  	width: 100vw;
+	  	position: relative;
+	  	left: 50%;
+	  	right: 50%;
+	  	margin-left: -50vw;
+		margin-right: -50vw;
+	}
+
+}
+
+@media (max-width: 512px) {
+
+	.sermon-box {
+	    height: 120px !important;
+	}
+
+	div.col-xs-2.sermon-box-art {
+
+	    height: 120px;
+
+	}
+
+	.sermon-right-box-mobile2 {
+		display: block;
+		height: 100px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.sermon-right-box-mobile {
+		display: none;
+	}
+
+	.sermon-box-data p {
+
+		padding-bottom: 7px;
+
+	}
+
+}
+
+/*@media (max-width: 360px) {*/
+@media (max-width: 375px) {
+
+	.sermon-box {
+	    height: 100px !important;
+	}
+
+	div.col-xs-2.sermon-box-art {
+
+	    width: 100px;
+	    height: 100px;
+
+	}
+
+	.sermon-right-box-mobile2 {
+		height: 90px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		padding-right: 0px;
+	}
+	
+	.sermon-box-data p {
+
+		padding-bottom: 4px;
+
+	}
+
+	.sermon-box-data {
+		font-size: 11px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}	
+
+}
+
+@media (min-width: 321px) and (max-width: 2000px) {
+
+	.sermon-right-box-mobile3 {
+		display: none;
+	}
+
+}
+
+@media (max-width: 320px) {
+
+	.sermon-right-box-mobile3 {
+		display: block;
+	}
+
+	.sermon-right-box-mobile2 {
+		display: none;
+	}
+
+	.sermon-box-data {
+		font-size: 10px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	#download-button {
+		font-size: 9px;
+		/*margin-bottom: 0px !important;*/
+
+	}
+	
+	#favourite-button {
+		font-size: 9px;
+		/*margin-top: 0px !important;*/
+	}
+
+	.sermon-right-box-mobile3 {
+		height: 80px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		padding-right: 0px;
+	}
+
+}
+
+/*for full screen menu*/
