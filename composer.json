@@ -33,7 +33,6 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-            "tests/support/DatabaseMigrations.php"
         }
     },
     "scripts": {
