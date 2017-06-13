@@ -13,21 +13,20 @@ class SermonTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run () {
-
+    public function run()
+    {
         $faker = Faker::create();
         $categories = Category::all()->pluck('id')->toArray();
         $services = Service::all()->pluck('id')->toArray();
 
-        foreach(range(1,50) as $index){
+        foreach (range(1, 50) as $index) {
             $sermon = Sermon::create([
                 'preacher' => $faker->name,
                 'service_id' => $faker->randomElement($services),
                 'category_id' => $faker->randomElement($categories),
-		        'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
+     	        'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'title' => $faker->sentence($nbWords = 3, $variableNbWords = true),
             ]);
         }
-
     }
 }

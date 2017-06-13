@@ -1,7 +1,6 @@
 <?php
 
-namespace App;
-
+namespace App\Models;
 
 use Validator;
 use App\Service;
@@ -11,10 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Intervention\Image\ImageManagerStatic as Image;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-
 
 class Sermon extends Model implements HasMedia
 {
@@ -57,7 +54,7 @@ class Sermon extends Model implements HasMedia
     }
 
     protected $fillable = [
-     	'title', 'preacher', 'service_id', 'category_id', 'datepreached', 'status', 'filename', 'size', 'type', 'imageurl', 'slug',
+        'title', 'preacher', 'service_id', 'category_id', 'datepreached', 'status', 'filename', 'size', 'type', 'imageurl', 'slug',
     ];
 
     protected $hidden = [
@@ -139,7 +136,7 @@ class Sermon extends Model implements HasMedia
 
     public static function addImageUrlToUpdatedSermon($slug)
     {
-        $sermon = Sermon::findBySlug($slug)
+        $sermon = Sermon::findBySlug($slug);
         $image = $sermon->getMedia('sermon_image');
         $sermon->imageurl = $image[0]->getUrl();
         $sermon->save();
