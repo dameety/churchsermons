@@ -24,14 +24,14 @@ class EloquentSermon implements SermonRepository
         return $this->sermon->all();
     }
 
-    public function get30Paginated()
-    {
-        return $this->sermon->latest('created_at')->paginate(30);
-    }
-
     public function get10Paginated()
     {
         return $this->sermon->latest('created_at')->paginate(10);
+    }
+
+    public function get30Paginated()
+    {
+        return $this->sermon->latest('created_at')->paginate(30);
     }
 
     public function getBySlug($slug)

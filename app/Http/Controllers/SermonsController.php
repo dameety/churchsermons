@@ -7,14 +7,14 @@ use File;
 use Session;
 use Storage;
 use Redirect;
-use App\Models\Sermon;
+// use App\Models\Sermon;
 // use App\Sermon;
 use App\Setting;
 use App\Service;
 use App\Category;
 use App\Favourite;
 use Carbon\Carbon;
-use App\Stagedsermon;
+// use App\Models\Stagedsermon;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Events\DownloadCountEvent;
@@ -23,17 +23,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Events\LastDownloadTimeEvent;
 use App\Repositories\Sermon\SermonRepository;
+use App\Repositories\Stagedsermon\StagedsermonRepository;
 
 class SermonsController extends Controller
 {
 
-    protected $sermon;
-    protected $services;
-    protected $categories;
+    private $sermon;
+    private $services;
+    private $stagedsermon;
+    private $categories;
 
-    public function __construct(SermonRepository $sermon)
+    public function __construct(SermonRepository $sermon, StagedsermonRepository $stagedsermon)
     {
         $this->sermon = $sermon;
+        $this->stagedsermon = $stagedsermon;
         $this->services = Service::latest('created_at')->get();
         $this->categories = Category::latest('created_at')->get();
     }
