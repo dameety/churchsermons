@@ -15,8 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $settings= \App\Setting::first();
-        View::share('setting', $settings);
+        // $settings= \App\Setting::first();
+        // View::share('setting', $settings);
 
         //composers for the filter
         view()->composer('frontend.partials.filters-desktop', function ($view) {
