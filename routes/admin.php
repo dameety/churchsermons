@@ -34,7 +34,7 @@ Route::get('/settings/slider', 'AdminSettingsController@sliderPage');
 
 // all the routes below are used by the vuejs components
 Route::group(['namespace' => 'API'], function () {
-    
+
     /*all categories*/
     Route::get('category/api', 'CategoriesApiController@index');
     Route::get('category/api/all', 'CategoriesApiController@all');
@@ -54,7 +54,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::patch('service/api/update/{slug}', 'ServicesApiController@serviceUpdate');
     Route::delete('service/api/delete/{service}', 'ServicesApiController@deleteService');
 
-    
+
 
 
     Route::get('sermon/api', 'SermonsApiController@index');
@@ -62,7 +62,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('sermon/api/service', 'ServicesApiController@fetchServices');
     Route::get('sermon/api/category', 'CategoriesApiController@fetchCategories');
 
-    // upload new sermon 
+    // upload new sermon
     Route::post('sermon/api/upload', 'SermonsApiController@upload');
     Route::delete('sermon/api/delete/{sermon}', 'SermonsApiController@deleteSermon');
     Route::get('sermon/api/details/{slug}', 'SermonsApiController@getSermonDetails');
@@ -94,7 +94,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::patch('admin/api/update/{slug}', 'AdminsApiController@adminUpdate');
     Route::patch('admin/api/password/change/{slug}', 'AdminsApiController@changePassword');
     Route::delete('admin/api/delete/{admin}', 'AdminsApiController@deleteAdmin');
-    Route::post('admin/api/new', 'AdminsApiController@saveNewAdmin');    
+    Route::post('admin/api/new', 'AdminsApiController@saveNewAdmin');
     Route::get('admin/api/type/{type}', 'AdminsApiController@adminTypeFilter');
     Route::get('admin/api/current', 'AdminsApiController@currentAdmin');
 
@@ -121,6 +121,4 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('stagedsermon/api', 'SermonsApiController@stagedsermon');
     Route::delete('stagedsermon/api/delete/{stagedsermon}', 'SermonsApiController@deleteStagedesermon');
     Route::get('stagedsermon/api/count', 'SermonsApiController@stagedsermonCount');
-    
-
 });

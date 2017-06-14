@@ -3,73 +3,59 @@
 namespace App\Http\Controllers\API;
 
 use App\Sermon;
-use App\Category;
-use App\Http\Requests;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-
-
+use App\Http\Requests\CategoryValidationRequest;
+use App\Repositories\Category\CategoryRepository;
 
 class CategoriesApiController extends Controller
 {
 
-    public function index () {
-        return Category::latest('created_at')->paginate(30);
+    protected $category;
+
+    public function __construct(CategoryRepository $category)
+    {
+        $this->category = $category;
     }
 
-    public function all() {
-        return Category::latest('created_at')->get();
+    public function index()
+    {
+        return $this->category->get30Paginated();
     }
 
-    public function count () {
-        return Category::all()->count();
+    public function all()
+    {
+        return $this->category->getAllOrderByLatest();
     }
 
-    public function fetchCategories () {
-        return Category::all();
+    public function count()
+    {
+        return $this->category->countAll();
     }
 
-    public function newCategory(Request $request) {
-        $data = Input::all();
-        $category = new Category;
-
-        if($category->validate($data)) {
-            $category -> name = $request->name;
-            $category -> description = $request->description;
-            $category ->save();
-            return response('success', 201); 
-        } else {
-            $errors = $category->getErrors();
-            return response($errors, 422);
-        }
-
+    public function fetchCategories()
+    {
+        return $this->category->getAll();
     }
 
-    public function categoryUpdate(Request $request, $slug) {
-
-        $data = Input::all();
-        $category = Category::whereSlug($slug)->first();
-
-        if($category->validate($data, $key = "update")) {
-            $category -> name = $request-> name;
-            $category -> description = $request-> description;
-            $category -> save();  
-            return response('success', 201);
-        } else {
-            $errors = $category->getErrors();
-            return response($errors, 422);
-        }
-
+    public function newCategory(CategoryValidationRequest $request)
+    {
+        return $this->category->create($request);
     }
 
-    
-    public function sermonCategoryFilter(Category $category) {
+    public function categoryUpdate($slug, CategoryValidationRequest $request)
+    {
+        return $this->category->update($slug, $request);
+    }
+
+    public function sermonCategoryFilter(Category $category)
+    {
         return $category->sermons;
     }
 
-    public function deleteCategory(Category $category){
-        $category->delete();
+    public function deleteCategory(Category $category)
+    {
+        return $this->category->delete($category->slug);
     }
-
 }

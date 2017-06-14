@@ -2,40 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use File;
 use Session;
 use Storage;
 use Redirect;
-// use App\Models\Sermon;
-// use App\Sermon;
 use App\Setting;
 use App\Service;
 use App\Category;
 use App\Favourite;
 use Carbon\Carbon;
-// use App\Models\Stagedsermon;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Events\DownloadCountEvent;
 use App\Events\LastDownloadByEvent;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use App\Events\LastDownloadTimeEvent;
 use App\Http\Requests\SavesermonRequest;
 use App\Repositories\Sermon\SermonRepository;
+use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
 
 class SermonsController extends Controller
 {
     private $sermon;
     private $services;
+    private $category;
     private $categories;
     private $stagedsermon;
 
-    public function __construct(SermonRepository $sermon, StagedsermonRepository $stagedsermon)
-    {
+    public function __construct(
+        SermonRepository $sermon,
+        StagedsermonRepository $stagedsermon,
+        CategoryRepository $category
+    ) {
         $this->sermon = $sermon;
+        $this->category = $category;
         $this->stagedsermon = $stagedsermon;
         $this->services = Service::latest('created_at')->get();
         $this->categories = Category::latest('created_at')->get();
@@ -61,13 +61,13 @@ class SermonsController extends Controller
 
     public function saveNewSermon(SavesermonRequest $request)
     {
-
         if (!request()->file('sermonImage')) {
             $this->sermon->createUseDefaultImage($request);
         } else {
             $this->sermon->create($request);
         }
         // Category::countUp($request->category_id);
+        $this->category->increaseSermonCount($request->category_id);
         // Service::countUp($request->service_id);
         // riderect to another page
     }
@@ -77,7 +77,6 @@ class SermonsController extends Controller
         $categories = $this->categories;
         $services = $this->services;
         $sermon = $this->sermon->getBySlug($slug);
-        // Sermon::whereSlug($slug)->first();
         return view('admin.sermons.edit', compact('sermon', 'categories', 'services'));
     }
 
@@ -131,7 +130,6 @@ class SermonsController extends Controller
     public function allSermons()
     {
         $sermons = $this->sermon->get10Paginated();
-        // $sermons = Sermon::latest('created_at')->paginate(10);
         return view('frontend.home', compact('sermons'));
     }
 
@@ -191,7 +189,6 @@ class SermonsController extends Controller
 
     public function favouriteSermon2($slug)
     {
-
         $sermon = Sermon::whereSlug($slug)->first();
         Auth::user()->favourites()->attach($sermon->id);
         flash('Successful Operation. The sermon has been added to your favourites list.')->success()->important();
@@ -201,8 +198,6 @@ class SermonsController extends Controller
 
     public function favouriteRemove($slug)
     {
-
-        // $sermon = Sermon::whereSlug($slug)->first();
         $sermon = $this->sermon->getBySlug($slug);
         Auth::user()->favourites()->detach($sermon->id);
         flash('Successful Operation. The sermon has been removed from your favourites list.')->success()->important();

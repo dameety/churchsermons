@@ -59,6 +59,7 @@ class EloquentSermon implements SermonRepository
         $sermon->imageurl = '/uploads/default.jpg';
         $sermon -> save();
         $stagedsermon->delete();
+        return true;
     }
 
     public function create($request)
@@ -79,6 +80,7 @@ class EloquentSermon implements SermonRepository
         $sermon -> save();
         $stagedsermon->delete();
         $this->sermon->addImageUrlToSermon($sermon->slug);
+        return true;
     }
 
     public function update($slug, $request)

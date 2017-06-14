@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Category;
-
+// use App\Http\Requests;
+use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
     public function categoriesPage()
     {
-    	return view('admin.categories.categories');
+        return view('admin.categories.categories');
     }
-
 }
