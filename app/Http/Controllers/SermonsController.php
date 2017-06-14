@@ -22,16 +22,16 @@ use App\Events\LastDownloadByEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Events\LastDownloadTimeEvent;
+use App\Http\Requests\SavesermonRequest;
 use App\Repositories\Sermon\SermonRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
 
 class SermonsController extends Controller
 {
-
     private $sermon;
     private $services;
-    private $stagedsermon;
     private $categories;
+    private $stagedsermon;
 
     public function __construct(SermonRepository $sermon, StagedsermonRepository $stagedsermon)
     {
@@ -59,43 +59,21 @@ class SermonsController extends Controller
         return view('admin.sermons.newsermon', compact('slug', 'title', 'categories', 'services'));
     }
 
-    public function saveNewSermon(Request $request)
+    public function saveNewSermon(SavesermonRequest $request)
     {
-        $data = Input::all();
-        $sermon = $this->sermon;
-        // $sermon = new Sermo;
 
-        if ($sermon->validate($data)) {
-            if (!Input::hasFile('sermonImage')) {
-                $sermon->imageurl = '/uploads/default.jpg';
-            }
-            $stagedsermon = Stagedsermon::whereSlug($request->stagedsermonslug)->first();
-            $sermon -> title = $request-> title;
-            $sermon -> preacher = $request-> preacher;
-            $sermon -> service_id = (int)($request-> service_id);
-            $sermon -> category_id = (int)($request-> category_id);
-            $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
-            $sermon -> status = $request-> status;
-            $sermon-> size = $stagedsermon ->size;
-            $sermon-> type = $stagedsermon ->type;
-            $sermon -> filename = $stagedsermon-> filename;
-            //save the image to the sermon
-            $sermon->addMediaToSermon(Sermon::saveSermonImage($request));
-            $sermon -> save();
-            $stagedsermon->delete();
-            Sermon::addImageUrlToSermon($sermon->slug);
-            Category::countUp($request->category_id);
-            Service::countUp($request->service_id);
-            return redirect('/admin/sermon/upload');
+        if (!request()->file('sermonImage')) {
+            $this->sermon->createUseDefaultImage($request);
         } else {
-            $errors = $sermon->getErrors();
-            return back()->withErrors($errors)->withInput();
+            $this->sermon->create($request);
         }
+        // Category::countUp($request->category_id);
+        // Service::countUp($request->service_id);
+        // riderect to another page
     }
 
     public function editSermonPage($slug)
     {
-
         $categories = $this->categories;
         $services = $this->services;
         $sermon = $this->sermon->getBySlug($slug);

@@ -19,30 +19,6 @@ class Sermon extends Model implements HasMedia
     use HasMediaTrait;
     use SluggableScopeHelpers;
 
-    private $errors;
-
-    private $rules = array(
-        'title' => 'required|max:40',
-        'preacher' => 'required|max:30',
-        'sermonImage' => 'file|image',
-    );
-
-    public function validate($data)
-    {
-
-        $v = Validator::make($data, $this->rules);
-        if ($v->fails()) {
-            $this->errors = $v->errors()->getMessages();
-            return false;
-        }
-        return true;
-    }
-
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
     public function category()
     {
         return $this->belongsTo('App\Category');
@@ -118,10 +94,10 @@ class Sermon extends Model implements HasMedia
 
     public function addMediaToSermon($path)
     {
-        $this->addMedia( $path )->toMediaCollection('sermon_image');
+        $this->addMedia($path)->toMediaCollection('sermon_image');
     }
 
-    public static function addImageUrlToSermon()
+    public static function addImageUrlToSermon($slug)
     {
         $sermon = Sermon::findBySlug($slug);
         if ($sermon->imageurl === null) {
@@ -130,7 +106,7 @@ class Sermon extends Model implements HasMedia
             $sermon->save();
             return true;
         } else {
-            return;
+            return false;
         }
     }
 

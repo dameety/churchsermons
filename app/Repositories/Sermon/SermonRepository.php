@@ -14,6 +14,8 @@ interface SermonRepository
 
     public function create($request);
 
+    public function createUseDefaultImage($request);
+
     public function update($slug, $request);
 
     public function delete($slug, $filePath);

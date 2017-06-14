@@ -4,19 +4,22 @@ namespace App\Repositories\Sermon;
 
 use Storage;
 use App\Models\Sermon;
+use App\Models\Stagedsermon;
 use App\Events\DownloadCountEvent;
 use App\Events\LastDownloadByEvent;
 use App\Events\LastDownloadTimeEvent;
-use App\Repositories\Sermon\SermonRepository;
+use App\Repositories\Stagedsermon\StagedsermonRepository;
 
 class EloquentSermon implements SermonRepository
 {
 
     private $sermon;
+    private $stagedsermon;
 
-    public function __construct(Sermon $sermon)
+    public function __construct(Sermon $sermon, Stagedsermon $stagedsermon)
     {
         $this->sermon = $sermon;
+        $this->stagedsermon = $stagedsermon;
     }
 
     public function getAll()
@@ -39,13 +42,43 @@ class EloquentSermon implements SermonRepository
         return $this->sermon->findBySlug($slug);
     }
 
-    public function create($request)
+    public function createUseDefaultImage($request)
     {
+        $sermon = $this->sermon;
+
+        $stagedsermon = $this->stagedsermon->findBySlug($request->stagedsermonslug);
+        $sermon -> title = $request-> title;
+        $sermon -> preacher = $request-> preacher;
+        $sermon -> service_id = (int)($request-> service_id);
+        $sermon -> category_id = (int)($request-> category_id);
+        $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
+        $sermon -> status = $request-> status;
+        $sermon-> size = $stagedsermon ->size;
+        $sermon-> type = $stagedsermon ->type;
+        $sermon -> filename = $stagedsermon-> filename;
+        $sermon->imageurl = '/uploads/default.jpg';
+        $sermon -> save();
+        $stagedsermon->delete();
     }
 
-    public function createErrors()
+    public function create($request)
     {
-        return $this->sermon->getErrors();
+        $sermon = $this->sermon;
+        $stagedsermon = $this->stagedsermon->findBySlug($request->stagedsermonslug);
+        $sermon -> title = $request-> title;
+        $sermon -> preacher = $request-> preacher;
+        $sermon -> service_id = (int)($request-> service_id);
+        $sermon -> category_id = (int)($request-> category_id);
+        $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
+        $sermon -> status = $request-> status;
+        $sermon-> size = $stagedsermon ->size;
+        $sermon-> type = $stagedsermon ->type;
+        $sermon -> filename = $stagedsermon-> filename;
+        //save the image to the sermon
+        $sermon->addMediaToSermon($this->sermon->saveSermonImage($request));
+        $sermon -> save();
+        $stagedsermon->delete();
+        $this->sermon->addImageUrlToSermon($sermon->slug);
     }
 
     public function update($slug, $request)

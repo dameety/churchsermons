@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 // use File;
-use Redirect;
-// use App\Sermon;
-use App\Service;
-use App\Category;
+// use Redirect;
+use App\Sermon; ///
+// use App\Service;
+// use App\Category;
 use App\Models\Stagedsermon; ///
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,7 +21,6 @@ class SermonsApiController extends Controller
 
     public function __construct(SermonRepository $sermon, StagedsermonRepository $stagedsermon)
     {
-
         $this->sermon = $sermon;
         $this->stagedsermon = $stagedsermon;
     }
@@ -46,15 +45,11 @@ class SermonsApiController extends Controller
         return $this->sermon->getDetails($slug);
     }
 
-    // this is used to get the category for a sermon
-    // in detail view
     public function sermonCategory($slug)
     {
         return $this->getCategory($slug);
     }
 
-    // this is used to get the service for a sermon
-    // in detail view
     public function sermonService($slug)
     {
         return $this->getService($slug);

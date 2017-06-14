@@ -32,7 +32,6 @@ class Sermon extends Model implements HasMedia
 
     public function validate($data)
     {
-
         $v = Validator::make($data, $this->rules);
         if ($v->fails()) {
             $this->errors = $v->errors()->getMessages();

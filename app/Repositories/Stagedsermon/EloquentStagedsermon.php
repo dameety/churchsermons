@@ -35,14 +35,10 @@ class EloquentStagedsermon implements StagedsermonRepository
     {
         $sermonFile = request()->file('file');
         foreach ($sermonFile as $file) {
-            // $staging = new Stagedsermon;
             $staging = $this->stagedsermon;
-            //get file properties
             $staging-> title = $file -> getClientOriginalName();
             $staging-> size = $file -> getClientsize();
             $staging-> type = $file -> getClientOriginalExtension();
-
-            // Note: filename, is also the path
             $staging-> filename = $file ->store('sermons');
             $file ->store('sermons');
             $staging->save();
@@ -56,7 +52,6 @@ class EloquentStagedsermon implements StagedsermonRepository
     {
         $this->getBySlug($slug)->delete();
         Storage::delete($filePath);
-        // return true;
         return response()->json([
                 'deleted' => true
             ]);
