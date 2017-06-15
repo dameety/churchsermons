@@ -51,7 +51,7 @@ class CategoriesApiController extends Controller
 
     public function sermonCategoryFilter(Category $category)
     {
-        return $category->sermons;
+        return $this->category->sermons;
     }
 
     public function deleteCategory(Category $category)

@@ -2,71 +2,59 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Service;
-use App\Http\Requests;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-
+use App\Repositories\Service\ServiceRepository;
+use App\Http\Requests\ServiceValidationRequest;
 
 class ServicesApiController extends Controller
 {
 
-    public function index () {
-        return Service::latest('created_at')->paginate(30);
+    private $service;
+
+    public function __construct(ServiceRepository $service)
+    {
+        $this->service = $service;
     }
 
-    public function all() {
-        return Service::latest('created_at')->get();
+    public function index()
+    {
+        return $this->service->get30Paginated();
     }
 
-    public function count () {
-        return Service::all()->count();
+    public function all()
+    {
+        return $this->service->getAllOrderByLatest();
     }
 
-    public function fetchServices () {
-        return  Service::all();
+    public function count()
+    {
+        return $this->service->countAll();
     }
 
-    public function newServiceData(Request $request) {
-        $data = Input::all();
-        $service = new Service;
-        if($service->validate($data)) {
-
-            $service -> name = $request->name;
-            $service -> description = $request->description;
-            $service-> save();
-            return response('success', 201); 
-
-        } else {
-            return response($service->getErrors(), 422);
-        }
-
+    public function fetchServices()
+    {
+        return $this->service->getAll();
     }
 
-    public function serviceUpdate(Request $request, $slug) {
-        $data = Input::all();
-        $service = Service::whereSlug($slug)->first();
-
-        if($service->validate($data, $key = "update")) {
-
-            $service -> name = $request-> name;
-            $service -> description = $request-> description;
-            $service -> save();
-            return response('success', 201); 
-
-        } else {
-            return response($service->getErrors(), 422);
-        }
-
+    public function newServiceData(ServiceValidationRequest $request)
+    {
+        return $this->service->create($request);
     }
 
-    public function sermonServiceFilter(Service $service) {
-        return $service->sermons;
+    public function serviceUpdate($slug, ServiceValidationRequest $request)
+    {
+        return $this->service->update($slug, $request);
     }
 
-    public function deleteService(Service $service) {
-        $service->delete();
+    public function sermonServiceFilter(Service $service)
+    {
+        return $this->service->sermons;
     }
-    
+
+    public function deleteService(Service $service)
+    {
+        return $this->service->delete($category->slug);
+    }
 }

@@ -40,7 +40,7 @@ class EloquentCategory implements CategoryRepository
         $category -> name = $request->name;
         $category -> description = $request->description;
         $category ->save();
-        return response('success', 201);
+        return response()->json(['created' => true]);
     }
 
     public function update($slug, $request)
@@ -49,13 +49,13 @@ class EloquentCategory implements CategoryRepository
         $category -> name = $request-> name;
         $category -> description = $request-> description;
         $category -> save();
-        return response('success', 201);
+        return response()->json(['updated' => true]);
     }
 
     public function delete($slug)
     {
         $this->getBySlug($slug)->delete();
-        return true;
+        return response()->json(['deleted' => true]);
     }
 
     public function countAll()

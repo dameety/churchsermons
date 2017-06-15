@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Validator;
-use App\Service;
-use App\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Intervention\Image\ImageManagerStatic as Image;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Intervention\Image\ImageManagerStatic as Image;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Sermon extends Model implements HasMedia
 {

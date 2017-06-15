@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-
-
+use App\Repositories\Service\ServiceRepository;
 
 class ServicesController extends Controller
 {
-    public function servicesPage() {
+
+    protected $service;
+
+    public function __construct(ServiceRepository $service)
+    {
+        $this->service = $service;
+    }
+
+    public function servicesPage()
+    {
         return view('admin.services.services');
     }
 }

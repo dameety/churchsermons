@@ -91,7 +91,7 @@ class EloquentSermon implements SermonRepository
     {
         $this->getBySlug($slug)->delete();
         Storage::delete($filePath);
-        return true;
+        return response()->json(['deleted' => true]);
     }
 
     public function countAll()

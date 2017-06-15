@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use File;
+// use File;
 use Session;
 use Storage;
 use Redirect;
 use App\Setting;
-use App\Service;
-use App\Category;
 use App\Favourite;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\LastDownloadTimeEvent;
 use App\Http\Requests\SavesermonRequest;
 use App\Repositories\Sermon\SermonRepository;
+use App\Repositories\Service\ServiceRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
 
@@ -32,7 +31,8 @@ class SermonsController extends Controller
     public function __construct(
         SermonRepository $sermon,
         StagedsermonRepository $stagedsermon,
-        CategoryRepository $category
+        CategoryRepository $category,
+        ServiceRepository $sercice
     ) {
         $this->sermon = $sermon;
         $this->category = $category;
@@ -66,9 +66,8 @@ class SermonsController extends Controller
         } else {
             $this->sermon->create($request);
         }
-        // Category::countUp($request->category_id);
         $this->category->increaseSermonCount($request->category_id);
-        // Service::countUp($request->service_id);
+        $this->service->increaseSermonCount($request->category_id);
         // riderect to another page
     }
 
