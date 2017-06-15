@@ -4,77 +4,79 @@ namespace App\Http\Controllers\API;
 
 use App\User;
 use App\Admin;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
-
+use App\Repositories\User\UserRepository;
 
 class UsersApiController extends Controller
 {
 
-    public function index() {
-        return User::latest('created_at')->paginate(30);
+    protected $user;
+
+    public function __construct(UserRepository $user)
+    {
+        $this->user = $user;
     }
 
-    public function count () {
-        return User::all()->count();
+    public function index()
+    {
+        return $this->user->get30Paginated();
     }
 
-    public function userTypeFilter ($type) {
-        return User::where('permission', $type)->all();
+    public function count()
+    {
+        return $this->user->countAll();
     }
 
-    public function changePassword(Request $request, $slug) {
+    public function userTypeFilter($type)
+    {
+        return $this->user->typeFilter();
+    }
 
-        if(Admin::adminPermission()) {
-            $data = Input::all();
-            $user = User::whereSlug($slug)->first();
-            if($user->validate($data, 'passwordChange')) {
-                $user-> password = Hash::make($request-> password);
-                $user -> save();
-                return response('success', 201);     
-            } else {
-                return response($user->getErrors(), 422);
-            }
+    public function changePassword($slug, UserValidationRequest $request)
+    {
+        if (Admin::adminPermission()) {
+            return $this->user->changePassword($slug, $request);
         } else {
-            return response('Not a super admin', 422);
+            return response('password change', false);
+        }
+    }
+
+    public function saveNewUser(UserValidationRequest $request)
+    {
+        if (Admin::adminPermission()) {
+            return $this->user->create($request);
+        } else {
+            return response()->json('updated' => false);
         }
 
+        // if (Admin::adminPermission()) {
+        //     $data = Input::all();
+        //     $user = new User;
+        //     if ($user->validate($data, 'newUser')) {
+        //         $user -> name = $request-> name;
+        //         $user -> email = $request-> email;
+        //         $user -> permission = $request-> permission;
+        //         $user-> password = Hash::make($request-> password);
+        //         $user -> save();
+        //         return response('success', 201);
+        //     } else {
+        //         return response($user->getErrors(), 422);
+        //     }
+        // } else {
+        //     return response('Not a super admin', 422);
+        // }
     }
 
-    public function saveNewUser(Request $request) {
 
-        if(Admin::adminPermission()) {
-            $data = Input::all();
-            $user = new User;
-            if($user->validate($data, 'newUser')) {
-                $user -> name = $request-> name;
-                $user -> email = $request-> email;
-                $user -> permission = $request-> permission;
-                $user-> password = Hash::make($request-> password);
-                $user -> save();
-                return response('success', 201);     
-            } else {
-                return response($user->getErrors(), 422);
-            }
+    public function deleteUser(User $user)
+    {
+        if (Admin::adminPermisson()) {
+            return $this->user->delete();
         } else {
-            return response('Not a super admin', 422);
+            return response('deleted' => false);
         }
-
     }
-
-    
-    public function deleteUser(User $user) {
-
-        if(Admin::adminPermisson()) {
-            $user->delete();
-            return response('success', 200);
-        } else {
-            return response('Not a super admin', 422);
-        }
-
-    }
-
 }

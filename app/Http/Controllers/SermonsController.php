@@ -110,7 +110,6 @@ class SermonsController extends Controller
 
     public function downloadSermon($slug)
     {
-        //new code
         $sermonStatus = $this->sermon->getBySlug($slug)->status;
         $user = $this->user->checkPersmision($sermonStatus);
         if ($user) {
@@ -119,31 +118,6 @@ class SermonsController extends Controller
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
             return back();
         }
-
-        // // $sermon = Sermon::whereSlug($slug)->first();
-        // $user = Auth::user();
-        // $setting = Setting::first();
-
-        // if ($user ->permission === $setting->plan_name) {
-        //     event(new DownloadCountEvent($sermon));
-        //     event(new LastDownloadTimeEvent($sermon));
-        //     event(new LastDownloadByEvent($sermon));
-        //     $fname = $sermon->filename;
-        //     $title = $sermon->title;
-        //     $filePath = storage_path('app/'.$fname);
-        //     return response()->download($filePath, $title);
-        // } elseif ($user->permission === "Standard" && $sermon->status === "free") {
-        //     event(new DownloadCountEvent($sermon));
-        //     event(new LastDownloadTimeEvent($sermon));
-        //     event(new LastDownloadByEvent($sermon));
-        //     $fname = $sermon->filename;
-        //     $title = $sermon->title;
-        //     $filePath = storage_path('app/'.$fname);
-        //     return response()->download($filePath, $title);
-        // } else {
-        //     flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
-        //     return back();
-        // }
     }
 
     public function favouriteSermon2($slug)
@@ -172,35 +146,10 @@ class SermonsController extends Controller
 
     public function favouriteDownload($slug)
     {
-        //new code
-        // $user = $this->user->checkPersmision($slug);
-        // if($user) {
-        //     $this->sermon->download($slug);
-        // }
-
-        $user = Auth::user();
-        $setting = Setting::first();
-        $sermon = Sermon::whereSlug($slug)->first();
-
-        if ($user ->permission === $setting->plan_name) {
-            event(new DownloadCountEvent($sermon));
-            event(new LastDownloadTimeEvent($sermon));
-            event(new LastDownloadByEvent($sermon));
-
-            $fname = $sermon->filename;
-            $title = $sermon->title;
-            $filePath = storage_path('app/'.$fname);
-            return response()->download($filePath, $title);
-        } elseif ($user->permission === "Standard" && $sermon->status === "free") {
-            event(new DownloadCountEvent($sermon));
-            event(new LastDownloadTimeEvent($sermon));
-            event(new LastDownloadByEvent($sermon));
-
-            $fname = $sermon->filename;
-            $title = $sermon->title;
-            $filePath = storage_path('app/'.$fname);
-
-            return response()->download($filePath, $title);
+        $sermonStatus = $this->sermon->getBySlug($slug)->status;
+        $user = $this->user->checkPersmision($sermonStatus);
+        if ($user) {
+            return $this->sermon->download($slug);
         } else {
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
             return back();

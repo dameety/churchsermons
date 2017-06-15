@@ -35,8 +35,8 @@ class Admin extends Authenticatable
         'password' => 'required|min:8',
     );
 
-    public function validate($data, $key) {
-
+    public function validate($data, $key)
+    {
         if ($key === 'newAdmin') {
             $v = Validator::make($data, $this->newAdmin);
         } elseif ($key === 'passwordChange') {
@@ -44,13 +44,14 @@ class Admin extends Authenticatable
         }
 
         if ($v->fails()) {
-            $this->errors = $v->errors()->getMessages();;
+            $this->errors = $v->errors()->getMessages();
             return false;
         }
         return true;
     }
 
-    public function getErrors() {
+    public function getErrors()
+    {
         return $this->errors;
     }
 
@@ -63,13 +64,13 @@ class Admin extends Authenticatable
 
     ];
 
-
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new AdminResetPassword($token));
     }
 
-    public function sluggable() {
+    public function sluggable()
+    {
         return [
             'slug' => [
                 'source' => 'email'
@@ -82,20 +83,22 @@ class Admin extends Authenticatable
         return 'slug';
     }
 
-    public function getUpdatedAtAttribute($value) {
+    public function getUpdatedAtAttribute($value)
+    {
         return Carbon::parse($value)->format('d-m-Y');
     }
-    
-    public function getCreatedAtAttribute($value) {
+
+    public function getCreatedAtAttribute($value)
+    {
         return Carbon::parse($value)->format('d-m-Y');
     }
-    
-    public static function adminPermission () {
+
+    public static function adminPermission()
+    {
         $admin = Auth::guard('admin')->user();
-        if($admin->permission !== 'Super Admin') {
+        if ($admin->permission !== 'Super Admin') {
             return false;
         }
         return true;
     }
-
 }

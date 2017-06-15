@@ -2,63 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Setting;
-use Validator;
-use App\User;
-use Redirect;
-use Session;
-use Input;
-use Auth;
+// use App\Http\Requests;
 use DB;
+use Auth;
 use Hash;
-use Cartalyst\Stripe\Stripe;
-use Stripe\Error\Card;
+use Input;
+use Session;
+use Redirect;
+use App\User;
 use Exception;
-
-
+use Validator;
+use App\Setting;
+use Stripe\Error\Card;
+use Illuminate\Http\Request;
+use Cartalyst\Stripe\Stripe;
+use App\Repositories\User\UserRepository;
 
 class UsersController extends Controller
 {
-    
-    private $email;
     private $plan;
-    private $stripe; 
-    private $user_card_id;
-    private $setting;
     private $user;
+    private $email;
+    private $stripe;
+    private $setting;
+    private $user_card_id;
 
-    public function __construct( ) {
-
-        $setting = Setting::first();
+    public function __construct(UserRepository $user)
+    {
         $this->user = Auth::user();
-        $this->setting = Setting::first();
+        $setting = Setting::first();
         $this->plan = $setting->plan_id;
+        $this->setting = Setting::first();
         $this->stripe = new Stripe($setting->api_key);
-
     }
 
-    public function usersPage () {
+    public function usersPage()
+    {
         return view('admin.users.users');
-
     }
 
-    public function profile () {
+    public function profile()
+    {
         $user = Auth::user();
-        return view('frontend.pages.profile', compact('user'));       
+        return view('frontend.pages.profile', compact('user'));
     }
 
-
-    public function profileUpdate (Request $request) {
-
+    public function profileUpdate(Request $request)
+    {
         $this->validate($request, [
             'name' => 'required|string',
         ]);
 
-        $user = User::whereId(Auth::id())->first();            
+        $user = User::whereId(Auth::id())->first();
 
-        if ( $request->password !== null ) {    
+        if ($request->password !== null ) {
 
             $user->name = $request->name;
             $user->email = Auth::user()->email;
@@ -141,7 +138,7 @@ class UsersController extends Controller
         $user->subscription_id = $subscription;
         $user->subscriptionStatus = "active";
         $user->permission = $this->plan;
-        
+
         //notifiy admin or
         // use a loging package to log it
         // show the log to admin
@@ -185,10 +182,10 @@ class UsersController extends Controller
             $subscription = $this->createSubscription($customerId, $token);
 
             if (isset($subscription)) {
-                
+
                 // update the user database
                 $this->updateUserDetails($customerId, $subscription);
-  
+
                 flash('Successful Operation. Your account has been successfully upgraded. Enjoy.')->success()->important();
                 return back();
 
@@ -208,9 +205,9 @@ class UsersController extends Controller
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
             return back();
-        }        
+        }
 
-        
+
     } // END OF THE CONTROLLER
 
 
@@ -245,7 +242,7 @@ class UsersController extends Controller
 
                 flash('Successful Operation. Your subscription has been canceled.')->success()->important();
                 return back();
-                
+
             } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
                 Session::flash('cardError', $e->getMessage());
                 return back();
@@ -255,7 +252,7 @@ class UsersController extends Controller
             } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
                 Session::flash('serverError', $e->getMessage());
                 return back();
-            }     
+            }
 
         } else {
             flash('Unsuccessful Operation. Please choose yes to cancel your subscription.')->error()->important();
@@ -274,11 +271,11 @@ class UsersController extends Controller
         $stripe = new Stripe($setting->api_key);
 
         try {
-    
+
             // get the subscription and check if its still active
             $subscription = $stripe->subscriptions()->find($user->customer_id, $user->subscription_id);
             if( $subscription['status'] === "active" ) {
-                
+
                 $subscription = $stripe->subscriptions()->reactivate($user->customer_id, $user->subscription_id);
 
                 // upgrade user to plan
@@ -299,7 +296,7 @@ class UsersController extends Controller
                     ]);
                     // if created successfully...
                     if (isset($subscription['id'])) {
-                
+
                         // update the user database
                         $user = Auth::user();
                         $user->subscription_id = $subscription['id'];
@@ -318,7 +315,7 @@ class UsersController extends Controller
                     }
 
 
-                } else { // do this if $cardId is not set .. 
+                } else { // do this if $cardId is not set ..
                     return redirect(route('upgradeAccount'));
                 }
 
@@ -328,7 +325,7 @@ class UsersController extends Controller
 
             flash('Successful Operation. Your subscription has been reactivated. Enjoy.')->success()->important();
             return back();
-            
+
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -338,7 +335,7 @@ class UsersController extends Controller
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
             return back();
-        }     
+        }
 
 
     }
@@ -360,7 +357,7 @@ class UsersController extends Controller
         $stripe = new Stripe($setting->api_key);
 
         try {
-    
+
             $card = $stripe->cards()->update($user->customer_id, $id, [
                 'exp_year' => $request->exp_year,
                 'exp_month' => $request->exp_month,
@@ -369,7 +366,7 @@ class UsersController extends Controller
 
             flash('Successful Operation. Your card details has been updated.')->success()->important();
             return back();
-            
+
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -379,7 +376,7 @@ class UsersController extends Controller
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
             return back();
-        }     
+        }
 
     }
 
@@ -388,17 +385,17 @@ class UsersController extends Controller
 
 
         $user = Auth::user();
-        $setting = Setting::first();      
+        $setting = Setting::first();
 
         $stripe = new Stripe($setting->api_key);
 
         try {
-    
+
             $card = $stripe->cards()->delete($user->customer_id, $id);
 
             flash('Successful Operation. Your card has been deleted.')->success()->important();
             return back();
-            
+
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -408,7 +405,7 @@ class UsersController extends Controller
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
             return back();
-        }     
+        }
 
     }
 
@@ -423,7 +420,7 @@ class UsersController extends Controller
             'cvc' => 'required|digits:3',
         ]);
 
-        
+
         //get stripe key from settings
         $setting = Setting::first();
         $stripe = new Stripe($setting->api_key);
@@ -454,7 +451,7 @@ class UsersController extends Controller
                 flash('Successful Operation. Your card has been added.')->success()->important();
                 return back();
             }
-            
+
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -464,7 +461,7 @@ class UsersController extends Controller
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
             return back();
-        }    
+        }
 
 
     }

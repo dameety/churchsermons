@@ -24,11 +24,9 @@ class SavesermonRequest extends FormRequest
     public function rules()
     {
         return [
-
             'title' => 'required|max:40',
             'preacher' => 'required|max:30',
             'sermonImage' => 'file|image',
-
         ];
     }
 }
