@@ -5,7 +5,7 @@ Route::get('/home', 'AdminsController@home')->name('home');
 
 // all sermon routes below
 Route::get('/sermons', 'SermonsController@allSermonsPage')->name('allsermons_path');
-Route::get('/sermon/upload', 'SermonsController@uploadPage');
+Route::get('/sermon/upload', 'SermonsController@uploadPage')->name('uploadPage');
 Route::get('/sermon/{slug}/new', 'SermonsController@newSermonForm');
 Route::post('/sermon/new', 'SermonsController@saveNewSermon');
 Route::get('/sermon/{slug}/edit', 'SermonsController@editSermonPage');

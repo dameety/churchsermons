@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-// use File;
 // use Redirect;
 use App\Sermon; ///
-// use App\Service;
-// use App\Category;
 use App\Models\Stagedsermon; ///
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -19,19 +19,18 @@ class AppServiceProvider extends ServiceProvider
         // View::share('setting', $settings);
 
         //composers for the filter
-        view()->composer('frontend.partials.filters-desktop', function ($view) {
-            $view->with('services', \App\Sermon::sermonServiceFilters());
-        });
-        view()->composer('frontend.partials.filters-desktop', function ($view) {
-            $view->with('categories', \App\Sermon::sermonCategoryFilters());
-        });
-        view()->composer('frontend.partials.filters', function ($view) {
-            $view->with('services', \App\Sermon::sermonServiceFilters());
-        });
-        view()->composer('frontend.partials.filters', function ($view) {
-            $view->with('categories', \App\Sermon::sermonCategoryFilters());
-        });
-
+        // view()->composer('frontend.partials.filters-desktop', function ($view) {
+        //     $view->with('services', \App\Sermon::sermonServiceFilters());
+        // });
+        // view()->composer('frontend.partials.filters-desktop', function ($view) {
+        //     $view->with('categories', \App\Sermon::sermonCategoryFilters());
+        // });
+        // view()->composer('frontend.partials.filters', function ($view) {
+        //     $view->with('services', \App\Sermon::sermonServiceFilters());
+        // });
+        // view()->composer('frontend.partials.filters', function ($view) {
+        //     $view->with('categories', \App\Sermon::sermonCategoryFilters());
+        // });
     }
 
     /**

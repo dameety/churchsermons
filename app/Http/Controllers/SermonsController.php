@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 // use File;
-use Session;
-use Storage;
+// use Session;
+// use Storage;
 use Redirect;
 use App\Setting;
 use App\Favourite;
@@ -23,22 +23,20 @@ use App\Repositories\Stagedsermon\StagedsermonRepository;
 class SermonsController extends Controller
 {
     private $sermon;
-    private $services;
+    private $service;
     private $category;
-    private $categories;
     private $stagedsermon;
 
     public function __construct(
         SermonRepository $sermon,
-        StagedsermonRepository $stagedsermon,
+        ServiceRepository $service,
         CategoryRepository $category,
-        ServiceRepository $sercice
+        StagedsermonRepository $stagedsermon
     ) {
         $this->sermon = $sermon;
+        $this->service = $service;
         $this->category = $category;
         $this->stagedsermon = $stagedsermon;
-        $this->services = Service::latest('created_at')->get();
-        $this->categories = Category::latest('created_at')->get();
     }
 
     public function allSermonsPage()
@@ -53,10 +51,8 @@ class SermonsController extends Controller
 
     public function newSermonForm($slug)
     {
-        $services = $this->services;
-        $categories = $this->categories;
         $title = str_replace("-mp3", "", $slug);
-        return view('admin.sermons.newsermon', compact('slug', 'title', 'categories', 'services'));
+        return view('admin.sermons.newsermon', compact('slug', 'title'));
     }
 
     public function saveNewSermon(SavesermonRequest $request)
@@ -68,62 +64,24 @@ class SermonsController extends Controller
         }
         $this->category->increaseSermonCount($request->category_id);
         $this->service->increaseSermonCount($request->category_id);
-        // riderect to another page
+        return redirect('uploadPage')->with('status', 'Sermon has been saved successfully');
     }
 
     public function editSermonPage($slug)
     {
-        $categories = $this->categories;
-        $services = $this->services;
         $sermon = $this->sermon->getBySlug($slug);
-        return view('admin.sermons.edit', compact('sermon', 'categories', 'services'));
+        return view('admin.sermons.edit', compact('sermon'));
     }
 
-    public function updateSermon($slug, Request $request)
+    public function updateSermon($slug, SavesermonRequest $request)
     {
-
-        $data = Input::all();
-        // $sermon = Sermon::whereSlug($slug)->first();
-        $sermon = $this->sermon->getBySlug($slug);
-
-        if ($sermon->validate($data)) {
-            if (Input::hasFile('sermonImage')) {
-                $sermon -> title = $request-> title;
-                $sermon -> preacher = $request-> preacher;
-                $sermon -> service_id = (int)($request -> service_id);
-                $sermon -> category_id = (int)($request -> category_id);
-                $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
-                $sermon -> status = $request-> status;
-                $sermon -> size = $request -> size;
-                $sermon -> type = $request -> type;
-                $sermon -> filename = $request -> filename;
-                $sermon -> removeMediaFromSermon();
-                $sermon -> addMediaToSermon(Sermon::saveSermonImage($request));
-                $sermon -> save();
-                $this->sermon->addImageUrlToUpdatedSermon($sermon->slug);
-                flash('Update operation successful.')->success();
-                return back();
-            } else {
-                $sermon -> title = $request-> title;
-                $sermon -> preacher = $request-> preacher;
-                $sermon -> service_id = (int)($request -> service_id);
-                $sermon -> category_id = (int)($request -> category_id);
-                $sermon -> datepreached = date('Y-m-d', strtotime($request-> datepreached));
-                $sermon -> status = $request-> status;
-                $sermon -> size = $request -> size;
-                $sermon -> type = $request -> type;
-                $sermon -> filename = $request -> filename;
-                $sermon -> removeMediaFromSermon();
-                $sermon -> imageurl = '/uploads/default.jpg';
-                $sermon -> save();
-                flash('Update operation successful.')->success();
-                return back();
-            }
+        if (request()->file('sermonImage')) {
+            $this->sermon->update($slug, $request);
         } else {
-            // $errors = $sermon->getErrors();
-            $errors = $sermon->getErrors();
-            return back()->withErrors($errors)->withInput();
+            $this->sermon->updateWithDefaultImage($slug, $request);
         }
+        flash('Update operation successful.')->success();
+        return back();
     }
 
     public function allSermons()
@@ -134,56 +92,58 @@ class SermonsController extends Controller
 
     public function getCategory($slug)
     {
-
-        $category = Category::whereSlug($slug)->first();
-        $sermons = Sermon::whereId($category->id)->paginate(10); //
         $sermonCount = $this->sermon->countAll();
+        $category = $this->category->getBySlug($slug);
+        $sermons = $this->sermon->getByIdAndPaginate($id);
         $key = "category";
         return view('frontend.sermons', compact('sermons', 'sermonCount', 'key', 'slug'));
     }
 
     public function getService($slug)
     {
-        $service = Service::whereSlug($slug)->first();
-        $sermons = Sermon::whereId($service->id)->paginate(10); //
         $sermonCount = $this->sermon->countAll();
+        $service = $this->service->getBySlug($slug);
+        $sermons = $this->sermon->getByIdAndPaginate($id);
         $key = "service";
-
         return view('frontend.sermons', compact('sermons', 'sermonCount', 'key', 'slug'));
     }
 
     public function downloadSermon($slug)
     {
         //new code
-        // $user = $this->user->checkPersmision($slug);
-        // if($user) {
-        //     $this->sermon->download($slug);
-        // }
-
-        $sermon = Sermon::whereSlug($slug)->first();
-        $user = Auth::user();
-        $setting = Setting::first();
-
-        if ($user ->permission === $setting->plan_name) {
-            event(new DownloadCountEvent($sermon));
-            event(new LastDownloadTimeEvent($sermon));
-            event(new LastDownloadByEvent($sermon));
-            $fname = $sermon->filename;
-            $title = $sermon->title;
-            $filePath = storage_path('app/'.$fname);
-            return response()->download($filePath, $title);
-        } elseif ($user->permission === "Standard" && $sermon->status === "free") {
-            event(new DownloadCountEvent($sermon));
-            event(new LastDownloadTimeEvent($sermon));
-            event(new LastDownloadByEvent($sermon));
-            $fname = $sermon->filename;
-            $title = $sermon->title;
-            $filePath = storage_path('app/'.$fname);
-            return response()->download($filePath, $title);
+        $sermonStatus = $this->sermon->getBySlug($slug)->status;
+        $user = $this->user->checkPersmision($sermonStatus);
+        if ($user) {
+            return $this->sermon->download($slug);
         } else {
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
             return back();
         }
+
+        // // $sermon = Sermon::whereSlug($slug)->first();
+        // $user = Auth::user();
+        // $setting = Setting::first();
+
+        // if ($user ->permission === $setting->plan_name) {
+        //     event(new DownloadCountEvent($sermon));
+        //     event(new LastDownloadTimeEvent($sermon));
+        //     event(new LastDownloadByEvent($sermon));
+        //     $fname = $sermon->filename;
+        //     $title = $sermon->title;
+        //     $filePath = storage_path('app/'.$fname);
+        //     return response()->download($filePath, $title);
+        // } elseif ($user->permission === "Standard" && $sermon->status === "free") {
+        //     event(new DownloadCountEvent($sermon));
+        //     event(new LastDownloadTimeEvent($sermon));
+        //     event(new LastDownloadByEvent($sermon));
+        //     $fname = $sermon->filename;
+        //     $title = $sermon->title;
+        //     $filePath = storage_path('app/'.$fname);
+        //     return response()->download($filePath, $title);
+        // } else {
+        //     flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
+        //     return back();
+        // }
     }
 
     public function favouriteSermon2($slug)

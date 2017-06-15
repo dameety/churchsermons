@@ -14,6 +14,8 @@ interface SermonRepository
 
     public function create($request);
 
+    public function getByIdAndPaginate($id);
+
     public function createUseDefaultImage($request);
 
     public function update($slug, $request);
