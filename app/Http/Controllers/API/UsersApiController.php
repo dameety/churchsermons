@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\User;
-use App\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Admin\AdminRepository;
+use App\Http\Requests\UserValidationRequest;
 
 class UsersApiController extends Controller
 {
 
     protected $user;
+    protected $admin;
 
-    public function __construct(UserRepository $user)
+    public function __construct(UserRepository $user, AdminRepository $admin)
     {
         $this->user = $user;
+        $this->admin = $admin;
     }
 
     public function index()
@@ -37,46 +37,29 @@ class UsersApiController extends Controller
 
     public function changePassword($slug, UserValidationRequest $request)
     {
-        if (Admin::adminPermission()) {
+        if ($this->admin->adminPermisson()) {
             return $this->user->changePassword($slug, $request);
         } else {
-            return response('password change', false);
+            return response()->json(['passwor changed' => false]);
         }
     }
 
     public function saveNewUser(UserValidationRequest $request)
     {
-        if (Admin::adminPermission()) {
+        if ($this->admin->adminPermisson()) {
             return $this->user->create($request);
         } else {
-            return response()->json('updated' => false);
+            return response()->json(['created' => false]);
         }
-
-        // if (Admin::adminPermission()) {
-        //     $data = Input::all();
-        //     $user = new User;
-        //     if ($user->validate($data, 'newUser')) {
-        //         $user -> name = $request-> name;
-        //         $user -> email = $request-> email;
-        //         $user -> permission = $request-> permission;
-        //         $user-> password = Hash::make($request-> password);
-        //         $user -> save();
-        //         return response('success', 201);
-        //     } else {
-        //         return response($user->getErrors(), 422);
-        //     }
-        // } else {
-        //     return response('Not a super admin', 422);
-        // }
     }
 
 
     public function deleteUser(User $user)
     {
-        if (Admin::adminPermisson()) {
+        if ($this->admin->adminPermisson()) {
             return $this->user->delete();
         } else {
-            return response('deleted' => false);
+            return response()->json(['deleted' => false]);
         }
     }
 }

@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Requests;
-use DB;
-use Auth;
-use Hash;
-use Input;
 use Session;
 use Redirect;
-use App\User;
 use Exception;
-use Validator;
 use App\Setting;
+use App\Models\User;
 use Stripe\Error\Card;
 use Illuminate\Http\Request;
 use Cartalyst\Stripe\Stripe;
@@ -29,7 +23,8 @@ class UsersController extends Controller
 
     public function __construct(UserRepository $user)
     {
-        $this->user = Auth::user();
+        // $this->user = Auth::user();
+        $this->user = $user;
         $setting = Setting::first();
         $this->plan = $setting->plan_id;
         $this->setting = Setting::first();
@@ -43,7 +38,7 @@ class UsersController extends Controller
 
     public function profile()
     {
-        $user = Auth::user();
+        $user = $this->user->authUser;
         return view('frontend.pages.profile', compact('user'));
     }
 
@@ -55,44 +50,39 @@ class UsersController extends Controller
 
         $user = User::whereId(Auth::id())->first();
 
-        if ($request->password !== null ) {
-
+        if ($request->password !== null) {
             $user->name = $request->name;
             $user->email = Auth::user()->email;
             $user->password = Hash::make($request->password);
             $user->save();
             flash('Your profile has been updated successfully.');
             return back();
-
-        } else if ( $request->password === null ) {
-
+        } elseif ($request->password === null) {
             $user->name = $request->name;
             $user->email = Auth::user()->email;
             $user->save();
             flash('Your profile has been updated successfully.');
             return back();
-
         }
-
     }
 
-    public function getUserCards () {
-
+    public function getUserCards()
+    {
         $cards = User::getUserCards();
-        if( $cards === "" || $cards === null ) {
+        if ($cards === "" || $cards === null) {
             return view('frontend.pages.nocard');
         } else {
             return view('frontend.pages.listcards', compact('cards'));
         }
-
     }
 
-    public function getSubscription () {
+    public function getSubscription()
+    {
         return view('frontend.pages.subscription');
     }
 
-    public function createTokenFromCard ( $request ) {
-
+    public function createTokenFromCard($request)
+    {
         $token = $this->stripe->tokens()->create([
             'card' => [
 
@@ -105,11 +95,11 @@ class UsersController extends Controller
         ]);
         $this->user_card_id = $token['card']['id'];
         return $token['id'];
-
     }
 
 
-    public function createACustomer () {
+    public function createACustomer()
+    {
         $user = Auth::user();
         $customer = $this->stripe->customers()->create([
             'email' => $user->email,
@@ -119,8 +109,8 @@ class UsersController extends Controller
     }
 
 
-    public function createSubscription ($customerId, $token) {
-
+    public function createSubscription($customerId, $token)
+    {
         $subscription = $this->stripe->subscriptions()->create($customerId, [
             'plan' => $this->plan,
             'card' => $token
@@ -130,30 +120,24 @@ class UsersController extends Controller
     }
 
 
-    public function updateUserDetails ($customerId, $subscription) {
-
+    public function updateUserDetails($customerId, $subscription)
+    {
         $user = Auth::user();
         $user->card_id = $this->user_card_id;
         $user->customer_id = $customerId;
         $user->subscription_id = $subscription;
         $user->subscriptionStatus = "active";
         $user->permission = $this->plan;
-
-        //notifiy admin or
-        // use a loging package to log it
-        // show the log to admin
         $user->save();
-
     }
 
-
-    public function upgradeAccount () {
+    public function upgradeAccount()
+    {
         return view('frontend.payment.form');
     }
 
-
-    public function upgradeAction (Request $request) {
-
+    public function upgradeAction(Request $request)
+    {
         $this->validate($request, [
             'cardNumber' => 'required',
             'expiryMonth' => 'required|numeric',
@@ -182,20 +166,15 @@ class UsersController extends Controller
             $subscription = $this->createSubscription($customerId, $token);
 
             if (isset($subscription)) {
-
                 // update the user database
                 $this->updateUserDetails($customerId, $subscription);
 
                 flash('Successful Operation. Your account has been successfully upgraded. Enjoy.')->success()->important();
                 return back();
-
             } else {
-
                 flash('Unsuccessful Operation. There was an issue upgrading your account. Please try again.')->error()->important();
                 return back();
-
             }
-
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -206,13 +185,9 @@ class UsersController extends Controller
             Session::flash('serverError', $e->getMessage());
             return back();
         }
-
-
     } // END OF THE CONTROLLER
 
-
-    public function cancelSubscription (Request $request) {
-
+    public function cancelSubscription(Request $request) {
         $user = Auth::user();
         $setting = Setting::first();
         // validate user input
