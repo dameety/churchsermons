@@ -27,7 +27,7 @@ class EloquentSetting implements SettingRepository
         return $this->setting->findBySlug($slug);
     }
 
-    public function updateEmailContent($slug, $request)
+    public function emailContent($slug, $request)
     {
         $setting = $this->getBySlug($slug);
         $setting -> welcomeEmailHeading = $request-> welcomeEmailHeading;
@@ -73,7 +73,17 @@ class EloquentSetting implements SettingRepository
         return response()->json(['status', 200]);
     }
 
-    public function bannerUpload($slug, $request)
+    public function sliderIsLessThan5()
+    {
+        $images = $this->setting->getMedia('slider_image')->count();
+        if ($images < 5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function bannerUpload($request)
     {
         $folder = $this->setting->createUploadsFolder();
         $imgFile = request()->file('file');
@@ -84,7 +94,7 @@ class EloquentSetting implements SettingRepository
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
-                ->save(public_path($folder) . $fileName);
+                ->save($folder . $fileName);
 
             $this->setting->addMedia($file)
                 ->usingName(public_path($folder) . $fileName)
