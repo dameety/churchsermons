@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -67,9 +67,8 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function logoutToPath() {
+    public function logoutToPath()
+    {
         return '/admin/login';
     }
-
-
 }

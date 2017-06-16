@@ -2,82 +2,64 @@
 
 namespace App\Http\Controllers\API;
 
-use DB;
-use App\Admin;
-use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-
+use App\Repositories\Admin\AdminRepository;
+use App\Http\Requests\AdminValidationRequest;
 
 class AdminsApiController extends Controller
 {
+    private $admin;
 
-    public function currentAdmin () {
-        $admin = Auth::guard('admin')->user();
-        return $admin->permission;
+    public function __construct(AdminRepository $admin)
+    {
+        $this->admin = $admin;
     }
 
-    public function index() {
-        return Admin::latest('created_at')->paginate(30);
+    public function currentAdmin()
+    {
+        return $this->admin->authAdmin();
     }
 
-    public function count () {
-        return Admin::all()->count();
+    public function index()
+    {
+        return $this->admin->get30Paginated();
     }
 
-    public function adminTypeFilter ($type) {
-        $admin = Admin::where('permission', $type)->all();
+    public function count()
+    {
+        return $this->admin->countAll();
     }
 
-    public function changePassword(Request $request, $slug) {
-        
-        if(Admin::adminPermission()) {
-            $data = Input::all();
-            $admin = Admin::whereSlug($slug)->first();
-            if($admin->validate($data, 'passwordChange')) {
-                $admin-> password = Hash::make($request-> password);
-                $admin -> save();
-                return response('success', 201);     
-            } else {
-                return response($user->getErrors(), 422);
-            }
+    public function adminTypeFilter($type)
+    {
+        return $this->admin->typeFilter($type);
+    }
+
+    public function changePassword($slug, AdminValidationRequest $request)
+    {
+        if ($this->admin->adminPermisson()) {
+            return $this->admin->changePassword($slug, $request);
         } else {
-            return response('Not a super admin', 422);
-        }
-
-    }
-
-    public function saveNewAdmin(Request $request) {
-        if(Admin::adminPermission()) {
-            $data = Input::all();
-            $admin = new Admin;
-            if($admin->validate($data, 'newAdmin')) {
-                $admin -> name = $request-> name;
-                $admin -> email = $request-> email;
-                $admin -> permission = $request-> permission;
-                $admin-> password = Hash::make($request-> password);
-                $admin -> save();
-                return response('success', 201);     
-            } else {
-                return response($user->getErrors(), 422);
-            }
-        } else {
-            return response('Not a super admin', 422);
-        }
-
-    }
-
-
-    public function deleteAdmin(Admin $admin) {
-        if(Admin::adminPermission()) {
-            $admin->delete();
-            return response('success', 200);
-        } else {
-            return response('Not a super admin', 422);
+            return response()->json(['password changed' => false]);
         }
     }
 
+    public function saveNewAdmin(Request $request)
+    {
+        if ($this->admin->adminPermisson()) {
+            return $this->admin->create($request);
+        } else {
+            return response()->json(['created' => false]);
+        }
+    }
+
+    public function deleteAdmin(Admin $admin)
+    {
+        if ($this->admin->adminPermisson()) {
+            return $this->admin->delete();
+        } else {
+            return response()->json(['deleted' => false]);
+        }
+    }
 }
