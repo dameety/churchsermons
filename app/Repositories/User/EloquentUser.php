@@ -3,6 +3,7 @@
 namespace App\Repositories\User;
 
 use Auth;
+use App\Models\User;
 use App\Repositories\User\UserRepository;
 
 class EloquentUser implements UserRepository
@@ -18,17 +19,17 @@ class EloquentUser implements UserRepository
 
     public function getAll()
     {
-        return $this->sermon->all();
+        return $this->user->all();
     }
 
     public function get30Paginated()
     {
-        return $this->sermon->latest('created_at')->paginate(30);
+        return $this->user->latest('created_at')->paginate(30);
     }
 
     public function getBySlug($slug)
     {
-        return $this->sermon->findBySlug($slug);
+        return $this->user->findBySlug($slug);
     }
 
     public function create($request)
@@ -38,9 +39,8 @@ class EloquentUser implements UserRepository
         $user -> email = $request-> email;
         $user -> permission = $request-> permission;
         $user-> password = bcrypt($request-> password);
-        // $user-> password = Hash::make($request-> password);
         $user -> save();
-        return response()->json('success' => 201);
+        return response()->json(['success' => 201]);
     }
 
     public function authUser()
@@ -55,10 +55,9 @@ class EloquentUser implements UserRepository
     public function changePassword($slug, $request)
     {
         $user = $this->user->getBySlug($slug);
-        // $user -> password = Hash::make($request-> password);
         $user -> password = bcrypt($request->password);
         $user -> save();
-        return response()->json('password change' => true);
+        return response()->json(['password change' => true]);
     }
 
     public function delete($slug)

@@ -11,7 +11,6 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-
 class Setting extends Model implements HasMediaConversions
 {
     use Sluggable;
@@ -19,7 +18,7 @@ class Setting extends Model implements HasMediaConversions
     use SluggableScopeHelpers;
 
     private $errors;
-    
+
     private $stripeKey = array(
         'api_key' => 'required',
     );
@@ -72,7 +71,7 @@ class Setting extends Model implements HasMediaConversions
         }
 
         if ($v->fails()) {
-            $this->errors = $v->errors()->getMessages();;
+            $this->errors = $v->errors()->getMessages();
             return false;
         }
         return true;
@@ -91,7 +90,7 @@ class Setting extends Model implements HasMediaConversions
     {
         return 'slug';
     }
-    
+
     public function sluggable()
     {
         return [
@@ -101,7 +100,8 @@ class Setting extends Model implements HasMediaConversions
         ];
     }
 
-    public function getApiKeyAttribute($value) {
+    public function sgetApiKeyAttribute($value)
+    {
         return Crypt::decryptString($value);
     }
 
@@ -114,6 +114,4 @@ class Setting extends Model implements HasMediaConversions
             ->height(150)
             ->keepOriginalImageFormat();
     }
-    
-
 }

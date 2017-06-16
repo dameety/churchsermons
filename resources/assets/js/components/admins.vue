@@ -5,16 +5,15 @@
         <div class="breadcrumb">
 
             <li><span class="breadcrumb-item uk-badge"> &nbsp; TOTAL ADMINS: {{admins.length}} &nbsp;</span></li>
-            <li> <button class="newButton breadcrumb-item uk-button uk-button-primary uk-button-small uk-button-disabled">TOTAL ADMINS: {{admins.length}}</button></li>
             <li> <button class="newButton breadcrumb-item uk-button uk-button-primary uk-button-small" @click="newAdminForm = true">Add New Admin</button></li>
 
             <!-- right top pagination-->
-            <li id="pagination" class="breadcrumb-menu hidden-md-down">   
+            <li id="pagination" class="breadcrumb-menu hidden-md-down">
                 <button class="btn btn-default btn-sm" @click="fetchAdmins(pagination.prev_page_url)"
                         :disabled="!pagination.prev_page_url">
                     Previous
-                </button> &nbsp; 
-                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                </button> &nbsp;
+                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                 <button class="btn btn-default btn-sm" @click="fetchAdmins(pagination.next_page_url)"
                         :disabled="!pagination.next_page_url">Next
                 </button>
@@ -23,14 +22,14 @@
 
 
         <div class="container-fluid">
-            <div class="animated fadeIn">  
+            <div class="animated fadeIn">
 
         		<!-- new admin form -->
                 <div id="newAdminForm" class="col-lg-12 uk-animation-slide-top-medium" v-show="newAdminForm">
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-edit"></i>  Please fill in the new admin details below
-                            
+
                             <div class="card-actions">
                                 <a class="pull-right" style="color:#FC0000;" uk-icon="icon: close; ratio: 1.2" @click="newAdminForm = false"></a>
                             </div>
@@ -51,7 +50,7 @@
                                     <label for="Permission">Permission</label>
                                     <select v-model="newAdmin.permission" name="permission" class="form-control">
                                         <option>Standard Admin</option>
-                                        <option>Super Admin</option>                        
+                                        <option>Super Admin</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -73,17 +72,17 @@
                 <!-- search inputs -->
                 <div class="card-block" v-show="!newAdminForm">
                     <div id="searchForm" class="col-lg-12 uk-animation-slide-top-medium">
-                        <div class="card">    
+                        <div class="card">
                             <div class="row card-header">
                                 <div class="col-sm-5">
-                                    <label for="Filter by Admin Type">Filter by Admin Type</label> 
+                                    <label for="Filter by Admin Type">Filter by Admin Type</label>
                                     <select class="form-control input-sm" v-model="adminTypeSelected" @change="adminTypeFilter(adminTypeSelected)">
                                         <option>Standard Admin</option>
-                                        <option>Super Admin</option>              
+                                        <option>Super Admin</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-7">
-                                    <label for="Search">Search</label> 
+                                    <label for="Search">Search</label>
                                     <input type="text" class="form-control input-sm" v-model="searchWord">
                                 </div>
                             </div>
@@ -111,8 +110,8 @@
                                 <tr class="uk-card uk-card-hover">
                                     <td> {{ admin.name }} </td>
                                     <td> {{ admin.email }} </td>
-                                    <td> 
-                                        {{ admin.permission }} 
+                                    <td>
+                                        {{ admin.permission }}
                                     </td>
                                     <td>
                                         <div class="pull-right">
@@ -134,8 +133,8 @@
                             <button class="btn btn-default btn-sm" @click="fetchAdmins(pagination.prev_page_url)"
                                     :disabled="!pagination.prev_page_url">
                                 Previous
-                            </button> &nbsp; 
-                            <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                            </button> &nbsp;
+                            <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                             <button class="btn btn-default btn-sm" @click="fetchAdmins(pagination.next_page_url)"
                                     :disabled="!pagination.next_page_url">Next
                             </button>
@@ -143,7 +142,7 @@
                     </div>
                 </div>
                 <!-- END OF ALL SERMONS -->
-            
+
 
                 <!-- admin details modal -->
                 <div id="adminDetailsModal" uk-modal>
@@ -153,7 +152,7 @@
                             <h2 class="uk-modal-title">Admin Details</h2>
                         </div>
                         <div class="uk-modal-body" uk-overflow-auto>
-                            
+
                             <div class="row modalRowTop">
                                 <div class="col-md-4">
                                     <strong class="pull-right">Name:</strong>
@@ -261,7 +260,7 @@
 		data: function() {
             return {
 
-                // toggleButton: 
+                // toggleButton:
                 currentAdminPermission: "",
                 admins: [],
                 oneAdmin: {},
@@ -299,7 +298,7 @@
         },
 
         methods: {
-            
+
             fetchCurrentAdmin: function () {
                 this.$http.get('/admin/admin/api/current').then((response) => {
                     this.currentAdminPermission = response.data;
@@ -409,7 +408,7 @@
                         this.formErrors = errors.response.data;
                     });
                 }
-            	
+
             },
 
             deleteAdmin: function(admin) {
@@ -442,7 +441,7 @@
                     });
 
                 }
-            	
+
             },
 
         }
@@ -453,5 +452,5 @@
 <style>
     .inputError {
         color: red;
-    }    
+    }
 </style>

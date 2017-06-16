@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Auth;
-use Validator;
 use Exception;
 use App\Setting;
 use Carbon\Carbon;

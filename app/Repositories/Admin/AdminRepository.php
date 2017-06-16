@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App\Repositories\Admin;
 
-interface UserRepository
+interface AdminRepository
 {
     public function getAll();
 
     public function countAll();
 
-    public function authUser();
+    public function authAdmin();
 
     public function getBySlug($slug);
 
