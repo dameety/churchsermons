@@ -35,7 +35,7 @@ class AdminSettingsApiController extends Controller
 
     public function updateWelcomeEmail($slug, SettingValidationRequest $request)
     {
-        return $this->setting->updateEmailContent($slug, $request);
+        return $this->setting->emailContent($slug, $request);
     }
 
     public function saveStripeKey($slug, SettingValidationRequest $request)
@@ -68,11 +68,10 @@ class AdminSettingsApiController extends Controller
         return $this->setting->churchName($slug, $request);
     }
 
-    public function sliderImageUpload($slug, SettingValidationRequest $request)
+    public function sliderImageUpload(Request $request)
     {
-        $homeImages = $this->setting->getMedia('slider_image')->count();
-        if ($homeImages < 5) {
-            return $this->setting->bannerUpload($slug, $request);
+        if ($this->setting->sliderIsLessThan5()) {
+            return $this->setting->bannerUpload($request);
         } else {
             return response('The slider can take only 5 images', 422);
         }
