@@ -13,8 +13,8 @@ use App\Repositories\Stagedsermon\StagedsermonRepository;
 class SermonsApiController extends Controller
 {
 
-    private $sermon;
-    private $stagedsermon;
+    protected $sermon;
+    protected $stagedsermon;
 
     public function __construct(SermonRepository $sermon, StagedsermonRepository $stagedsermon)
     {

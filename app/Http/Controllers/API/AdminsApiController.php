@@ -9,7 +9,7 @@ use App\Http\Requests\AdminValidationRequest;
 
 class AdminsApiController extends Controller
 {
-    private $admin;
+    protected $admin;
 
     public function __construct(AdminRepository $admin)
     {
