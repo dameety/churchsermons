@@ -11,7 +11,7 @@ use App\Http\Requests\ServiceValidationRequest;
 class ServicesApiController extends Controller
 {
 
-    private $service;
+    protected $service;
 
     public function __construct(ServiceRepository $service)
     {

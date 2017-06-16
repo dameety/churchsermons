@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-// use File;
-// use Session;
-// use Storage;
 use Redirect;
-use App\Setting;
 use App\Favourite;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Events\DownloadCountEvent;
 use App\Events\LastDownloadByEvent;
@@ -122,7 +117,7 @@ class SermonsController extends Controller
 
     public function favouriteSermon2($slug)
     {
-        $sermon = Sermon::whereSlug($slug)->first();
+        $sermon = $this->sermon->getBySlug($slug);
         Auth::user()->favourites()->attach($sermon->id);
         flash('Successful Operation. The sermon has been added to your favourites list.')->success()->important();
         return back();

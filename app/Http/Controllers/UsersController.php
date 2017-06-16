@@ -14,12 +14,12 @@ use App\Repositories\User\UserRepository;
 
 class UsersController extends Controller
 {
-    private $plan;
-    private $user;
-    private $email;
-    private $stripe;
-    private $setting;
-    private $user_card_id;
+    protected $plan;
+    protected $user;
+    protected $email;
+    protected $stripe;
+    protected $setting;
+    protected $user_card_id;
 
     public function __construct(UserRepository $user)
     {

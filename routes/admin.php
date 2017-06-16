@@ -56,7 +56,6 @@ Route::group(['namespace' => 'API'], function () {
 
 
 
-
     Route::get('sermon/api', 'SermonsApiController@index');
     Route::get('sermon/api/count', 'SermonsApiController@count');
     Route::get('sermon/api/service', 'ServicesApiController@fetchServices');
@@ -76,7 +75,6 @@ Route::group(['namespace' => 'API'], function () {
 
 
 
-
     /*all users*/
     Route::get('user/api/', 'UsersApiController@index');
     Route::get('user/api/count', 'UsersApiController@count');
@@ -84,7 +82,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::patch('user/api/password/change/{slug}', 'UsersApiController@changePassword');
     Route::delete('user/api/delete/{user}', 'UsersApiController@deleteUser');
     Route::get('user/api/type/{type}', 'UsersApiController@userTypeFilter');
-
 
 
 
@@ -97,7 +94,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('admin/api/new', 'AdminsApiController@saveNewAdmin');
     Route::get('admin/api/type/{type}', 'AdminsApiController@adminTypeFilter');
     Route::get('admin/api/current', 'AdminsApiController@currentAdmin');
-
 
 
 
@@ -114,7 +110,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/setting/api/slider', 'AdminSettingsApiController@getSliderImages');
     Route::post('/setting/api/slider/upload', 'AdminSettingsApiController@sliderImageUpload');
     Route::post('setting/api/slider/remove', 'AdminSettingsApiController@deleteSliderImage');
-
 
 
     // FOR STAGED SERMONS during upload process

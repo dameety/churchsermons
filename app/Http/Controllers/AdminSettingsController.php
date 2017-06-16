@@ -3,21 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Setting;
-
-
+use App\Repositories\Setting\SettingRepository;
 
 class AdminSettingsController extends Controller
 {
 
-    public function index() {
-        $setting = Setting::first();
+    protected $setting;
+
+    public function __construct(SettingRepository $setting)
+    {
+        $this->setting = $setting;
+    }
+
+    public function index()
+    {
+        $setting = $this->setting;
         return view('admin.settings.admin', compact('setting'));
     }
 
-    public function sliderPage () {
+    public function sliderPage()
+    {
         return view('admin.settings.slider');
     }
-
 }
