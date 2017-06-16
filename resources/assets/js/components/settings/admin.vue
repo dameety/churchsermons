@@ -2,9 +2,8 @@
 	<main class="main">
 
 	    <div class="breadcrumb">
-	        <li class="breadcrumb-item">Configuration</li>	        
+	        <li class="breadcrumb-item">Configuration</li>
 	    </div>
-
 
 		<div class="col-sm-7 uk-margin-auto">
 	   		<div class="animated fadeIn">
@@ -96,7 +95,7 @@
                         <strong> Stripe plan <small>Please note that only the amount is changeable later.</small> </strong>
                     </div>
                     <div class="card-block">
-                        
+
                         <form class="form-horizontal" method="post" @submit.prevent="saveStripePlan(settings.slug)">
 
 		            		<div class="form-group">
@@ -170,7 +169,7 @@
                         <strong> Welcome Email </strong>
                     </div>
                     <div class="card-block">
-                        
+
                         <form class="form-horizontal" method="post" @submit.prevent="updateWelcomeEmail(settings.slug)">
 
 		            		<div class="form-group">
@@ -223,7 +222,7 @@
         },
 
         methods: {
-        	
+
         	fetchSettings: function () {
                 this.$http.get('/admin/setting/api').then((response) => {
                     this.settings = response.data;
@@ -256,7 +255,7 @@
                     })
                 }).catch(errors => {
                     this.formErrors = errors.response.body;
-                }); 
+                });
 
         	},
 
@@ -272,7 +271,7 @@
                     })
                 }).catch(errors => {
                     this.formErrors = errors.response.body;
-                }); 
+                });
 
         	},
 
@@ -288,7 +287,7 @@
 
                 }).catch(errors => {
                     this.formErrors = errors.response.body;
-                }); 
+                });
 
         	},
 
@@ -306,14 +305,14 @@
                 });
 
         	},
-        	
+
 
         }
-        
+
     }
 </script>
 
 <style>
-	
+
 
 </style>

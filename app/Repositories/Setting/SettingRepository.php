@@ -8,15 +8,15 @@ interface SettingRepository
 
     public function getBySlug($slug);
 
-    public function updateEmailContent($request);
+    public function emailContent($slug, $request);
 
-    public function stripePlan($request);
+    public function stripePlan($slug, $request);
 
-    public function stripeKey($request);
+    public function stripeKey($slug, $request);
 
-    public function contactEmail($request);
+    public function contactEmail($slug, $request);
 
-    public function churchName($request);
+    public function churchName($slug, $request);
 
     public function bannerUpload($request);
 }

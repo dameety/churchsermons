@@ -12,12 +12,10 @@ class ServiceFeatureTest extends TestCase
 
     public function serviceCanBeCreated()
     {
-        
     }
 
     public function testServiceCanBeDeleted()
     {
-        
     }
 
     public function testServiceCanBeUpdated()
@@ -27,6 +25,6 @@ class ServiceFeatureTest extends TestCase
 
     public function testServiceCountWorks()
     {
-    	
+
     }
 }
