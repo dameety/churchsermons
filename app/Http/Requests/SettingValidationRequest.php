@@ -16,6 +16,10 @@ class SettingValidationRequest extends FormRequest
         return true;
     }
 
+    public function rulwes()
+    {
+        //
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,16 +27,16 @@ class SettingValidationRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->isPath('admin/setting/api/mail/update/{slug}')) {
+        if ($this->Path('admin/setting/api/mail/update/{slug}')) {
             return [
                 'welcomeEmailHeading' => 'required|string|max:40',
                 'welcomeEmailBody' => 'required'
             ];
         }
-        if ($this->isPath('admin/setting/api/key/{slug}')) {
+        if ($this->Path('admin/setting/api/key/{slug}')) {
             return [
                 'api_key' => 'required|max:16'
-            ]
+            ];
         }
         if ($this->isPath('admin/setting/api/plan/{slug}')) {
             return [
@@ -42,27 +46,27 @@ class SettingValidationRequest extends FormRequest
                 'plan_amount' => 'required|numeric',
                 'plan_interval' => 'required',
                 'plan_description' => 'required|max:22'
-            ]
+            ];
         }
         if ($this->isPath('admin/setting/api/email/{slug}')) {
             return [
-                'contact_email' => 'required|email'
-            ]
+                'contact_email' => 'required'
+            ];
         }
-        if ($this->isPath('admin/setting/api/name/{slug}')) {
+        if ($this->Path('admin/setting/api/name/{slug}')) {
             return [
                 'church_name' => 'required'
-            ]
+            ];
         }
-        if ($this->isPath('admin/setting/api/slider/upload')) {
+        if ($this->Path('admin/setting/api/slider/upload')) {
             return [
                 'file.*' => 'required|image'
-            ]
+            ];
         }
-        if ($this->isPath('admin/setting/applogo')) {
+        if ($this->Path('admin/setting/applogo')) {
             return [
                 'appLogo' => 'required|mimes:jpg,jpeg,png'
-            ]
+            ];
         }
     }
 }
