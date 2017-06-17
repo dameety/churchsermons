@@ -15,11 +15,11 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" method="post" @submit.prevent="saveChurchName(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveChurchName(settings.slug)">
 
                             <div class="form-group">
-                                <input type="text" v-model="settings.church_name" name="church_name" required="required" maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['church_name']" class="inputError">{{ formErrors['church_name'] }}</span>
+                                <input type="text" v-model="settings.churchName" name="churchName" required="required" maxlength="20" class="form-control input-sm">
+                                <span v-if="formErrors['churchName']" class="inputError">{{ formErrors['churchName'] }}</span>
                             </div>
 
                             <div class="form-actions">
@@ -42,11 +42,11 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" method="post" @submit.prevent="saveContactEmail(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveContactEmail(settings.slug)">
 
                             <div class="form-group">
-                                <input type="text" v-model="settings.contact_email" name="contact_email" required="required" maxlength="30" class="form-control input-sm">
-                                <span v-if="formErrors['contact_email']" class="inputError">{{ formErrors['contact_email'] }}</span>
+                                <input type="text" v-model="settings.contactEmail" name="contactEmail" required="required" maxlength="30" class="form-control input-sm">
+                                <span v-if="formErrors['contactEmail']" class="inputError">{{ formErrors['contactEmail'] }}</span>
                             </div>
 
                             <div class="form-actions">
@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" method="post" @submit.prevent="saveStripeKey(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveStripeKey(settings.slug)">
 
                             <div class="form-group">
                                 <input type="text" v-model="settings.api_key" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" method="post" @submit.prevent="saveStripePlan(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveStripePlan(settings.slug)">
 
 		            		<div class="form-group">
 
@@ -170,7 +170,7 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" method="post" @submit.prevent="updateWelcomeEmail(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="updateWelcomeEmail(settings.slug)">
 
 		            		<div class="form-group">
 
@@ -226,6 +226,7 @@
         	fetchSettings: function () {
                 this.$http.get('/admin/setting/api').then((response) => {
                     this.settings = response.data;
+                    console.log(response.data);
                 });
         	},
 
@@ -254,7 +255,7 @@
                         timer: 1500,
                     })
                 }).catch(errors => {
-                    this.formErrors = errors.response.body;
+                    this.formErrors = errors.response.data;
                 });
 
         	},
@@ -270,7 +271,7 @@
                         timer: 1500,
                     })
                 }).catch(errors => {
-                    this.formErrors = errors.response.body;
+                    this.formErrors = errors.response.data;
                 });
 
         	},
@@ -286,7 +287,7 @@
                     })
 
                 }).catch(errors => {
-                    this.formErrors = errors.response.body;
+                    this.formErrors = errors.response.data;
                 });
 
         	},
@@ -301,7 +302,7 @@
                             timer: 1500,
                         })
                 }).catch(errors => {
-                    this.formErrors = errors.response.body;
+                    this.formErrors = errors.response.data;
                 });
 
         	},

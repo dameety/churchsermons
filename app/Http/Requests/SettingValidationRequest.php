@@ -35,7 +35,7 @@ class SettingValidationRequest extends FormRequest
         }
         if ($this->Path('admin/setting/api/key/{slug}')) {
             return [
-                'api_key' => 'required|max:16'
+                'apiKey' => 'required|max:16'
             ];
         }
         if ($this->isPath('admin/setting/api/plan/{slug}')) {
@@ -50,12 +50,12 @@ class SettingValidationRequest extends FormRequest
         }
         if ($this->isPath('admin/setting/api/email/{slug}')) {
             return [
-                'contact_email' => 'required'
+                'contactEmail' => 'required'
             ];
         }
         if ($this->Path('admin/setting/api/name/{slug}')) {
             return [
-                'church_name' => 'required'
+                'churchName' => 'required'
             ];
         }
         if ($this->Path('admin/setting/api/slider/upload')) {

@@ -60,7 +60,7 @@ class EloquentSetting implements SettingRepository
     public function contactEmail($slug, $request)
     {
         $setting = $this->getBySlug($slug);
-        $setting -> contact_email = $request->contact_email;
+        $setting -> contactEmail = $request->contactEmail;
         $setting -> save();
         return response()->json(['status', 200]);
     }
@@ -68,7 +68,7 @@ class EloquentSetting implements SettingRepository
     public function churchName($slug, $request)
     {
         $setting = $this->getBySlug($slug);
-        $setting -> church_name = $request->church_name;
+        $setting -> churchName = $request->churchName;
         $setting -> save();
         return response()->json(['status', 200]);
     }
