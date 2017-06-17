@@ -84,6 +84,6 @@ class AdminSettingsApiController extends Controller
 
     public function getSliderImages()
     {
-        return $this->setting->images();
+        return $this->setting->sliderImages();
     }
 }

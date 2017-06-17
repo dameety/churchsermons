@@ -211,7 +211,6 @@
 
 		data: function() {
             return {
-
             	settings: {},
             	formErrors: {},
             };
@@ -226,7 +225,6 @@
         	fetchSettings: function () {
                 this.$http.get('/admin/setting/api').then((response) => {
                     this.settings = response.data;
-                    console.log(response.data);
                 });
         	},
 

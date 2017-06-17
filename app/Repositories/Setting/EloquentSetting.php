@@ -75,7 +75,7 @@ class EloquentSetting implements SettingRepository
 
     public function sliderIsLessThan5()
     {
-        $images = $this->setting->getMedia('slider_image')->count();
+        $images = $this->setting->first()->getMedia('slider_image')->count();
         if ($images < 5) {
             return true;
         } else {
@@ -95,8 +95,7 @@ class EloquentSetting implements SettingRepository
                     $constraint->upsize();
                 })
                 ->save($folder . $fileName);
-
-            $this->setting->addMedia($file)
+            $this->setting->first()->addMedia($file)
                 ->usingName(public_path($folder) . $fileName)
                 ->toMediaCollection('slider_image');
         }
@@ -105,7 +104,7 @@ class EloquentSetting implements SettingRepository
 
     public function delete($request)
     {
-        $images = $this->setting;
+        $images = $this->setting->first();
         $files = $images->getMedia('slider_image');
         foreach ($files as $file) {
             $url = $file->getUrl('gallery_size');
@@ -116,18 +115,17 @@ class EloquentSetting implements SettingRepository
         }
     }
 
-    public function images()
+    public function sliderImages()
     {
-        $images = $this->setting;
-        $files = $images->getMedia('slider_image');
+        $images = $this->setting->first();
+        $sliderImages = $images->getMedia('slider_image');
 
         // array to keep the urls
         $allImageUrls = array();
-        foreach ($files as $file) {
+        foreach ($sliderImages as $file) {
             $getFileUrl = $file->getUrl('gallery_size');
             array_unshift($allImageUrls, $getFileUrl);
         }
-        $sliderImages = collect($allImageUrls);
-        return $sliderImages;
+        return $allImageUrls;
     }
 }
