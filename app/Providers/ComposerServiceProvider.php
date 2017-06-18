@@ -41,6 +41,8 @@ class ComposerServiceProvider extends ServiceProvider
             ],
             'App\Http\ViewComposers\ServiceComposer@filter'
         );
+
+        View::composer('emails.welcome-user', 'App\Http\ViewComposers\SettingsComposer@emailContent');
     }
 
 

@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Churchsermons'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,7 +175,7 @@ return [
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -247,7 +247,7 @@ return [
         'DotenvEditor' => Brotzka\DotenvEditor\DotenvEditorFacade::class,
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
