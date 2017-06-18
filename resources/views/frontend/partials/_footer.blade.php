@@ -1,7 +1,7 @@
 <footer class="footer">
 	<div class="container">
-                
-    	<span> {{ $setting->church_name }} | Contact: {{ $setting->contact_email }} </span>
+
+    	<span> {{ config('app.name') }} | <strong>Contact: </strong>{{ config('app.contactEmail') }} </span>
 
   	</div>
 </footer>

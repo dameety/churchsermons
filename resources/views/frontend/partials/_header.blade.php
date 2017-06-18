@@ -1,6 +1,6 @@
 <nav id="navbarx" class="navbar navbar-default">
     <div class="container navbar-container">
-        
+
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->
@@ -13,7 +13,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand churchBrand" href="{{ url('/') }}">
-                {{ $setting->church_name }}
+                {{ config('app.name') }}
             </a>
         </div>
 
@@ -39,10 +39,10 @@
                         <li class="{{ isActiveURL('/user/upgrade') }}">
                             <a href="{{ route('upgradeAccount') }}">Upgrade</a>
                         </li>
-                        
+
                     @endif
                     @if( Auth::user()->subscriptionStatus === "active" )
-                        
+
                     @endif
                     @if( Auth::user()->subscriptionStatus === "cancelled" )
 
@@ -54,20 +54,20 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-                        
+
                     @endif
                     <li class="{{ isActiveURL('/sermons') }}">
                         <a href="{{ route('allSermons') }}">Sermons</a>
                     </li>
                     <li class="{{ isActiveURL('/sermons/favourites') }}">
                         <a href="{{ route('viewFavourite') }}">My Favourites</a>
-                    </li> 
+                    </li>
                     <li class="{{ isActiveURL('/user/profile') }}">
                         <a href="{{ route('profile') }}">My Profile</a>
                     </li>
                     <li>
                         <a href="{{ route('logout') }}">Logout</a>
-                    </li>                  
+                    </li>
                 @endif
             </ul>
 
@@ -75,12 +75,11 @@
 
 
         {{-- start --}}
-
         <div class="modal fade fullscreen" id="menuModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" >
                     <div class="modal-header">
-                            <button type="button" class="close btn btn-link" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close fa-lg" style="color:#999;"></i></button> 
+                            <button type="button" class="close btn btn-link" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close fa-lg" style="color:#999;"></i></button>
                             <h4 class="modal-title text-center"><span class="sr-only">main navigation</span></h4>
                     </div>
                     <div class="modal-body text-center">
@@ -101,7 +100,7 @@
                                 </li>
                                 <li class="{{ isActiveURL('/user/profile') }}">
                                     <a href="{{ route('profile') }}">My Profile</a>
-                                </li> 
+                                </li>
                                 <li>
                                     <a href="{{ route('logout') }}">Logout</a>
                                 </li>

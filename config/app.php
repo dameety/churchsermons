@@ -14,6 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Churchsermons'),
 
+    'contactEmail' => env('APP_EMAIL', 'Churchsermons@mail.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
