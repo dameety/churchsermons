@@ -1,24 +1,24 @@
 <template>
     <main class="main">
-        
+
         <div class="breadcrumb">
 
             <li class="breadcrumb-item"><span class="uk-badge"> &nbsp; Total Services: {{servicesCount}} &nbsp; </span></li>
             <li> &nbsp; <button class="newButton breadcrumb-item uk-button uk-button-primary uk-button-small" href="#newServiceForm" uk-scroll @click="newServiceForm = true">Add New Service</button></li>
 
-            <li id="pagination" class="breadcrumb-menu hidden-md-down">   
+            <li id="pagination" class="breadcrumb-menu hidden-md-down">
                   <button class="btn btn-default btn-sm" @click="fetchServices(pagination.prev_page_url)"
                           :disabled="!pagination.prev_page_url">
                       Previous
-                  </button> &nbsp; 
-                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                  </button> &nbsp;
+                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                   <button class="btn btn-default btn-sm" @click="fetchServices(pagination.next_page_url)"
                           :disabled="!pagination.next_page_url">Next
                   </button>
             </li>
         </div>
-       
-       
+
+
         <div class="container-fluid">
             <div class="animated fadeIn">
 
@@ -59,7 +59,7 @@
                     <!-- search input -->
                     <div class="card-block" v-show="!newServiceForm">
                         <div id="searchForm" class="col-lg-12 uk-animation-slide-top-medium">
-                            <div class="card">    
+                            <div class="card">
                                 <div class="card-header">
                                    <input type="text" v-model="searchWord" class="form-control">
                                 </div>
@@ -79,11 +79,11 @@
                                     <strong class="serviceName"> Name:</strong> &nbsp;{{ service.name }}
                                     <span class="badge badge-pill badge-danger float-right" title="This is the total number of sermons in this service" uk-tooltip>{{ service.sermonCount }}</span>
                                     <hr>
-                                    <p> <strong class="serviceDescription">Description:</strong> &nbsp;{{ service.description }}</p> 
+                                    <p> <strong class="serviceDescription">Description:</strong> &nbsp;{{ service.description }}</p>
                                 </div>
                                 <div class="uk-container card-header">
                                     <a uk-icon="icon: pencil; ratio: 1.2" href="#editServiceModal" uk-toggle @click.prevent="editService(service)"></a>
-                                    &nbsp; &nbsp; 
+                                    &nbsp; &nbsp;
                                     <a style="color:#FC0000;" uk-icon="icon: close; ratio: 1.2" @click.prevent="deleteService(service)"></a>
                                 </div>
                             </div>
@@ -101,8 +101,8 @@
                                     <button class="btn btn-default btn-sm" @click="fetchServices(pagination.prev_page_url)"
                                           :disabled="!pagination.prev_page_url">
                                       Previous
-                                    </button> &nbsp; 
-                                    <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                                    </button> &nbsp;
+                                    <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                                     <button class="btn btn-default btn-sm" @click="fetchServices(pagination.next_page_url)"
                                           :disabled="!pagination.next_page_url">Next
                                     </button>
@@ -112,7 +112,7 @@
                     </div>
                     <!-- bottom pagination -->
 
-                
+
                     <!-- the edit modal -->
                     <div id="editServiceModal" uk-modal>
                         <div class="uk-modal-dialog">
@@ -144,7 +144,7 @@
                         </div>
                     </div>
                     <!-- edit modal ends here -->
-                    
+
                 <!-- </div> -->
 
             </div>
@@ -154,8 +154,8 @@
 </template>
 
 <script>
-   
-    export default {     
+
+    export default {
 
         data: function() {
 
@@ -171,7 +171,7 @@
                 formErrors: {},
                 serviceToBeUpdated: {},
                 newServiceForm: false,
-                
+
             };
         },
 
@@ -229,7 +229,7 @@
                             timer: 1500,
                         })
 
-                    }).catch( errors => { 
+                    }).catch( errors => {
                         this.formErrors = errors.response.data;
                     });
 
@@ -250,14 +250,14 @@
                         type: 'success',
                         timer: 1500,
                     })
-                }).catch( errors => { 
+                }).catch( errors => {
                     this.formErrors = errors.response.data;
                 });
 
-            },        
+            },
 
             deleteService: function(service) {
-                var vm = this;                    
+                var vm = this;
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'This service will be deleted if you continue',
@@ -274,8 +274,8 @@
                 });
 
             },
-            
-            
+
+
         }
 
 

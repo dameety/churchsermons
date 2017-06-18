@@ -12,7 +12,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 // admin auth routes
 Route::group(['prefix' => 'admin'], function () {
-    
+
     Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::get('/logout', 'AdminAuth\LoginController@logout');
@@ -33,8 +33,8 @@ Route::get('/admin', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
-    
-    // get sermons by category 
+
+    // get sermons by category
     Route::name('category')->get('/category/{slug}', 'SermonsController@getCategory');
 
 
@@ -66,9 +66,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('updateCard')->post('/user/card/update/{id}', 'UsersController@updateCard');
     Route::name('deleteCard')->post('/user/card/delete/{id}', 'UsersController@deleteCard');
     Route::name('newCard')->post('/user/card/new', 'UsersController@newCard');
-
-
 });
-
-
-Route::get('/debug', 'HomeController@debug');
