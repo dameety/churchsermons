@@ -27,18 +27,17 @@ class SettingValidationRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->Path('admin/setting/api/mail/update/{slug}')) {
+
+        if ($this->is('admin/setting/api/mail/update/{slug}')) {
             return [
                 'welcomeEmailHeading' => 'required|string|max:40',
                 'welcomeEmailBody' => 'required'
             ];
-        }
-        if ($this->Path('admin/setting/api/key/{slug}')) {
+        } elseif ($this->is('admin/setting/api/key')) {
             return [
-                'apiKey' => 'required|max:16'
+                'api_key' => 'required|max:32'
             ];
-        }
-        if ($this->isPath('admin/setting/api/plan/{slug}')) {
+        } elseif ($this->is('admin/setting/api/plan/{slug}')) {
             return [
                 'plan_id' => 'required',
                 'plan_name' => 'required',
@@ -47,23 +46,19 @@ class SettingValidationRequest extends FormRequest
                 'plan_interval' => 'required',
                 'plan_description' => 'required|max:22'
             ];
-        }
-        if ($this->isPath('admin/setting/api/email/{slug}')) {
+        } elseif ($this->is('admin/setting/api/email/{slug}')) {
             return [
                 'contactEmail' => 'required'
             ];
-        }
-        if ($this->Path('admin/setting/api/name/{slug}')) {
+        } elseif ($this->is('admin/setting/api/name/{slug}')) {
             return [
                 'churchName' => 'required'
             ];
-        }
-        if ($this->Path('admin/setting/api/slider/upload')) {
+        } elseif ($this->is('admin/setting/api/slider/upload')) {
             return [
                 'file.*' => 'required|image'
             ];
-        }
-        if ($this->Path('admin/setting/applogo')) {
+        } elseif ($this->is('admin/setting/applogo')) {
             return [
                 'appLogo' => 'required|mimes:jpg,jpeg,png'
             ];
