@@ -12,14 +12,14 @@
               <button class="btn btn-default btn-sm" @click="fetchCategories(pagination.prev_page_url)"
                       :disabled="!pagination.prev_page_url">
                   Previous
-              </button> &nbsp; 
-              <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+              </button> &nbsp;
+              <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
               <button class="btn btn-default btn-sm" @click="fetchCategories(pagination.next_page_url)"
                       :disabled="!pagination.next_page_url">Next
               </button>
             </li>
         </div>
-        
+
         <div class="container-fluid">
             <div class="animated fadeIn">
 
@@ -36,13 +36,13 @@
                             <form @submit.prevent="addNewCategory">
                                 <div class="form-group">
                                     <label for="Name">Name</label>
-                                    <input type="text" v-model="newCategory.name" name="name" required="required" maxlength="30" class="form-control">
-                                    <span v-if="formErrors['name']" class="inputError">{{ formErrors['name'] }}</span>
+                                    <input type="text" v-model="newCategory.name" name="name" required maxlength="30" class="form-control">
+                                    <span v-if="formErrors.name" class="inputError">{{ formErrors.name[0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <textarea type="text" v-model="newCategory.description" name="description" maxlength="300" class="form-control" rows="5"> </textarea>
-                                    <span v-if="formErrors['description']" class="inputError">{{ formErrors['description'] }}</span>
+                                    <span v-if="formErrors.description" class="inputError">{{ formErrors.description[0] }}</span>
                                 </div>
                                 <br>
                                 <div class="uk-modal-footer uk-text-right">
@@ -58,7 +58,7 @@
                 <!-- search input -->
                 <div class="card-block" v-show="!newCategoryForm">
                     <div id="searchForm" class="col-lg-12 uk-animation-slide-top-medium">
-                        <div class="card">    
+                        <div class="card">
                             <div class="card-header">
                                 <input type="text" v-model="searchWord" class="form-control">
                             </div>
@@ -71,19 +71,18 @@
                 <!-- ALL THE CATEGORIES-->
                 <div class="row">
 
-                    <!-- all categoris cards -->
                     <div class="col-sm-6 col-md-4 uk-animation-slide-bottom-medium" v-for="category in filterBy(categories, searchWord)" v-show="!newCategoryForm">
                         <div class="card uk-card uk-card-default uk-card-hover">
                             <div class="card-block">
                                 <strong class="categoryName"> Name:</strong> &nbsp;{{ category.name }}
                                 <span class="badge badge-pill badge-danger float-right" title="This is the total number of sermons in this Category" uk-tooltip>{{ category.sermonCount }}</span>
                                 <hr>
-                                <p> <strong class="categoryDescription">Description:</strong> &nbsp;{{ category.description }}</p> 
+                                <p> <strong class="categoryDescription">Description:</strong> &nbsp;{{ category.description }}</p>
                             </div>
 
                             <div class="uk-container card-footer">
                                 <a uk-icon="icon: pencil; ratio: 1.2" href="#editCategoryModal" uk-toggle @click.prevent="editCategory(category)"></a>
-                              &nbsp; &nbsp; 
+                              &nbsp; &nbsp;
                                 <a style="color:#FC0000;" uk-icon="icon: close; ratio: 1.2" @click.prevent="deleteCategory(category)"></a>
                             </div>
                         </div>
@@ -94,14 +93,14 @@
 
                 <!-- bottom pagination -->
                 <div class="card-block uk-animation-slide-top-medium" v-show="!newCategoryForm">
-                    <div class="card">    
+                    <div class="card">
                         <div class="card-header">
                             <div class="paginationn float-right">
                                 <button class="btn btn-default btn-sm" @click="fetchCategories(pagination.prev_page_url)"
                                           :disabled="!pagination.prev_page_url">
                                       Previous
-                                  </button> &nbsp; 
-                                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                                  </button> &nbsp;
+                                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                                   <button class="btn btn-default btn-sm" @click="fetchCategories(pagination.next_page_url)"
                                           :disabled="!pagination.next_page_url">Next
                                 </button>
@@ -121,17 +120,17 @@
                         </div>
                         <div class="uk-modal-body">
                             <div class="card-block">
-                                <form method="post" @submit.prevent="updateCategory(categoryToBeUpdated.slug)">
+                                <form @submit.prevent="updateCategory(categoryToBeUpdated.slug)">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input type="text" v-model="categoryToBeUpdated.name" required="required" maxlength="15" name="name" class="form-control">
-                                        <span v-if="formErrors['name']" class="inputError">{{ formErrors['name'] }}</span>
+                                        <input type="text" v-model="categoryToBeUpdated.name" required maxlength="15" name="name" class="form-control">
+                                        <span v-if="formErrors.name" class="inputError">{{ formErrors.name[0] }}</span>
                                     </div>
                                     <hr>
                                     <div class="form-group">
                                         <label for="description">Description</label>
                                         <textarea type="text" v-model="categoryToBeUpdated.description" maxlength="200" name="description" class="form-control" rows="5"> </textarea>
-                                        <span v-if="formErrors['description']" class="inputError">{{ formErrors['description'] }}</span>
+                                        <span v-if="formErrors.description" class="inputError">{{ formErrors.description[0] }}</span>
                                     </div>
                                     <br>
                                     <div class="uk-modal-footer uk-text-right">
@@ -146,17 +145,17 @@
 
             </div>
         </div>
-        
+
     </main>
 </template>
 
 <script>
-   	   
+
     export default {
 
-        data: function() {
+        data () {
   			return {
-                
+
                 categories: [],     /*using the fetchCategories()*/
                 pagination: {},
                 searchWord:"",       /*used by the global filter*/
@@ -168,7 +167,7 @@
                 formErrors: {},
                 categoryToBeUpdated: {},
                 newCategoryForm: false
-              
+
   			};
 		},
 
@@ -179,13 +178,14 @@
 
 	    methods: {
 
-            fetchCategoriesCount: function () {
+            fetchCategoriesCount () {
                 this.$http.get('/admin/category/api/count').then((response) => {
                     this.categoriesCount = response.data;
                 });
             },
 
-          	fetchCategories: function (page_url) {  
+          	fetchCategories (page_url) {
+
                 let vm = this;
                 page_url = page_url || '/admin/category/api'
                 this.$http.get(page_url).then((response) => {
@@ -195,7 +195,7 @@
 
           	},
 
-            makePagination: function(data) {
+            makePagination (data) {
                 let pagination = {
                     current_page: data.current_page,
                     last_page: data.last_page,
@@ -206,13 +206,14 @@
                 this.pagination = pagination;
             },
 
-          	addNewCategory: function() {
+          	addNewCategory () {
+
 	            var category = this.newCategory
   				this.newCategory = { name: "", description: ""}
   				this.$http.post('/admin/category/api/new', category).then((response) => {
-      				    
-                        this.fetchCategories()
-                        this.fetchCategoriesCount()
+
+                        this.categories.unshift(category);
+                        this.categoriesCount++;
                         this.$swal({
                             title: 'Great!',
                             text: 'New Category Creation Successful',
@@ -220,17 +221,17 @@
                             timer: 1500,
                         })
 
-    			    }).catch( errors => { 
+    			    }).catch( errors => {
                         this.formErrors = errors.response.data;
                     });
 
 			},
 
-			editCategory: function(category) {
+			editCategory (category) {
                 this.categoryToBeUpdated = category;
           	},
 
-            updateCategory: function (slug) {
+            updateCategory (slug) {
 
                 var category = this.categoryToBeUpdated;
                 this.$http.patch('/admin/category/api/update/' + slug, category).then((response) => {
@@ -241,14 +242,15 @@
                         type: 'success',
                         timer: 1500,
                     })
-                }).catch( errors => { 
+                }).catch( errors => {
                     this.formErrors = errors.response.data;
                 });
 
             },
 
-            deleteCategory: function(category) {
-                var vm = this;                    
+            deleteCategory (category) {
+
+                var vm = this;
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'This service will be deleted if you continue',
@@ -258,14 +260,13 @@
                     cancelButtonText: "No, don't!",
                 }).then((response) => {
                     vm.$http.delete('/admin/category/api/delete/' + category.name).then((response) => {
-                        vm.fetchCategories();
-                        vm.fetchCategoriesCount();
+                        vm.$delete(vm.categories, vm.categories.indexOf(category))
+                        vm.categoriesCount--
                     });
-
                 });
-            
+
 	       },
-   			
+
 	    }
 
     }

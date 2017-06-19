@@ -22,8 +22,6 @@
         <div class="container-fluid">
             <div class="animated fadeIn">
 
-                <!-- <div class="row"> -->
-
                     <!-- start of new service form -->
                     <div id="newServiceForm" class="col-lg-12 uk-animation-slide-top-medium" v-show="newServiceForm">
                         <div class="card">
@@ -37,13 +35,13 @@
                                 <form @submit.prevent="addNewService">
                                     <div class="form-group">
                                         <label for="Name">Name</label>
-                                        <input type="text" v-model="newService.name" name="name" required="required" maxlength="30" class="form-control">
-                                        <span v-if="formErrors['name']" class="inputError">{{ formErrors.name }}</span>
+                                        <input type="text" v-model="newService.name" name="name" required maxlength="30" class="form-control">
+                                        <span v-if="formErrors.name" class="inputError">{{ formErrors.name[0] }}</span>
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Description</label>
                                         <textarea type="text" v-model="newService.description" name="description" maxlength="300" class="form-control" rows="5"> </textarea>
-                                        <span v-if="formErrors['description']" class="inputError">{{ formErrors.description }}</span>
+                                        <span v-if="formErrors.description" class="inputError">{{ formErrors.description[0] }}</span>
                                     </div>
                                     <br>
                                     <div class="uk-modal-footer uk-text-right">
@@ -72,7 +70,6 @@
                     <!-- ALL THE SERVICES -->
                     <div class="row">
 
-                        <!-- all services cards -->
                         <div class="col-sm-6 col-md-4 uk-animation-slide-bottom-medium" v-for="service in filterBy(services, searchWord)" v-show="!newServiceForm">
                             <div class="card uk-card uk-card-default uk-card-hover">
                                 <div class="card-block">
@@ -125,14 +122,14 @@
                                     <form method="post" @submit.prevent="updateService(serviceToBeUpdated.slug)">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input type="text" v-model="serviceToBeUpdated.name" required="required" maxlength="15" name="name" class="form-control">
-                                            <span v-if="formErrors['name']" class="inputError">{{ formErrors['name'] }}</span>
+                                            <input type="text" v-model="serviceToBeUpdated.name" required maxlength="15" name="name" class="form-control">
+                                            <span v-if="formErrors.name" class="inputError">{{ formErrors.name[0] }}</span>
                                         </div>
                                         <hr>
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             <textarea type="text" v-model="serviceToBeUpdated.description" maxlength="200" name="description" class="form-control" rows="5"> </textarea>
-                                            <span v-if="formErrors['description']" class="inputError">{{ formErrors['description'] }}</span>
+                                            <span v-if="formErrors.description" class="inputError">{{ formErrors.description[0] }}</span>
                                         </div>
                                         <br>
                                         <div class="uk-modal-footer uk-text-right">
@@ -145,7 +142,6 @@
                     </div>
                     <!-- edit modal ends here -->
 
-                <!-- </div> -->
 
             </div>
         </div>
@@ -157,7 +153,7 @@
 
     export default {
 
-        data: function() {
+        data () {
 
             return {
                 services: [],
@@ -182,14 +178,14 @@
 
         methods: {
 
-            fetchServicesCount: function () {
+            fetchServicesCount () {
                 this.$http.get('/admin/service/api/count').then((response) => {
                     this.servicesCount = response.data;
                 });
             },
 
 
-            fetchServices: function (page_url) {
+            fetchServices (page_url) {
 
                 let vm = this;
                 page_url = page_url || '/admin/service/api'
@@ -201,7 +197,7 @@
 
             },
 
-            makePagination: function(data) {
+            makePagination (data) {
                 let pagination = {
                     current_page: data.current_page,
                     last_page: data.last_page,
@@ -213,15 +209,15 @@
             },
 
 
-            addNewService: function () {
+            addNewService () {
 
-                var service = this.newService
+                let service = this.newService
                 this.newService = { name: "", description: "" }
                 this.$http.post('/admin/service/api/new', service)
                     .then((response) => {
 
-                        this.fetchServices();
-                        this.fetchServicesCount();
+                        this.services.unshift(service)
+                        this.servicesCount++;
                         this.$swal({
                             title: 'Great!',
                             text: 'New Service Creation Successful',
@@ -235,13 +231,13 @@
 
             },
 
-            editService: function(service) {
+            editService (service) {
                 this.serviceToBeUpdated = service;
             },
 
-            updateService: function (slug) {
+            updateService (slug) {
 
-                var services = this.serviceToBeUpdated
+                let services = this.serviceToBeUpdated
                 this.$http.patch('/admin/service/api/update/' + slug, services).then((response) => {
                     this.fetchServices();
                     this.$swal({
@@ -256,8 +252,9 @@
 
             },
 
-            deleteService: function(service) {
-                var vm = this;
+            deleteService (service) {
+
+                let vm = this;
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'This service will be deleted if you continue',
@@ -268,8 +265,9 @@
 
                 }).then(function() {
                     vm.$http.delete('/admin/service/api/delete/' + service.name).then((response) => {
-                        vm.fetchServices();
-                        vm.fetchServicesCount();
+                        let index = vm.services.indexOf(service);
+                        vm.$delete(vm.services, index);
+                        vm.servicesCount--
                     });
                 });
 
