@@ -3,7 +3,6 @@
 namespace App\Repositories\Setting;
 
 use App\Models\Setting;
-use Illuminate\Support\Facades\Crypt;
 use App\Repositories\Setting\SettingRepository;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -56,25 +55,25 @@ class EloquentSetting implements SettingRepository
         $setting -> plan_amount = $request->plan_amount;
         $setting -> plan_currency = $request->plan_currency;
         $setting -> plan_interval = $request->plan_interval;
-        $setting -> plan_description = $request->plan_description;
         $setting->save();
         return true;
     }
 
-    public function contactEmail($slug, $request)
+    public function contactEmail($request)
     {
-        $setting = $this->getBySlug($slug);
-        $setting -> contactEmail = $request->contactEmail;
-        $setting -> save();
+        $this->setting->setChurchName($request->contactEmail);
         return response()->json(['status', 200]);
     }
 
-    public function churchName($slug, $request)
+    public function churchName($request)
     {
-        $setting = $this->getBySlug($slug);
-        $setting -> churchName = $request->churchName;
-        $setting -> save();
+        $this->setting->setChurchName($request->churchName);
         return response()->json(['status', 200]);
+    }
+
+    public function  getNameAndEmail()
+    {
+        return $this->setting->getNameAndEmail();
     }
 
     public function sliderIsLessThan5()
@@ -86,6 +85,7 @@ class EloquentSetting implements SettingRepository
             return false;
         }
     }
+
 
     public function bannerUpload($request)
     {
@@ -123,7 +123,6 @@ class EloquentSetting implements SettingRepository
     {
         $images = $this->setting->first();
         $sliderImages = $images->getMedia('slider_image');
-
         // array to keep the urls
         $allImageUrls = array();
         foreach ($sliderImages as $file) {

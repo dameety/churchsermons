@@ -4095,15 +4095,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4111,12 +4102,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             settings: {},
             formErrors: {},
-            api_key: ""
+            details: {} //name, //email, //key
         };
     },
     mounted: function mounted() {
         this.fetchSettings();
-        this.fetchStripeKey();
+        this.fetchNameAndEmail();
     },
 
 
@@ -4135,32 +4126,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.api_key = response.data;
             });
         },
-
-
-        updateWelcomeEmail: function updateWelcomeEmail(slug) {
+        fetchNameAndEmail: function fetchNameAndEmail() {
             var _this3 = this;
 
-            var setting = this.settings;
-            this.$http.patch('/admin/setting/api/mail/update/' + slug, setting).then(function (response) {
-                _this3.$swal({
-                    title: 'Great!',
-                    text: 'Welcome email update successful',
-                    type: 'success',
-                    timer: 1500
-                });
-            }).catch(function (errors) {
-                _this3.formErrors = errors.response.data;
+            this.$http.get('/admin/setting/api/name-email').then(function (response) {
+                _this3.details = response.data;
             });
         },
 
-        saveStripeKey: function saveStripeKey() {
+
+        updateWelcomeEmail: function updateWelcomeEmail(slug) {
             var _this4 = this;
 
-            var apiKey = this.api_key;
-            this.$http.post('/admin/setting/api/key', { api_key: apiKey }).then(function (response) {
+            var setting = this.settings;
+            this.$http.patch('/admin/setting/api/mail/update/' + slug, setting).then(function (response) {
                 _this4.$swal({
                     title: 'Great!',
-                    text: 'Your stripe key has been saved',
+                    text: 'Welcome email update successful',
                     type: 'success',
                     timer: 1500
                 });
@@ -4169,15 +4151,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-
-        saveStripePlan: function saveStripePlan(slug) {
+        saveStripeKey: function saveStripeKey() {
             var _this5 = this;
 
-            var setting = this.settings;
-            this.$http.patch('/admin/setting/api/plan/' + slug, setting).then(function (response) {
+            var apiKey = this.api_key;
+            this.$http.post('/admin/setting/api/key', { api_key: apiKey }).then(function (response) {
                 _this5.$swal({
                     title: 'Great!',
-                    text: 'Your stripe plan has been saved',
+                    text: 'Your stripe key has been saved',
                     type: 'success',
                     timer: 1500
                 });
@@ -4186,14 +4167,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        saveContactEmail: function saveContactEmail(slug) {
+
+        saveStripePlan: function saveStripePlan(slug) {
             var _this6 = this;
 
             var setting = this.settings;
-            this.$http.patch('/admin/setting/api/email/' + slug, setting).then(function (response) {
+            this.$http.patch('/admin/setting/api/plan/' + slug, setting).then(function (response) {
                 _this6.$swal({
                     title: 'Great!',
-                    text: 'Your contact email has been saved',
+                    text: 'Your stripe plan has been saved',
                     type: 'success',
                     timer: 1500
                 });
@@ -4202,22 +4184,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        saveChurchName: function saveChurchName(slug) {
+        saveContactEmail: function saveContactEmail(slug) {
             var _this7 = this;
 
-            var setting = this.settings;
-            this.$http.patch('/admin/setting/api/name/' + slug, setting).then(function (response) {
+            var email = this.details.email;
+            this.$http.post('/admin/setting/api/email', { 'contactEmail': email }).then(function (response) {
                 _this7.$swal({
                     title: 'Great!',
-                    text: 'Your church name has been saved',
+                    text: 'Your contact email has been saved',
                     type: 'success',
                     timer: 1500
                 });
             }).catch(function (errors) {
                 _this7.formErrors = errors.response.data;
             });
-        }
+        },
 
+        saveChurchName: function saveChurchName() {
+            var _this8 = this;
+
+            var name = this.details.name;
+            this.$http.post('/admin/setting/api/name', { 'churchName': name }).then(function (response) {
+                _this8.$swal({
+                    title: 'Great!',
+                    text: 'Your church name has been saved',
+                    type: 'success',
+                    timer: 1500
+                });
+            }).catch(function (errors) {
+                _this8.formErrors = errors.response.data;
+            });
+        }
     }
 
 });
@@ -7273,7 +7270,7 @@ exports.push([module.i, "\n.gallery {\n    margin-bottom: 30px;\n}\ndiv.imageCon
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 51 */
@@ -37840,7 +37837,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.saveChurchName(_vm.settings.slug)
+        _vm.saveChurchName()
       }
     }
   }, [_c('div', {
@@ -37849,8 +37846,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.settings.churchName),
-      expression: "settings.churchName"
+      value: (_vm.details.name),
+      expression: "details.name"
     }],
     staticClass: "form-control input-sm",
     attrs: {
@@ -37860,12 +37857,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": "20"
     },
     domProps: {
-      "value": (_vm.settings.churchName)
+      "value": (_vm.details.name)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.settings.churchName = $event.target.value
+        _vm.details.name = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.formErrors['churchName']) ? _c('span', {
@@ -37890,8 +37887,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.settings.contactEmail),
-      expression: "settings.contactEmail"
+      value: (_vm.details.email),
+      expression: "details.email"
     }],
     staticClass: "form-control input-sm",
     attrs: {
@@ -37901,12 +37898,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": "30"
     },
     domProps: {
-      "value": (_vm.settings.contactEmail)
+      "value": (_vm.details.email)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.settings.contactEmail = $event.target.value
+        _vm.details.email = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.formErrors['contactEmail']) ? _c('span', {
@@ -37934,8 +37931,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.api_key),
-      expression: "api_key"
+      value: (_vm.details.stripeKey),
+      expression: "details.stripeKey"
     }],
     staticClass: "form-control input-sm",
     attrs: {
@@ -37946,12 +37943,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": "32"
     },
     domProps: {
-      "value": (_vm.api_key)
+      "value": (_vm.details.stripeKey)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.api_key = $event.target.value
+        _vm.details.stripeKey = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.formErrors['api_key']) ? _c('span', {
@@ -38136,38 +38133,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "week"
     }
-  }, [_vm._v(" Weekly ")])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "Plan Description"
-    }
-  }, [_vm._v("Plan Description")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.settings.plan_description),
-      expression: "settings.plan_description"
-    }],
-    staticClass: "form-control input-sm",
-    attrs: {
-      "type": "text",
-      "name": "plan_description",
-      "required": "required",
-      "maxlength": "22"
-    },
-    domProps: {
-      "value": (_vm.settings.plan_description)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.settings.plan_description = $event.target.value
-      }
-    }
-  }), _vm._v(" "), (_vm.formErrors['plan_description']) ? _c('span', {
-    staticClass: "inputError"
-  }, [_vm._v(_vm._s(_vm.formErrors['plan_description']))]) : _vm._e()]), _vm._v(" "), _vm._m(8)])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(" Weekly ")])])]), _vm._v(" "), _vm._m(8)])]), _vm._v(" "), _c('div', {
     staticClass: "card-footer"
   })]), _vm._v(" "), _c('div', {
     staticClass: "card"

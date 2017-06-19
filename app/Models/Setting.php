@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
 use Brotzka\DotenvEditor\DotenvEditor;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -16,6 +15,7 @@ class Setting extends Model implements HasMediaConversions
     use Sluggable;
     use HasMediaTrait;
     use SluggableScopeHelpers;
+
 
     protected $hidden = [
         'id',
@@ -33,11 +33,6 @@ class Setting extends Model implements HasMediaConversions
                 'source' => 'name'
             ]
         ];
-    }
-
-    public function sgetApiKeyAttribute($value)
-    {
-        return Crypt::decryptString($value);
     }
 
     public function registerMediaConversions()
@@ -63,5 +58,28 @@ class Setting extends Model implements HasMediaConversions
         $env->changeEnv([
             'STRIPE_KEY'   => $key
         ]);
+    }
+
+    public static function setChurchName($name)
+    {
+        $env = new DotenvEditor();
+        $env->changeEnv([
+            'APP_NAME'   => $name
+        ]);
+    }
+
+    public static function setChurchEmail($name)
+    {
+        $env = new DotenvEditor();
+        $env->changeEnv([
+            'APP_EMAIL'   => $email
+        ]);
+    }
+
+    public static function getNameAndEmail()
+    {
+        $collection = collect(['stripeKey', 'name', 'email']);
+        $data = $collection->combine([env('STRIPE_KEY'), env('APP_NAME'), env('APP_EMAIL')]);
+        return $data;
     }
 }

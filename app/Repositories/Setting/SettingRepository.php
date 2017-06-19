@@ -14,9 +14,9 @@ interface SettingRepository
 
     public function stripeKey($request);
 
-    public function contactEmail($slug, $request);
+    public function contactEmail($request);
 
-    public function churchName($slug, $request);
+    public function churchName($request);
 
     public function bannerUpload($request);
 }

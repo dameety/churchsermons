@@ -15,10 +15,10 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" @submit.prevent="saveChurchName(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveChurchName()">
 
                             <div class="form-group">
-                                <input type="text" v-model="settings.churchName" name="churchName" required="required" maxlength="20" class="form-control input-sm">
+                                <input type="text" v-model="details.name" name="churchName" required="required" maxlength="20" class="form-control input-sm">
                                 <span v-if="formErrors['churchName']" class="inputError">{{ formErrors['churchName'] }}</span>
                             </div>
 
@@ -45,7 +45,7 @@
                         <form class="form-horizontal" @submit.prevent="saveContactEmail(settings.slug)">
 
                             <div class="form-group">
-                                <input type="text" v-model="settings.contactEmail" name="contactEmail" required="required" maxlength="30" class="form-control input-sm">
+                                <input type="text" v-model="details.email" name="contactEmail" required="required" maxlength="30" class="form-control input-sm">
                                 <span v-if="formErrors['contactEmail']" class="inputError">{{ formErrors['contactEmail'] }}</span>
                             </div>
 
@@ -72,7 +72,7 @@
                         <form class="form-horizontal" method="post" @submit.prevent="saveStripeKey">
 
                             <div class="form-group">
-                                <input type="text" v-model="api_key" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
+                                <input type="text" v-model="details.stripeKey" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
                                 <span v-if="formErrors['api_key']" class="inputError">{{ formErrors['api_key'] }}</span>
                             </div>
 
@@ -141,15 +141,6 @@
 
                             </div>
 
-		            		<div class="form-group">
-
-					            <label for="Plan Description">Plan Description</label>
-                                <input type="text" v-model="settings.plan_description" name="plan_description" required="required" maxlength="22" class="form-control input-sm">
-                                <span v-if="formErrors['plan_description']" class="inputError">{{ formErrors['plan_description'] }}</span>
-
-                            </div>
-
-
                             <div class="form-actions">
 	                            <button type="submit" class="btn btn-primary">Save </button>
 	                        </div>
@@ -213,13 +204,13 @@
             return {
             	settings: {},
             	formErrors: {},
-                api_key: ""
+                details: {}     //name, //email, //key
             };
         },
 
         mounted () {
             this.fetchSettings();
-            this.fetchStripeKey();
+            this.fetchNameAndEmail();
         },
 
         methods: {
@@ -234,6 +225,13 @@
                 this.$http.get('/admin/setting/api/stripekey').then((response) => {
                     this.api_key = response.data;
                 });
+            },
+
+            fetchNameAndEmail () {
+                this.$http.get('/admin/setting/api/name-email').then((response) => {
+                    this.details = response.data;
+                })
+
             },
 
         	updateWelcomeEmail: function (slug) {
@@ -282,8 +280,8 @@
         	},
 
         	saveContactEmail: function (slug) {
-        		var setting = this.settings;
-                this.$http.patch('/admin/setting/api/email/' + slug,  setting).then((response) => {
+                let email = this.details.email;
+                this.$http.post('/admin/setting/api/email', {'contactEmail': email}).then((response) => {
                     this.$swal({
                         title: 'Great!',
                         text: 'Your contact email has been saved',
@@ -297,9 +295,10 @@
 
         	},
 
-        	saveChurchName: function (slug) {
-        		var setting = this.settings;
-                this.$http.patch('/admin/setting/api/name/' + slug,  setting).then((response) => {
+        	saveChurchName () {
+
+        		let name = this.details.name;
+                this.$http.post('/admin/setting/api/name', {'churchName' : name}).then((response) => {
                         this.$swal({
                             title: 'Great!',
                             text: 'Your church name has been saved',

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use Cartalyst\Stripe\Stripe;
 use App\Http\Controllers\Controller;
@@ -32,6 +31,11 @@ class AdminSettingsApiController extends Controller
         } else {
             return response($setting->getErrors(), 422);
         }
+    }
+
+    public function nameAndEmail()
+    {
+        return $this->setting->getNameAndEmail();
     }
 
     public function updateWelcomeEmail($slug, SettingValidationRequest $request)
@@ -64,14 +68,14 @@ class AdminSettingsApiController extends Controller
         return response()->json(['status', 200]);
     }
 
-    public function saveContactEmail($slug, SettingValidationRequest $request)
+    public function saveContactEmail(SettingValidationRequest $request)
     {
-        return $this->setting->contactEmail($slug, $request);
+        return $this->setting->contactEmail($request);
     }
 
-    public function saveChurchName($slug, SettingValidationRequest $request)
+    public function saveChurchName(SettingValidationRequest $request)
     {
-        return $this->setting->churchName($slug, $request);
+        return $this->setting->churchName($request);
     }
 
     public function sliderImageUpload(Request $request)

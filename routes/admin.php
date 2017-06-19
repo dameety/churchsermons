@@ -105,13 +105,12 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('setting/api', 'AdminSettingsApiController@index');
     Route::post('setting/applogo', 'AdminSettingsApiController@appLogo');
     Route::patch('setting/api/mail/update/{slug}', 'AdminSettingsApiController@updateWelcomeEmail');
-    // Route::patch('/setting/api/key/{slug}', 'AdminSettingsApiController@saveStripeKey');
     Route::patch('/setting/api/plan/{slug}', 'AdminSettingsApiController@saveStripePlan');
-    Route::patch('/setting/api/email/{slug}', 'AdminSettingsApiController@saveContactEmail');
-    Route::patch('/setting/api/name/{slug}', 'AdminSettingsApiController@saveChurchName');
+    Route::post('/setting/api/email', 'AdminSettingsApiController@saveContactEmail');
+    Route::post('/setting/api/name', 'AdminSettingsApiController@saveChurchName');
     Route::get('setting/api/stripekey', 'AdminSettingsApiController@getStripeKey');
     Route::post('setting/api/key', 'AdminSettingsApiController@saveStripeKey');
-
+    Route::get('setting/api/name-email', 'AdminSettingsApiController@nameAndEmail');
 
 
 

@@ -44,13 +44,12 @@ class SettingValidationRequest extends FormRequest
                 'plan_currency' => 'required',
                 'plan_amount' => 'required|numeric',
                 'plan_interval' => 'required',
-                'plan_description' => 'required|max:22'
             ];
-        } elseif ($this->is('admin/setting/api/email/{slug}')) {
+        } elseif ($this->is('admin/setting/api/email')) {
             return [
                 'contactEmail' => 'required'
             ];
-        } elseif ($this->is('admin/setting/api/name/{slug}')) {
+        } elseif ($this->is('admin/setting/api/name')) {
             return [
                 'churchName' => 'required'
             ];
