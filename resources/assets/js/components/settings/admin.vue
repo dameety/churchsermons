@@ -18,8 +18,8 @@
                         <form class="form-horizontal" @submit.prevent="saveChurchName()">
 
                             <div class="form-group">
-                                <input type="text" v-model="details.name" name="churchName" required="required" maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['churchName']" class="inputError">{{ formErrors['churchName'] }}</span>
+                                <input type="text" v-model="details.name" name="churchName" maxlength="50" class="form-control input-sm" required>
+                                <span v-if="formErrors.churchName" class="inputError">{{ formErrors.churchName[0] }}</span>
                             </div>
 
                             <div class="form-actions">
@@ -28,8 +28,6 @@
 
                         </form>
 
-                    </div>
-                    <div class="card-footer">
                     </div>
                 </div>
         		<!-- Church Name -->
@@ -42,11 +40,11 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" @submit.prevent="saveContactEmail(settings.slug)">
+                        <form class="form-horizontal" @submit.prevent="saveContactEmail">
 
                             <div class="form-group">
-                                <input type="text" v-model="details.email" name="contactEmail" required="required" maxlength="30" class="form-control input-sm">
-                                <span v-if="formErrors['contactEmail']" class="inputError">{{ formErrors['contactEmail'] }}</span>
+                                <input type="email" v-model="details.email" name="contactEmail" maxlength="30" class="form-control input-sm" required>
+                                <span v-if="formErrors.contactEmail" class="inputError">{{ formErrors.contactEmail[0] }}</span>
                             </div>
 
                             <div class="form-actions">
@@ -55,8 +53,6 @@
 
                         </form>
 
-                    </div>
-                    <div class="card-footer">
                     </div>
                 </div>
         		<!-- Contact Email -->
@@ -72,8 +68,8 @@
                         <form class="form-horizontal" method="post" @submit.prevent="saveStripeKey">
 
                             <div class="form-group">
-                                <input type="text" v-model="details.stripeKey" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
-                                <span v-if="formErrors['api_key']" class="inputError">{{ formErrors['api_key'] }}</span>
+                                <input type="text" v-model="details.stripeKey" name="api_key" minlength="32" maxlength="32" class="form-control input-sm" required>
+                                <span v-if="formErrors.api_key" class="inputError">{{ formErrors.api_key[0] }}</span>
                             </div>
 
                             <div class="form-actions">
@@ -82,8 +78,6 @@
 
                         </form>
 
-                    </div>
-                    <div class="card-footer">
                     </div>
                 </div>
         		<!-- stripe api key -->
@@ -100,40 +94,40 @@
 
 		            		<div class="form-group">
 
-					            <label for="Plan id">Plan id</label>
-                                <input type="text" v-model="settings.plan_id" name="plan_id" required="required" maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['plan_id']" class="inputError">{{ formErrors['plan_id'] }}</span>
+					            <label for="plan_id">Plan id</label>
+                                <input type="text" v-model="settings.plan_id" name="plan_id" maxlength="20" class="form-control input-sm" required>
+                                <span v-if="formErrors.plan_id" class="inputError">{{ formErrors.plan_id[0] }}</span>
 
                             </div>
 
 		            		<div class="form-group">
 
-					            <label for="Plan Name">Plan Name</label>
-                                <input type="text" v-model="settings.plan_name" name="plan_name" required="required" maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['plan_name']" class="inputError">{{ formErrors['plan_name'] }}</span>
+					            <label for="plan_name">Plan Name</label>
+                                <input type="text" v-model="settings.plan_name" name="plan_name" maxlength="20" class="form-control input-sm" required>
+                                <span v-if="formErrors.plan_name" class="inputError">{{ formErrors.plan_name[0] }}</span>
 
                             </div>
 
 		            		<div class="form-group">
 
-					            <label for="Plan Amount">Plan Amount</label>
-                                <input type="text" v-model="settings.plan_amount" name="plan_amount" required="required" maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['plan_amount']" class="inputError">{{ formErrors['plan_amount'] }}</span>
+					            <label for="plan_amount">Plan Amount</label>
+                                <input type="text" v-model="settings.plan_amount" name="plan_amount" maxlength="20" class="form-control input-sm" required>
+                                <span v-if="formErrors.plan_amount" class="inputError">{{ formErrors.plan_amount[0] }}</span>
 
                             </div>
 
 		            		<div class="form-group">
 
-					            <label for="Plan Currency">Plan Currency</label>
-                                <input type="text" v-model="settings.plan_currency" name="plan_currency" required="required" placeholder="3-letter ISO code for currency." maxlength="20" class="form-control input-sm">
-                                <span v-if="formErrors['plan-currency']" class="inputError">{{ formErrors['plan_currency'] }}</span>
+					            <label for="plan_currency">Plan Currency</label>
+                                <input type="text" v-model="settings.plan_currency" name="plan_currency" placeholder="3-letter ISO code for currency." maxlength="20" class="form-control input-sm" required>
+                                <span v-if="formErrors.plan_currency" class="inputError">{{ formErrors.plan_currency[0] }}</span>
 
                             </div>
 
 		            		<div class="form-group">
 
-					            <label for="Plan Interval">Plan Interval</label>
-					            <select v-model="settings.plan_interval" class="form-control" name="plan_interval" required="required">
+					            <label for="plan_interval">Plan Interval</label>
+					            <select v-model="settings.plan_interval" class="form-control" name="plan_interval" required>
                                     <option value="year"> Yearly </option>
                                     <option value="month"> MonthLy </option>
                                     <option value="week"> Weekly </option>
@@ -148,11 +142,7 @@
                         </form>
 
                     </div>
-                    <div class="card-footer">
-                    </div>
                 </div>
-        		<!-- </div> -->
-
 
         		<!-- email details -->
 	            <div class="card">
@@ -165,17 +155,17 @@
 
 		            		<div class="form-group">
 
-					            <label for="Welcome Email Heading">Welcome Email Heading</label>
-                                <input type="text" v-model="settings.welcomeEmailHeading" name="welcomeEmailHeading" required="required" maxlength="40" class="form-control input-sm">
-                                <span v-if="formErrors['welcomeEmailHeading']" class="inputError">{{ formErrors['welcomeEmailHeading'] }}</span>
+					            <label for="welcomeEmailHeading">Welcome Email Heading</label>
+                                <input type="text" v-model="settings.welcomeEmailHeading" name="welcomeEmailHeading" maxlength="40" class="form-control input-sm" required>
+                                <span v-if="formErrors.welcomeEmailHeading" class="inputError">{{ formErrors.welcomeEmailHeading[0] }}</span>
 
                             </div>
 
                             <div class="form-group">
 
-					            <label for="Welcome Email Body">Welcome Email Body</label>
-                            	<textarea type="text" v-model="settings.welcomeEmailBody" name="welcomeEmailBody" required="required" class="form-control" rows="7"> </textarea>
-                                <span v-if="formErrors['welcomeEmailBody']" class="inputError">{{ formErrors['welcomeEmailBody'] }}</span>
+					            <label for="welcomeEmailBody">Welcome Email Body</label>
+                            	<textarea type="text" v-model="settings.welcomeEmailBody" name="welcomeEmailBody" class="form-control" rows="7" required> </textarea>
+                                <span v-if="formErrors.welcomeEmailBody" class="inputError">{{ formErrors.welcomeEmailBody[0] }}</span>
 
                             </div>
 
@@ -185,8 +175,6 @@
 
                         </form>
 
-                    </div>
-                    <div class="card-footer">
                     </div>
                 </div>
 
@@ -228,10 +216,9 @@
             },
 
             fetchNameAndEmail () {
-                this.$http.get('/admin/setting/api/name-email').then((response) => {
+                this.$http.get('/admin/setting/api/details').then((response) => {
                     this.details = response.data;
                 })
-
             },
 
         	updateWelcomeEmail: function (slug) {
@@ -279,9 +266,11 @@
 
         	},
 
-        	saveContactEmail: function (slug) {
+        	saveContactEmail () {
+
                 let email = this.details.email;
                 this.$http.post('/admin/setting/api/email', {'contactEmail': email}).then((response) => {
+
                     this.$swal({
                         title: 'Great!',
                         text: 'Your contact email has been saved',
@@ -290,7 +279,8 @@
                     })
 
                 }).catch(errors => {
-                    this.formErrors = errors.response.data;
+                    let errorss = errors.response.data;
+                    this.formErrors = errorss;
                 });
 
         	},
