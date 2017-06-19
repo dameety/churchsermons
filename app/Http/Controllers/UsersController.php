@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Redirect;
 use Exception;
-use App\Setting;
+use App\Models\Setting;
 use App\Models\User;
 use Stripe\Error\Card;
 use Illuminate\Http\Request;

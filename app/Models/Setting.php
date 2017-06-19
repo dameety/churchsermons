@@ -78,8 +78,8 @@ class Setting extends Model implements HasMediaConversions
 
     public static function getNameEmailStripeKey()
     {
-        $collection = collect(['stripeKey', 'name', 'email']);
-        $data = $collection->combine([env('STRIPE_KEY'), env('APP_NAME'), env('APP_EMAIL')]);
-        return $data;
+        $keys = collect(['stripeKey', 'name', 'email']);
+        $details = $keys->combine([env('STRIPE_KEY'), env('APP_NAME'), env('APP_EMAIL')]);
+        return $details;
     }
 }
