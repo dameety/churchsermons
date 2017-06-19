@@ -47,11 +47,11 @@ class SettingValidationRequest extends FormRequest
             ];
         } elseif ($this->is('admin/setting/api/email')) {
             return [
-                'contactEmail' => 'required'
+                'contactEmail' => 'required|email|max:30'
             ];
         } elseif ($this->is('admin/setting/api/name')) {
             return [
-                'churchName' => 'required'
+                'churchName' => 'required|max:50'
             ];
         } elseif ($this->is('admin/setting/api/slider/upload')) {
             return [
