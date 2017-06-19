@@ -69,10 +69,10 @@
                     </div>
                     <div class="card-block">
 
-                        <form class="form-horizontal" @submit.prevent="saveStripeKey(settings.slug)">
+                        <form class="form-horizontal" method="post" @submit.prevent="saveStripeKey">
 
                             <div class="form-group">
-                                <input type="text" v-model="settings.api_key" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
+                                <input type="text" v-model="api_key" name="api_key" required="required" minlength="32" maxlength="32" class="form-control input-sm">
                                 <span v-if="formErrors['api_key']" class="inputError">{{ formErrors['api_key'] }}</span>
                             </div>
 
@@ -209,24 +209,32 @@
 
 	export default {
 
-		data: function() {
+		data () {
             return {
             	settings: {},
             	formErrors: {},
+                api_key: ""
             };
         },
 
-        mounted: function () {
+        mounted () {
             this.fetchSettings();
+            this.fetchStripeKey();
         },
 
         methods: {
 
-        	fetchSettings: function () {
+        	fetchSettings () {
                 this.$http.get('/admin/setting/api').then((response) => {
                     this.settings = response.data;
                 });
         	},
+
+            fetchStripeKey () {
+                this.$http.get('/admin/setting/api/stripekey').then((response) => {
+                    this.api_key = response.data;
+                });
+            },
 
         	updateWelcomeEmail: function (slug) {
         		var setting = this.settings;
@@ -240,12 +248,12 @@
                 }).catch(errors => {
                     this.formErrors = errors.response.data;
                 });
-
         	},
 
-        	saveStripeKey : function (slug) {
-        		var setting = this.settings;
-                this.$http.patch('/admin/setting/api/key/' + slug, setting).then((response) => {
+            saveStripeKey () {
+
+                let apiKey = this.api_key;
+                this.$http.post('/admin/setting/api/key', {api_key: apiKey}).then((response) => {
                     this.$swal({
                         title: 'Great!',
                         text: 'Your stripe key has been saved',
@@ -256,8 +264,7 @@
                     this.formErrors = errors.response.data;
                 });
 
-        	},
-
+            },
 
         	saveStripePlan: function (slug) {
         		var setting = this.settings;

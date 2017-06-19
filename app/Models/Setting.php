@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
+use Brotzka\DotenvEditor\DotenvEditor;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -54,5 +55,13 @@ class Setting extends Model implements HasMediaConversions
             mkdir(public_path($folder), @755, true);
         }
         return public_path($folder);
+    }
+
+    public static function setStripeKey($key)
+    {
+        $env = new DotenvEditor();
+        $env->changeEnv([
+            'STRIPE_KEY'   => $key
+        ]);
     }
 }

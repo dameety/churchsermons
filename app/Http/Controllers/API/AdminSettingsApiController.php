@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Cartalyst\Stripe\Stripe;
 use App\Http\Controllers\Controller;
@@ -38,9 +39,14 @@ class AdminSettingsApiController extends Controller
         return $this->setting->emailContent($slug, $request);
     }
 
-    public function saveStripeKey($slug, SettingValidationRequest $request)
+    public function saveStripeKey(SettingValidationRequest $request)
     {
-        return $this->setting->stripeKey($slug, $request);
+        return $this->setting->stripeKey($request);
+    }
+
+    public function getStripeKey()
+    {
+        return $this->setting->getStripeKey();
     }
 
     public function saveStripePlan($slug, SettingValidationRequest $request)

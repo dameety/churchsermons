@@ -97,19 +97,22 @@ Route::group(['namespace' => 'API'], function () {
 
 
 
+    // get all slider images
+    Route::get('/setting/api/slider', 'AdminSettingsApiController@getSliderImages');
+    Route::post('setting/api/slider/upload', 'AdminSettingsApiController@sliderImageUpload');
+    Route::post('setting/api/slider/remove', 'AdminSettingsApiController@deleteSliderImage');
+
     Route::get('setting/api', 'AdminSettingsApiController@index');
     Route::post('setting/applogo', 'AdminSettingsApiController@appLogo');
     Route::patch('setting/api/mail/update/{slug}', 'AdminSettingsApiController@updateWelcomeEmail');
-    Route::patch('/setting/api/key/{slug}', 'AdminSettingsApiController@saveStripeKey');
+    // Route::patch('/setting/api/key/{slug}', 'AdminSettingsApiController@saveStripeKey');
     Route::patch('/setting/api/plan/{slug}', 'AdminSettingsApiController@saveStripePlan');
     Route::patch('/setting/api/email/{slug}', 'AdminSettingsApiController@saveContactEmail');
     Route::patch('/setting/api/name/{slug}', 'AdminSettingsApiController@saveChurchName');
+    Route::get('setting/api/stripekey', 'AdminSettingsApiController@getStripeKey');
+    Route::post('setting/api/key', 'AdminSettingsApiController@saveStripeKey');
 
 
-    // get all slider images
-    Route::get('/setting/api/slider', 'AdminSettingsApiController@getSliderImages');
-    Route::post('/setting/api/slider/upload', 'AdminSettingsApiController@sliderImageUpload');
-    Route::post('setting/api/slider/remove', 'AdminSettingsApiController@deleteSliderImage');
 
 
     // FOR STAGED SERMONS during upload process

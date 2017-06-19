@@ -12,7 +12,7 @@ interface SettingRepository
 
     public function stripePlan($slug, $request);
 
-    public function stripeKey($slug, $request);
+    public function stripeKey($request);
 
     public function contactEmail($slug, $request);
 

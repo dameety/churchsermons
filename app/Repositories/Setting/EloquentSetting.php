@@ -36,12 +36,16 @@ class EloquentSetting implements SettingRepository
         return response()->json(['status', 200]);
     }
 
-    public function stripeKey($slug, $request)
+    public function stripeKey($request)
     {
-        $setting = $this->getBySlug($slug);
-        $setting -> api_key = Crypt::encryptString($request-> api_key);
-        $setting -> save();
+        $this->setting->setStripeKey($request->api_key);
         return response()->json(['status', 200]);
+    }
+
+    public function getStripeKey()
+    {
+        $key = env('STRIPE_KEY');
+        return $key;
     }
 
     public function stripePlan($slug, $request)
