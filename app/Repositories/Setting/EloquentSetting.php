@@ -71,9 +71,9 @@ class EloquentSetting implements SettingRepository
         return response()->json(['status', 200]);
     }
 
-    public function  getNameAndEmail()
+    public function getDetails()
     {
-        return $this->setting->getNameAndEmail();
+        return $this->setting->getNameEmailStripeKey();
     }
 
     public function sliderIsLessThan5()

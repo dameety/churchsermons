@@ -110,7 +110,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('/setting/api/name', 'AdminSettingsApiController@saveChurchName');
     Route::get('setting/api/stripekey', 'AdminSettingsApiController@getStripeKey');
     Route::post('setting/api/key', 'AdminSettingsApiController@saveStripeKey');
-    Route::get('setting/api/name-email', 'AdminSettingsApiController@nameAndEmail');
+    Route::get('setting/api/details', 'AdminSettingsApiController@details');
 
 
 
