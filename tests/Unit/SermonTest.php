@@ -2,59 +2,54 @@
 
 namespace Tests\Unit;
 
-use App\Sermon;
 use Tests\TestCase;
+use App\Models\Sermon;
+use App\Models\Service;
+use App\Models\Category;
 use Faker\Factory as Faker;
+use Illuminate\Http\UploadedFile;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SermonTest extends TestCase
 {
-
-    public function testUploadsFolderExists() {
-
+    /** @test */
+    public function uploadsFolderExists()
+    {
         $folder  = 'uploads/';
         $this->assertFileExists(public_path($folder));
-
     }
 
-    public function testAddMediaToSermon () {
-
+    /** @test */
+    public function returnFalseIfWrongImageAdded()
+    {
         $path = public_path('img/sermon-image-for-test.jpg');
         $result = $this->sermon->addMediaToSermon($path);
-        $this->assertEquals(true, $result);
-
+        $this->assertFalse($result);
     }
 
-    public function testAddImageUrlToSermon () {
+    /** @test */
+    public function addImageToSermon()
+    {
+        $path = UploadedFile::fake()->image('sermonImage.jpg', 300, 150)->size(20);
+        $result = $this->newSermon->addMediaToSermon($path);
+        $this->assertTrue($result);
+    }
 
-        $path = public_path('img/sermon-image-for-test.jpg');
-        $sermon = $this->sermon;
+    /** @test */
+    public function addImageUrlToSavedSermon()
+    {
+        Image::make(public_path('uploads/testimage.jpg'))->resize(300, 200)->save(public_path('uploads/testimage.png'), 60);
+
+        $sermon = $this->newSermon;
+        $sermon-> addMediaToSermon(public_path('uploads/testimage.png'));
         $sermon->title = $this->faker->sentence($nbWords = 3, $variableNbWords = true);
-        $sermon->service_id = 2;
-        $sermon->category_id = 3;
-        $sermon -> addMediaToSermon($path);
+        $sermon->service_id = factory(Service::class)->create()->id;
+        $sermon->category_id = factory(Category::class)->create()->id;
         $sermon -> save();
+
         $result = Sermon::addImageUrlToSermon($sermon->slug);
-        $this->assertEquals(true, $result);
-
+        $this->assertTrue($result);
     }
-
-    public function testThatSermonImageCanBeUpdated () {
-
-        $path = public_path('img/sermon-image-for-test.jpg');
-        $sermon = $this->sermon;
-        $sermon->title = $this->faker->sentence($nbWords = 3, $variableNbWords = true);
-        $sermon->service_id = 2;
-        $sermon->category_id = 3;
-        $sermon -> addMediaToSermon($path);
-        $sermon -> save();
-        Sermon::addImageUrlToSermon($sermon->slug);
-
-        $result = Sermon::addImageUrlToUpdatedSermon($sermon->slug);
-        $this->assertEquals(true, $result);
-
-    }
-
-
 }

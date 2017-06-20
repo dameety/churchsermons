@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-// use Redirect;
-use App\Sermon; ///
+use App\Models\Sermon; ///
 use App\Models\Stagedsermon; ///
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
