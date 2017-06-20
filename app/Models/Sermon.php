@@ -91,7 +91,11 @@ class Sermon extends Model implements HasMedia
 
     public function addMediaToSermon($path)
     {
+        if (!file_exists($path)) {
+            return false;
+        }
         $this->addMedia($path)->toMediaCollection('sermon_image');
+        return true;
     }
 
     public static function addImageUrlToSermon($slug)
