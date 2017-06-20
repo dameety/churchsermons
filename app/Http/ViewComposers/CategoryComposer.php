@@ -22,6 +22,6 @@ class CategoryComposer
 
     public function filter(View $view)
     {
-        $view->with('categories', $this->category->sermonCategoryFilters());
+        // $view->with('categories', $this->category->sermonCategoryFilters());
     }
 }

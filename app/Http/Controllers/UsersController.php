@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Session;
 use Redirect;
 use Exception;
-use App\Models\Setting;
 use App\Models\User;
 use Stripe\Error\Card;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Cartalyst\Stripe\Stripe;
 use App\Repositories\User\UserRepository;
+use App\Http\Requests\UserValidationRequest;
 
 class UsersController extends Controller
 {
@@ -23,7 +24,6 @@ class UsersController extends Controller
 
     public function __construct(UserRepository $user)
     {
-        // $this->user = Auth::user();
         $this->user = $user;
         $setting = Setting::first();
         $this->plan = $setting->plan_id;
@@ -38,37 +38,25 @@ class UsersController extends Controller
 
     public function profile()
     {
-        $user = $this->user->authUser;
-        return view('frontend.pages.profile', compact('user'));
+        return view('frontend.pages.profile', [
+            'user' => $this->user->authUser;
+        ]);
     }
 
-    public function profileUpdate(Request $request)
+    public function profileUpdate(UserValidatonRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-        ]);
-
-        $user = User::whereId(Auth::id())->first();
-
         if ($request->password !== null) {
-            $user->name = $request->name;
-            $user->email = Auth::user()->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
-            flash('Your profile has been updated successfully.');
-            return back();
-        } elseif ($request->password === null) {
-            $user->name = $request->name;
-            $user->email = Auth::user()->email;
-            $user->save();
-            flash('Your profile has been updated successfully.');
-            return back();
+            $this->user->updateWithPassword($request);
+        } else {
+            $this->user->update($request);
         }
+        flash('Your profile has been updated successfully.');
+        return back();
     }
 
     public function getUserCards()
     {
-        $cards = User::getUserCards();
+        $cards = $this->user->authUser()->getUserCards();
         if ($cards === "" || $cards === null) {
             return view('frontend.pages.nocard');
         } else {
@@ -187,7 +175,8 @@ class UsersController extends Controller
         }
     } // END OF THE CONTROLLER
 
-    public function cancelSubscription(Request $request) {
+    public function cancelSubscription(Request $request)
+    {
         $user = Auth::user();
         $setting = Setting::first();
         // validate user input
@@ -195,17 +184,14 @@ class UsersController extends Controller
             'deactivate' => 'required',
         ]);
 
-        if ( $user->subscriptionStatus === "cancelled" ) {
-
+        if ($user->subscriptionStatus === "cancelled") {
             flash('Unsuccessful Operation. You have no active subscription to cancel.')->error()->important();
             return back();
-
         }
-        if( $request->deactivate === "yes" ) {
+        if ($request->deactivate === "yes") {
             //cancel sub
             $stripe = new Stripe($setting->api_key);
             try {
-
                 $subscription = $stripe->subscriptions()->cancel($user->customer_id, $user->subscription_id);
                 // upate user back to Standard user
                 $user->permission = "Standard";
@@ -217,7 +203,6 @@ class UsersController extends Controller
 
                 flash('Successful Operation. Your subscription has been canceled.')->success()->important();
                 return back();
-
             } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
                 Session::flash('cardError', $e->getMessage());
                 return back();
@@ -228,50 +213,39 @@ class UsersController extends Controller
                 Session::flash('serverError', $e->getMessage());
                 return back();
             }
-
         } else {
             flash('Unsuccessful Operation. Please choose yes to cancel your subscription.')->error()->important();
             return back();
         }
-
-
     }
 
-
-    public function reactivateSubscription () {
-
+    public function reactivateSubscription()
+    {
         $user = Auth::user();
         $setting = Setting::first();
-
         $stripe = new Stripe($setting->api_key);
 
         try {
-
             // get the subscription and check if its still active
             $subscription = $stripe->subscriptions()->find($user->customer_id, $user->subscription_id);
-            if( $subscription['status'] === "active" ) {
-
+            if ($subscription['status'] === "active") {
                 $subscription = $stripe->subscriptions()->reactivate($user->customer_id, $user->subscription_id);
-
                 // upgrade user to plan
                 $user->permission = $setting->plan_name;
                 $user->subscriptionStatus = "active";
                 $user->save();
-
-
             } else {
                 // create a new one if its not active how
                 // check if user has a card on site
                 $customer = $stripe->customers()->find($user->customer_id);
                 $cardId = $customer['default_source'];
-                if( isset($cardId ) ) {
+                if (isset($cardId)) {
                     // create new subscription using the found card
                     $subscription = $stripe->subscriptions()->create($user->customer_id, [
                         'plan' => $setting->plan_id,
                     ]);
                     // if created successfully...
                     if (isset($subscription['id'])) {
-
                         // update the user database
                         $user = Auth::user();
                         $user->subscription_id = $subscription['id'];
@@ -281,26 +255,17 @@ class UsersController extends Controller
 
                         flash('Successful Operation. Your account has been successfully reactivated. Enjoy.')->success()->important();
                         return back();
-
                     } else {
-
                         flash('Unsuccessful Operation. There was an issue reactivating your account. Please try again.')->error()->important();
                         return back();
-
                     }
-
-
                 } else { // do this if $cardId is not set ..
                     return redirect(route('upgradeAccount'));
                 }
-
-
             }
-
 
             flash('Successful Operation. Your subscription has been reactivated. Enjoy.')->success()->important();
             return back();
-
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -311,37 +276,29 @@ class UsersController extends Controller
             Session::flash('serverError', $e->getMessage());
             return back();
         }
-
-
     }
 
-
-
-    public function updateCard (Request $request, $id) {
-
+    public function updateCard(Request $request, $id)
+    {
         // validate user input
         $this->validate($request, [
             'exp_year' => 'required',
             'exp_month' => 'required'
         ]);
 
-
         $user = Auth::user();
         $setting = Setting::first();
 
         $stripe = new Stripe($setting->api_key);
 
         try {
-
             $card = $stripe->cards()->update($user->customer_id, $id, [
                 'exp_year' => $request->exp_year,
                 'exp_month' => $request->exp_month,
             ]);
 
-
             flash('Successful Operation. Your card details has been updated.')->success()->important();
             return back();
-
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -352,25 +309,19 @@ class UsersController extends Controller
             Session::flash('serverError', $e->getMessage());
             return back();
         }
-
     }
 
-
-    public function deleteCard (Request $request, $id) {
-
-
+    public function deleteCard(Request $request, $id)
+    {
         $user = Auth::user();
         $setting = Setting::first();
 
         $stripe = new Stripe($setting->api_key);
 
         try {
-
             $card = $stripe->cards()->delete($user->customer_id, $id);
-
             flash('Successful Operation. Your card has been deleted.')->success()->important();
             return back();
-
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -381,12 +332,10 @@ class UsersController extends Controller
             Session::flash('serverError', $e->getMessage());
             return back();
         }
-
     }
 
-
-    public function newCard (Request $request) {
-
+    public function newCard(Request $request)
+    {
         // validate user input
         $this->validate($request, [
             'cardNumber' => 'required',
@@ -395,14 +344,12 @@ class UsersController extends Controller
             'cvc' => 'required|digits:3',
         ]);
 
-
         //get stripe key from settings
         $setting = Setting::first();
         $stripe = new Stripe($setting->api_key);
 
 
         try {
-
             $token = $stripe->tokens()->create([
                 'card' => [
 
@@ -421,12 +368,10 @@ class UsersController extends Controller
 
             // create the card
             $card = $stripe->cards()->create($user->customer_id, $token['id']);
-
             if (isset($card['id'])) {
                 flash('Successful Operation. Your card has been added.')->success()->important();
                 return back();
             }
-
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
             return back();
@@ -437,9 +382,5 @@ class UsersController extends Controller
             Session::flash('serverError', $e->getMessage());
             return back();
         }
-
-
     }
-
-
 }

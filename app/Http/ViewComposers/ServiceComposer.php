@@ -22,6 +22,6 @@ class ServiceComposer
 
     public function filter(View $view)
     {
-        $view->with('services', $this->service->sermonServiceFilters());
+        // $view->with('services', $this->service->sermonServiceFilters());
     }
 }
