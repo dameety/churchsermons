@@ -32,10 +32,13 @@ class AdminSettingsApiController extends Controller
             return response($setting->getErrors(), 422);
         }
     }
-
-    public function nameAndEmail()
+    /**
+     * Get the app name, email, and stripe key
+     * to display in the settings page
+     */
+    public function details()
     {
-        return $this->setting->getNameAndEmail();
+        return $this->setting->getDetails();
     }
 
     public function updateWelcomeEmail($slug, SettingValidationRequest $request)

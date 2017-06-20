@@ -39,7 +39,7 @@ class UsersController extends Controller
     public function profile()
     {
         return view('frontend.pages.profile', [
-            'user' => $this->user->authUser;
+            'user' => $this->user->authUser
         ]);
     }
 
