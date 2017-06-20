@@ -76,7 +76,7 @@ class EloquentUser implements UserRepository
         return $user->save();
     }
 
-    public function updetWithPassword($request)
+    public function updateWithPassword($request)
     {
         $user = $this->authUser();
         $user->name = $request->name;

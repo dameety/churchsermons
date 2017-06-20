@@ -20,11 +20,11 @@ class SermonsController extends Controller
     protected $stagedsermon;
 
     public function __construct(
-        UserRepository $user
+        UserRepository $user,
         SermonRepository $sermon,
         ServiceRepository $service,
         CategoryRepository $category,
-        StagedsermonRepository $stagedsermon,
+        StagedsermonRepository $stagedsermon
     ) {
         $this->user = $user;
         $this->sermon = $sermon;
@@ -82,7 +82,7 @@ class SermonsController extends Controller
     public function allSermons()
     {
         return view('frontend.home', [
-            'sermons' => $this->sermon->get10Paginated();
+            'sermons' => $this->sermon->get10Paginated()
         ]);
     }
 
@@ -142,7 +142,7 @@ class SermonsController extends Controller
         return view('frontend.favourites', [
             'sermons' => $this->user->allUserFavourites(),
             'favCount' => $this->user->allUserFavouriteCount()
-        ])
+        ]);
     }
 
     public function favouriteDownload($slug)

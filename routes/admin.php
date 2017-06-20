@@ -5,7 +5,7 @@ Route::get('/home', 'AdminsController@home')->name('home');
 
 // all sermon routes below
 Route::get('/sermons', 'SermonsController@allSermonsPage')->name('allsermons_path');
-Route::get('/sermon/upload', 'SermonsController@uploadPage')->name('uploadPage');
+Route::get('/sermon/upload', 'SermonsController@uploadPage');
 Route::get('/sermon/{slug}/new', 'SermonsController@newSermonForm');
 Route::post('/sermon/new', 'SermonsController@saveNewSermon');
 Route::get('/sermon/{slug}/edit', 'SermonsController@editSermonPage');
@@ -65,13 +65,11 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('sermon/api/upload', 'SermonsApiController@upload');
     Route::delete('sermon/api/delete/{sermon}', 'SermonsApiController@deleteSermon');
     Route::get('sermon/api/details/{slug}', 'SermonsApiController@getSermonDetails');
-
-
     Route::get('sermon/download/{slug}', 'SermonsApiController@downloadSermon');
     Route::get('sermon/api/sermoncategory/{slug}', 'SermonsApiController@sermonCategory');
     Route::get('sermon/api/sermonservice/{slug}', 'SermonsApiController@sermonService');
     Route::get('sermon/api/service/{service}', 'ServicesApiController@sermonServiceFilter');
-    Route::get('sermon/api/category/{slug}', 'CategoriesApiController@sermonCategoryFilter');
+    Route::get('sermon/api/category/{category}', 'CategoriesApiController@sermonCategoryFilter');
 
 
 

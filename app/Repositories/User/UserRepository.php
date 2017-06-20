@@ -32,5 +32,5 @@ interface UserRepository
 
     public function allUserFavourites();
 
-    public function allUserFavouriteCount();
+    public function allUserFavouritesCount();
 }
