@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Admin::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Admin::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,7 +23,18 @@ $factory->define(App\Admin::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Service::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
@@ -32,11 +43,27 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Category::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'description' => $faker->text($maxNbChars = 200),
         'sermonCount' => $faker->randomDigitNotNull,
+    ];
+});
+
+$factory->define(App\Models\Sermon::class, function (Faker\Generator $faker) {
+
+    return [
+        'title' => $faker->sentence($nbWords = 4, $variableNbWords = true),
+        'preacher' => $faker->name,
+        'service_id' => function () {
+            return factory(App\Models\Service::class)->create()->id;
+        },
+        'category_id' => function () {
+            return factory(App\Models\Category::class)->create()->id;
+        },
+        'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'size' => $faker->randomDigitNotNull,
     ];
 });
