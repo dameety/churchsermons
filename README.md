@@ -1,6 +1,6 @@
 # Church Sermons
 
-Church sermons app is basically an app for churches to make available the messages preached in church for all members. This is built using the latest versions of laravel and vuejs.
+Church sermons app is an app for churches to make available the messages preached in church for all members. This is built using the latest versions of laravel and vuejs.
 
 
 ## License

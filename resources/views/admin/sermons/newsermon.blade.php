@@ -7,9 +7,9 @@
         <main class="main">
 
         <div class="breadcrumb">
-            <li class="breadcrumb-item">Creating A New Sermon</li> 
+            <li class="breadcrumb-item">Creating A New Sermon</li>
         </div>
-        
+
 
         <div class="col-sm-7 uk-margin-auto">
             <div class="aanimated fadeIn">
@@ -23,12 +23,12 @@
                         <div class="card-block">
                             <form method="POST" action="{{ url('/admin/sermon/new') }}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
-                                
+
                                 <input type="hidden" name="stagedsermonslug" value="{{ $slug }}">
 
                                 <div>
 
-                                    <div class="sermon-image-container">
+                                    <div class="form-group sermon-image-container">
                                         <vue-img-preview
                                             input-name="sermonImage"
                                         ></vue-img-preview>
@@ -52,11 +52,11 @@
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('preacher') }}</strong>
                                             </span>
-                                        @endif      
+                                        @endif
                                     </div>
 
                                     <div class="form-group {{ $errors->has('service_id') ? ' has-error' : '' }}">
-                                        <label for="Service">Service</label>                   
+                                        <label for="Service">Service</label>
                                         <select name="service_id" class="form-control input-sm">
                                             @foreach( $services as $service )
                                                 <option value="{{ $service->id }}"> {{{ $service->name }}}  </option>
@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">
-                                        <label for="Category">Category</label>                        
+                                        <label for="Category">Category</label>
                                         <select name="category_id" class="form-control input-sm">
                                             @foreach( $categories as $category )
                                                 <option value="{{ $category->id }}"> {{{ $category->name }}}  </option>
@@ -85,7 +85,7 @@
                                             <option value="premium">Premium</option>
                                         </select>
                                     </div>
-                                
+
                                 </div>
 
 
@@ -104,7 +104,7 @@
 
             </div>
         </div>
-        
+
     </main>
 
 @endsection

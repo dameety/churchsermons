@@ -5,12 +5,12 @@
             <li><span class="breadcrumb-item uk-badge"> &nbsp; Total Sermons: {{sermonsCount}} &nbsp;</span></li>
 
             <!-- Breadcrumb Menu-->
-            <li id="pagination" class="breadcrumb-menu" v-if="sermons != '' ">   
+            <li id="pagination" class="breadcrumb-menu" v-if="sermons != '' ">
                   <button class="btn btn-default btn-sm" @click="fetchSermons(pagination.prev_page_url)"
                           :disabled="!pagination.prev_page_url">
                       Previous
-                  </button> &nbsp; 
-                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                  </button> &nbsp;
+                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                   <button class="btn btn-default btn-sm" @click="fetchSermons(pagination.next_page_url)"
                           :disabled="!pagination.next_page_url">Next
                   </button>
@@ -24,10 +24,10 @@
                     <!-- filter and search inputs -->
                     <div class="card-block">
                         <div id="searchForm" class="col-lg-12 uk-animation-slide-top-medium">
-                            <div class="card">    
+                            <div class="card">
                                 <div class="row card-header">
                                     <div class="col-sm-3">
-                                        <label for="Service">Filter by Service</label> 
+                                        <label for="Service">Filter by Service</label>
                                         <select class="form-control input-sm" v-model="serviceSelected" @change="serviceSermonsFilter(serviceSelected)">
                                             <option v-for="service in services">
                                                 {{ service.name }}
@@ -35,7 +35,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <label for="Category">Filter by Category</label> 
+                                        <label for="Category">Filter by Category</label>
                                         <select class="form-control input-sm" v-model="categorySelected" @change="categorySermonsFilter(categorySelected)">
                                             <option v-for="category in categories">
                                                 {{ category.name }}
@@ -43,7 +43,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="Search">Search</label> 
+                                        <label for="Search">Search</label>
                                         <input type="text" class="form-control input-sm" v-model="searchWord">
                                     </div>
                                 </div>
@@ -111,14 +111,14 @@
                     <!-- bottom pagination -->
                     <div class="card-block" v-show="sermons != ''">
                         <div class="col-lg-12 uk-animation-slide-top-medium">
-                            <div class="card">    
+                            <div class="card">
                                 <div class="card-header">
                                     <div class="paginationn float-right">
                                         <button class="btn btn-default btn-sm" @click="fetchSermons(pagination.prev_page_url)"
                                                   :disabled="!pagination.prev_page_url">
                                               Previous
-                                          </button> &nbsp; 
-                                          <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                                          </button> &nbsp;
+                                          <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                                           <button class="btn btn-default btn-sm" @click="fetchSermons(pagination.next_page_url)"
                                                   :disabled="!pagination.next_page_url">Next
                                         </button>
@@ -138,7 +138,7 @@
                                 <h2 class="uk-modal-title">Sermon Details</h2>
                             </div>
                             <div class="uk-modal-body" uk-overflow-auto>
-                                
+
                                 <div class="row modalRowTop">
                                     <div class="col-md-4">
                                         <strong class="pull-right">Title:</strong>
@@ -243,7 +243,7 @@
 <script>
 
     export default {
-        
+
         data: function() {
 
             return {
@@ -259,22 +259,22 @@
                 oneSermonCategory: {},
                 oneSermonService: {},
                 // formErrors: {},
-                
+
                 oneSermonDetail: {},         // gotten from the sermonDetails function
                 sermonCategory: {},         //gotten from the sermonDetails function
-                sermonService: {},          //gotten from the sermonDetails function 
+                sermonService: {},          //gotten from the sermonDetails function
 
                 // data for the filter and search inputs
                 serviceSelected: "",
                 categorySelected: "",
-                searchWord: "", 
+                searchWord: "",
 
                 filterWord: "",
 
 
             }
-        }, 
- 
+        },
+
 
         mounted: function () {
             this.fetchSermons();        //saved in the sermons: []
@@ -282,16 +282,16 @@
             this.fetchServices();       //saved in the services: []
             this.fetchSermonsCount();
         },
-  
+
         methods: {
 
-            fetchSermonsCount: function () {
+            fetchSermonsCount () {
                 this.$http.get('/admin/sermon/api/count').then((response) => {
                     this.sermonsCount = response.data;
                 });
             },
 
-            fetchSermons: function (page_url) {
+            fetchSermons (page_url) {
 
                 let vm = this;
                 page_url = page_url || '/admin/sermon/api'
@@ -302,7 +302,7 @@
 
             },
 
-            makePagination: function(data){
+            makePagination (data){
 
                 let pagination = {
                     current_page: data.current_page,
@@ -315,11 +315,12 @@
 
             },
 
-            editSermon: function (sermon) {
+            editSermon (sermon) {
                 return `/admin/sermon/${sermon.slug}/edit`;
-            }, 
-            
-            deleteSermon: function(sermon) {
+            },
+
+            deleteSermon (sermon) {
+
                 const vm = this;
                 this.$swal({
                     title: 'Are you sure?',
@@ -328,45 +329,43 @@
                     showCancelButton: true,
                 }).then(function() {
                     vm.$http.delete('/admin/sermon/api/delete/' + sermon.slug).then((response) => {
-
-                        let index = vm.sermons.indexOf(sermon); 
+                        let index = vm.sermons.indexOf(sermon);
                         vm.$delete(vm.sermons, index);
-                        vm.sermonCount = vm.semonCount - 1;
+                        vm.semonCount--;
                     });
-
                 });
 
             },
 
-            sermonDetails: function (sermon) {
+            sermonDetails (sermon) {
 
                 this.oneSermonDetail = sermon;
                 this.$http.get('/admin/sermon/api/sermoncategory/' + sermon.slug)
-                    .then(function (response) {                        
-                        this.sermonCategory = response.body;
+                    .then((response) => {
+                        this.sermonCategory = response.data;
                     });
                 this.$http.get('/admin/sermon/api/sermonservice/' + sermon.slug)
-                    .then(function (response) {                        
-                        this.sermonService = response.body;
-                    }); 
+                    .then((response) => {
+                        this.sermonService = response.data;
+                    });
 
             },
 
-            fetchCategories: function () {
+            fetchCategories () {
                 this.$http.get('/admin/sermon/api/category').then((response) => {
-                    this.categories = response.body;
+                    this.categories = response.data;
                 });
             },
 
-            fetchServices: function () {
+            fetchServices () {
                 this.$http.get('/admin/sermon/api/service').then((response) => {
-                        this.services = response.body;
+                        this.services = response.data;
                     });
             },
 
             serviceSermonsFilter: function (serviceSelected) {
                 this.$http.get('/admin/sermon/api/service/' + serviceSelected).then((response) => {
-                    this.sermons = response.body;
+                    this.sermons = response.data;
                     this.filterWord = serviceSelected;
                 });
 
@@ -374,18 +373,18 @@
 
             categorySermonsFilter (categorySelected) {
                 this.$http.get('/admin/sermon/api/category/' + categorySelected).then((response) => {
-                    this.sermons = response.body;
+                    this.sermons = response.data;
                     this.filterWord = categorySelected;
                 });
             },
 
-            downloadSermon: function(slug) {
+            downloadSermon (slug) {
                 window.location.href = '/admin/sermon/download/' + slug;
                 this.fetchSermons();
             },
 
-            closefilterResult: function () {
-                location.reload(true)
+            closefilterResult () {
+                location.reload(true);
             },
 
 

@@ -1,13 +1,10 @@
 <?php
 
 
-
 Route::get('/', 'HomeController@welcome');
-
 
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
-
 
 // admin auth routes
 Route::group(['prefix' => 'admin'], function () {

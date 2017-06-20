@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Sermon;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

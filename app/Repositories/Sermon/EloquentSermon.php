@@ -124,8 +124,8 @@ class EloquentSermon implements SermonRepository
 
     public function delete($slug, $filePath)
     {
-        $this->getBySlug($slug)->delete();
         Storage::delete($filePath);
+        $this->getBySlug($slug)->delete();
         return response()->json(['deleted' => true]);
     }
 
@@ -159,7 +159,6 @@ class EloquentSermon implements SermonRepository
         $fname = $sermon->filename;
         $title = $sermon->title;
         $filePath = storage_path('app/'.$fname);
-
         return response()->download($filePath, $title);
     }
 
