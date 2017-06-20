@@ -2,12 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-
 
 class Favourite extends Model
 {
@@ -16,7 +14,7 @@ class Favourite extends Model
     use SluggableScopeHelpers;
 
     protected $fillable = [
-    	'title', 'preacher', 'sermon_id', 'user_id', 'datepreached', 'status', 'filename', 'path', 'slug',
+        'title', 'preacher', 'sermon_id', 'user_id', 'datepreached', 'status', 'filename', 'path', 'slug',
     ];
 
     public function sluggable()
@@ -33,16 +31,18 @@ class Favourite extends Model
         return 'slug';
     }
 
-    public function getUpdatedAtAttribute($value) {
-    	return Carbon::parse($value)->format('d-m-Y');
-	}
-    public function getCreatedAtAttribute($value) {
+    public function getUpdatedAtAttribute($value)
+    {
         return Carbon::parse($value)->format('d-m-Y');
     }
 
-	public function getdatepreachedAttribute($value) {
-	    return Carbon::parse($value)->format('d F Y');
-	}
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
 
-
+    public function getdatepreachedAttribute($value)
+    {
+        return Carbon::parse($value)->format('d F Y');
+    }
 }
