@@ -18,9 +18,19 @@ interface UserRepository
 
     public function typeFilter($type);
 
-    public function update($slug, $request);
+    public function update($request);
+
+    public function updateWithPassword($request);
 
     public function delete($slug);
 
     public function changePassword($slug, $request);
+
+    public function attachFavourite($id);
+
+    public function detachFavourite($id);
+
+    public function allUserFavourites();
+
+    public function allUserFavouriteCount();
 }

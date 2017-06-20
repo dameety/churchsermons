@@ -2,8 +2,8 @@
 
 namespace App\Repositories\User;
 
-use Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\User\UserRepository;
 
 class EloquentUser implements UserRepository
@@ -45,11 +45,44 @@ class EloquentUser implements UserRepository
 
     public function authUser()
     {
-        return $this->auth->user;
+        return $this->auth->user();
     }
 
-    public function update($slug, $request)
+    public function attachFavourite($id)
     {
+        return $this->authUser()->favourites()->attach($id);
+    }
+
+    public function detachFavourite($id)
+    {
+        return $this->authUser()->favourites()->detach($id);
+    }
+
+    public function allUserFavourites()
+    {
+        return $this->authUser()->favourites;
+    }
+
+    public function allUserFavouritesCount()
+    {
+        return $this->authUser()->favourites()->count();
+    }
+
+    public function update($request)
+    {
+        $user = $this->authUser();
+        $user->name = $request->name;
+        $user->email = $this->authUser()->email;
+        return $user->save();
+    }
+
+    public function updetWithPassword($request)
+    {
+        $user = $this->authUser();
+        $user->name = $request->name;
+        $user->email = $this->authUser()->email;
+        $user->password = bcrypt($request->password);
+        return $user->save();
     }
 
     public function changePassword($slug, $request)

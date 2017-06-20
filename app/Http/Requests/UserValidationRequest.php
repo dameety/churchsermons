@@ -34,5 +34,11 @@ class UserValidationRequest extends FormRequest
                 'password' => 'required|min:8'
             ];
         }
+
+        if ($this->is('/user/profile/update')) {
+            return [
+                'name' => 'required|string'
+            ];
+        }
     }
 }
