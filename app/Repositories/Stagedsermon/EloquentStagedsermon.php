@@ -33,28 +33,21 @@ class EloquentStagedsermon implements StagedsermonRepository
 
     public function create($request)
     {
-        $sermonFile = request()->file('file');
-        foreach ($sermonFile as $file) {
-            $staging = $this->stagedsermon;
-            $staging-> title = $file -> getClientOriginalName();
-            $staging-> size = $file -> getClientsize();
-            $staging-> type = $file -> getClientOriginalExtension();
-            $staging-> filename = $file ->store('sermons');
-            $file ->store('sermons');
-            $staging->save();
-            return response()->json([
-                'uploaded' => true
-            ]);
-        }
+        $file = request()->file('file');
+        $staging = $this->stagedsermon;
+        $staging-> title = $file -> getClientOriginalName();
+        $staging-> size = $file -> getClientsize();
+        $staging-> type = $file -> getClientOriginalExtension();
+        $staging-> filename = $file ->store('sermons');
+        $staging->save();
+        return response()->json(['uploaded' => true]);
     }
 
     public function delete($slug, $filePath)
     {
-        $this->getBySlug($slug)->delete();
         Storage::delete($filePath);
-        return response()->json([
-                'deleted' => true
-            ]);
+        $this->getBySlug($slug)->delete();
+        return response()->json(['deleted' => true]);
     }
 
     public function countAll()

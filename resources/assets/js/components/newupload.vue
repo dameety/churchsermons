@@ -5,7 +5,7 @@
         <div uk-sticky="offset: 54; show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom" class="breadcrumb">
             <li><span class="breadcrumb-item uk-badge"> &nbsp; Total Sermons: {{sermonsCount}} &nbsp;</span></li>
         </div>
-		
+
 		<div class="col-sm-7 uk-margin-auto">
 	   		<div class="animated fadeIn">
 
@@ -13,21 +13,19 @@
                 <!-- the dropzone area -->
 	    		<div class="row">
 
-
 	    			<div id="uploadForm" class="col-lg-12" v-show="!newSermonForm">
-	                    <div class="card">    
+	                    <div class="card">
 	                        <div class="card-header">
 
-								<!-- visit this link for docs -->
 								<dropzone
 
-									ref="dropzone"	
+									ref="dropzone"
 									id= "dropzoneId"
-									:useCustomDropzoneOptions=true 
-									:dropzoneOptions="uploadOptions"
+									:useCustomDropzoneOptions=true
+									:dropzone-options="uploadOptions"
 									url="/admin/sermon/api/upload"
 									v-on:vdropzone-success="showSuccess">
-										
+
 								</dropzone>
 
 	                        </div>
@@ -40,8 +38,7 @@
                 <!-- list of all staged sermons -->
 	        	<div class="row">
 	        		<div class="col-lg-12" v-show="!newSermonForm">
-	                	
-	                	<!-- all the staged sermons -->
+
                         <div class="card">
                             <table class="table table-hover table-outline mb-0">
                                 <thead class="thead-default">
@@ -59,7 +56,7 @@
                                                 <img src="/img/audioImage.png" class="img-avatar" alt="sermon audio logo">
                                             </div>
                                         </td>
-                                        
+
                                         <a :href="sermonUrl(sermon)" class="sermontitle">
                                             <td id="stagedSermonTitle">{{ sermon.title }}</td>
                                         </a>
@@ -83,8 +80,8 @@
                                 <button class="btn btn-default btn-sm" @click="fetchStagedSermons(pagination.prev_page_url)"
                                           :disabled="!pagination.prev_page_url">
                                       Previous
-                                  </button> &nbsp; 
-                                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                                  </button> &nbsp;
+                                  <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                                   <button class="btn btn-default btn-sm" @click="fetchStagedSermons(pagination.next_page_url)"
                                           :disabled="!pagination.next_page_url">Next
                                 </button>
@@ -94,47 +91,43 @@
                     </div>
 	        	</div>
 
-
-
 	    	</div>
 	    </div>
-	    
+
 	</main>
 </template>
 
 <script>
 
 import Dropzone from 'vue2-dropzone'
-// import vueImgPreview from 'vue-img-preview'
 
-	export default {   
+	export default {
 
 	    components: {
+
 	    	Dropzone,
-      //       vueImgPreview
 
 	    },
 
 		data: function() {
 			return {
-				
+
 				// for dropzone
 				uploadOptions: {
-					maxFiles: 5,	
+					maxFiles: 5,
                     dictDefaultMessage: "Step 1: Drop sermon files here to begin upload",
-					maxFilesize: 120,  
+					maxFileSizeInMB: 500,
 					uploadMultiple: true,
 					parallelUploads: true,
-					addRemoveLinks: true,
 					acceptedFiles: 'audio/*',
 					headers: {'X-CSRF-TOKEN': Laravel.csrfToken},
-					
+
 				},
 
                 sermonsCount: "",
 				stagedSermons: [],
 				pagination: {},
-				sermonToComplete: "",				
+				sermonToComplete: "",
 
                 services: [],           /*used in the select input*/
 				categories: [],         /*using the getAllCategories() and select input*/
@@ -151,9 +144,9 @@ import Dropzone from 'vue2-dropzone'
                     sermonImage: ""
 	            },
                 newSermonForm: false,
-        
+
 	            formErrors:[],
-                
+
                 galleryImages: [],
                 imgeSrc: "",
 
@@ -190,7 +183,7 @@ import Dropzone from 'vue2-dropzone'
 
 			},
 
-			// fill the form with the sermon title to 
+			// fill the form with the sermon title to
 			// be completed
 			fillStagedSermon: function (sermon) {
 				this.newSermonForm = true;
@@ -216,7 +209,7 @@ import Dropzone from 'vue2-dropzone'
             completeSermonUpload: function () {
                 var sermon = this.newSermon
                 this.formErrors = '';
-                                        
+
 
                 this.$http.post('/admin/sermon/api/upload/fill', sermon).then((response) => {
                     this.newSermon = {
@@ -231,10 +224,10 @@ import Dropzone from 'vue2-dropzone'
                         type: 'success',
                         timer: 1500,
                     })
-                }).catch( errors => { 
+                }).catch( errors => {
                     this.formErrors = errors.response.data;
                     console.log(errors.response.data);
-                });                    
+                });
 
             },
 
@@ -319,7 +312,7 @@ import Dropzone from 'vue2-dropzone'
     }
 
 	.progress-indicator {
-		
+
 		height: 20px;  /* Can be anything */
 		position: relative;
 		background: green;
