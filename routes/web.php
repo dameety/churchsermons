@@ -3,6 +3,8 @@
 
 Route::get('/', 'HomeController@welcome');
 
+Route::get('/home', 'HomeController@welcome');
+
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -20,7 +22,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
-
 });
 
 Route::get('/admin', function () {
