@@ -17,7 +17,7 @@ class SermonTest extends TestCase
     /** @test */
     public function uploadsFolderExists()
     {
-        $folder  = 'uploads/';
+        $folder = 'uploads/';
         $this->assertFileExists(public_path($folder));
     }
 

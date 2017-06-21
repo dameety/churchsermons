@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+import VeeValidate from 'vee-validate';
 import Vue2Filters from 'vue2-filters';
 import VueSweetAlert from 'vue-sweetalert';
 import {vueImgPreview} from 'vue-img-preview';
@@ -7,6 +8,7 @@ import {vueImgPreview} from 'vue-img-preview';
 window.Vue = require('vue');
 
 Vue.use(Vue2Filters);
+Vue.use(VeeValidate);
 Vue.use(VueSweetAlert);
 
 Vue.prototype.$http = axios;
