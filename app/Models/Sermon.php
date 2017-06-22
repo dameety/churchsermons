@@ -63,16 +63,21 @@ class Sermon extends Model implements HasMedia
         return Carbon::parse($value)->format('d F Y');
     }
 
-    public static function saveSermonImage($request)
+    public static function createUploadsFolder()
     {
-
-        $sermonImage = request()->file('sermonImage');
         $folder  = 'uploads/';
-        $fileName = uniqid() . '.' . $sermonImage->getClientOriginalExtension();
-
         if (!file_exists(public_path($folder))) {
             mkdir(public_path($folder), @755, true);
         }
+        return public_path($folder);
+    }
+
+    public static function saveSermonImage($request)
+    {
+        $folder  = Sermon::createUploadsFolder();
+
+        $sermonImage = request()->file('sermonImage');
+        $fileName = uniqid() . '.' . $sermonImage->getClientOriginalExtension();
 
         $savedFile = Image::make($sermonImage)
             ->resize(400, null, function ($constraint) {
