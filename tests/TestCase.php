@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Sermon;
 use Faker\Factory as Faker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -16,9 +17,10 @@ abstract class TestCase extends BaseTestCase
     use DatabaseTransactions;
 
     protected $user;
+    protected $admin;
     protected $faker;
-    protected $newUser;
     protected $sermon;
+    protected $newUser;
     protected $newSermon;
 
     public function setUp()
@@ -28,6 +30,7 @@ abstract class TestCase extends BaseTestCase
         $this-> newSermon = new Sermon;
         $this ->faker = Faker::create();
         $this->user = factory(User::class)->create();
+        $this->admin = factory(Admin::class)->create();
         $this -> sermon = factory(Sermon::class)->create();
     }
 
