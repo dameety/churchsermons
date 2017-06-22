@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\Admin;
+use App\Models\Category;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -13,11 +15,10 @@ class CategoryCreationTest extends TestCase
     /** @test */
     public function creatingACategoryWorks()
     {
-        $response = $this->actingAs($this->admin)->call('POST', '/admin/category/api/new', [
-            'name' => $this->faker->sentence($nbWords = 3, $variableNbWords = true),
+        $response = $this->call('POST', '/admin/category/api/new', [
+            'name' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
-        // dd($response->getContent());
 
         $response->assertStatus(200)
             ->assertJson(['created' => true]);
@@ -27,7 +28,6 @@ class CategoryCreationTest extends TestCase
     public function categoryNameIsRequired()
     {
         $response = $this->call('POST', '/admin/category/api/new', [
-
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
@@ -35,15 +35,37 @@ class CategoryCreationTest extends TestCase
     }
 
     /** @test */
-    // public function categoryNameMustBeUnique()
-    // {
-    //     $name = $this->faker->sentence($nbWords = 3, $variableNbWords = true);
-    //     $response = $this->call('POST', '/admin/category/api/new', [
-    //         'name' => $name,
-    //         'description' => $this->faker->text($maxNbChars = 200),
-    //     ]);
+    public function categoryNameMustBeUnique()
+    {
+        $category = factory(Category::class)->create();
 
-    //     dd($response->getContent());
-    //     $response->assertSessionHasErrors(["name"]);
-    // }
+        $response = $this->call('POST', '/admin/category/api/new', [
+            'name' => $category->name,
+            'description' => $this->faker->text($maxNbChars = 200),
+        ]);
+
+        $response->assertSessionHasErrors(["name"]);
+    }
+
+    /** @test */
+    public function validationForNumberOfNameCharsWorks()
+    {
+        $response = $this->call('POST', '/admin/category/api/new', [
+            'name' => $this->faker->sentence($nbWords = 70, $variableNbWords = true),
+            'description' => $this->faker->text($maxNbChars = 200),
+        ]);
+
+        $response->assertSessionHasErrors(["name"]);
+    }
+
+    /** @test */
+    public function validationForNumberOfDescriptionCharsWorks()
+    {
+        $response = $this->call('POST', '/admin/category/api/new', [
+            'name' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
+            'description' => $this->faker->text($minNbChars = 500),
+        ]);
+
+        $response->assertSessionHasErrors(["description"]);
+    }
 }
