@@ -20,6 +20,7 @@ $factory->define(App\Models\Admin::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'permission' => 'Super Admin'
     ];
 });
 
@@ -37,7 +38,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+        'name' => $faker->sentence($nbWords = 2, $variableNbWords = true),
         'description' => $faker->text($maxNbChars = 200),
         'sermonCount' => $faker->randomDigitNotNull,
     ];
@@ -46,9 +47,8 @@ $factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+        'name' => $faker->sentence($nbWords = 2, $variableNbWords = true),
         'description' => $faker->text($maxNbChars = 200),
-        'sermonCount' => $faker->randomDigitNotNull,
     ];
 });
 
