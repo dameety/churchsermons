@@ -20,8 +20,7 @@ class CategoryCreationTest extends TestCase
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        $response->assertStatus(200)
-            ->assertJson(['created' => true]);
+        $response->assertStatus(200)->assertJson(['created' => true]);
     }
 
     /** @test */
