@@ -49,6 +49,11 @@ class EloquentAdmin implements AdminRepository
         return $admin->permission;
     }
 
+    public function checkAdminPermission()
+    {
+        return $this->admin->adminPermission();
+    }
+
     public function update($slug, $request)
     {
     }

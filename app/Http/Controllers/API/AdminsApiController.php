@@ -47,7 +47,7 @@ class AdminsApiController extends Controller
 
     public function saveNewAdmin(Request $request)
     {
-        if ($this->admin->adminPermisson()) {
+        if ($this->admin->checkAdminPermission()) {
             return $this->admin->create($request);
         } else {
             return response()->json(['created' => false]);

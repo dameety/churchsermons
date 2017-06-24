@@ -18,7 +18,7 @@ class Admin extends Authenticatable
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'permission'
     ];
 
     protected $hidden = [
