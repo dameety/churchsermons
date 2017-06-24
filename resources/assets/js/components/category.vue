@@ -259,7 +259,7 @@
                     confirmButtonText: "Yes, delete it!",
                     cancelButtonText: "No, don't!",
                 }).then((response) => {
-                    vm.$http.delete('/admin/category/api/delete/' + category.name).then((response) => {
+                    vm.$http.delete('/admin/category/api/delete/' + category.slug).then((response) => {
                         vm.$delete(vm.categories, vm.categories.indexOf(category))
                         vm.categoriesCount--
                     });

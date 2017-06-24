@@ -20,7 +20,7 @@ class Category extends Model
     }
 
     protected $fillable = [
-        'name', 'description',
+        'name', 'description'
     ];
 
     public function sluggable()

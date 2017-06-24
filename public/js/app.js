@@ -3015,7 +3015,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "No, don't!"
             }).then(function (response) {
-                vm.$http.delete('/admin/category/api/delete/' + category.name).then(function (response) {
+                vm.$http.delete('/admin/category/api/delete/' + category.slug).then(function (response) {
                     vm.$delete(vm.categories, vm.categories.indexOf(category));
                     vm.categoriesCount--;
                 });

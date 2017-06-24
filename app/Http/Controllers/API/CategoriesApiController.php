@@ -53,8 +53,8 @@ class CategoriesApiController extends Controller
         return $this->category->sermons;
     }
 
-    public function deleteCategory(Category $category)
+    public function deleteCategory($slug)
     {
-        return $this->category->delete($category->slug);
+        return $this->category->delete($slug);
     }
 }
