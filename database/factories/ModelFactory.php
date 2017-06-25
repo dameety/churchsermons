@@ -38,9 +38,8 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->sentence($nbWords = 2, $variableNbWords = true),
-        'description' => $faker->text($maxNbChars = 200),
-        'sermonCount' => $faker->randomDigitNotNull,
+        'name' => $faker->text($maxNbChars = 15),
+        'description' => $faker->sentence($nbWords = 500, $variableNbWords = true)
     ];
 });
 
