@@ -40,7 +40,7 @@ class EloquentService implements ServiceRepository
         $service -> name = $request->name;
         $service -> description = $request->description;
         $service ->save();
-        return response()->json(['success' => 201]);
+        return response()->json(['created' => true]);
     }
 
     public function update($slug, $request)
@@ -49,7 +49,7 @@ class EloquentService implements ServiceRepository
         $service -> name = $request-> name;
         $service -> description = $request-> description;
         $service -> save();
-        return response()->json(['updated' => 201]);
+        return response()->json(['updated' => true]);
     }
 
     public function delete($slug)
