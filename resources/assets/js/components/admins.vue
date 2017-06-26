@@ -378,11 +378,9 @@
                 });
             },
 
-
             showChangePasswordModal: function (admin) {
                 this.adminPasswordToChange = admin;
             },
-
 
             changePassword: function (slug) {
                 if(this.currentAdminPermission !== "Super Admin") {

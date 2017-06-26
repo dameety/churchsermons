@@ -123,7 +123,7 @@ class AdminCreationTest extends TestCase
     }
 
     /** @test */
-    public function standardAdminCannotDelete()
+    public function standardAdminCannotAuthorizeDelete()
     {
         $admin = factory(Admin::class)->create();
         $admin2 = factory(Admin::class)->create(['permission' => 'Standard Admin']);
