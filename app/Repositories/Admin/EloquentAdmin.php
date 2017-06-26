@@ -40,7 +40,7 @@ class EloquentAdmin implements AdminRepository
         $admin -> permission = $request-> permission;
         $admin-> password = bcrypt($request-> password);
         $admin -> save();
-        return response()->json(['success' => 201]);
+        return response()->json(['created' => true]);
     }
 
     public function authAdmin()

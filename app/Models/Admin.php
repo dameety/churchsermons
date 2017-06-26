@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\AdminResetPassword;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -57,8 +57,7 @@ class Admin extends Authenticatable
 
     public static function adminPermission()
     {
-        $admin = Auth::guard('admin')->user();
-        if ($admin->permission !== 'Super Admin') {
+        if (Auth::guard()->user()->permission !== 'Super Admin') {
             return false;
         }
         return true;
@@ -66,6 +65,6 @@ class Admin extends Authenticatable
 
     public static function current()
     {
-        return Auth::guard('admin')->user();
+        return Auth::guard()->user();
     }
 }

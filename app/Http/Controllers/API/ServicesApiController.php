@@ -53,8 +53,8 @@ class ServicesApiController extends Controller
         return $this->service->sermons;
     }
 
-    public function deleteService(Service $service)
+    public function deleteService($slug)
     {
-        return $this->service->delete($service->slug);
+        return $this->service->delete($slug);
     }
 }
