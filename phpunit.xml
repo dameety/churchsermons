@@ -7,7 +7,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="true">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Feature Tests">
             <directory suffix="Test.php">./tests/Feature</directory>
@@ -28,6 +28,5 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="testing"/>
-        <env name="DB_DATABASE" value="homestead"/>
     </php>
 </phpunit>
