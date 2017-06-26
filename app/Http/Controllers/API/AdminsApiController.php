@@ -39,14 +39,14 @@ class AdminsApiController extends Controller
 
     public function changePassword($slug, AdminValidationRequest $request)
     {
-        if ($this->admin->adminPermisson()) {
+        if ($this->admin->checkAdminPermission()) {
             return $this->admin->changePassword($slug, $request);
         } else {
             return response()->json(['password changed' => false]);
         }
     }
 
-    public function saveNewAdmin(Request $request)
+    public function saveNewAdmin(AdminValidationRequest $request)
     {
         if ($this->admin->checkAdminPermission()) {
             return $this->admin->create($request);
@@ -55,10 +55,10 @@ class AdminsApiController extends Controller
         }
     }
 
-    public function deleteAdmin(Admin $admin)
+    public function deleteAdmin($slug)
     {
-        if ($this->admin->adminPermisson()) {
-            return $this->admin->delete();
+        if ($this->admin->checkAdminPermission()) {
+            return $this->admin->delete($slug);
         } else {
             return response()->json(['deleted' => false]);
         }
