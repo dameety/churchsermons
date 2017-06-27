@@ -6,7 +6,6 @@ use App\Setting;
 use Auth;
 use Carbon\Carbon;
 use Cartalyst\Stripe\Stripe;
-
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Exception;
