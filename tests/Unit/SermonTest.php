@@ -40,10 +40,10 @@ class SermonTest extends TestCase
     /** @test */
     public function addImageUrlToSavedSermon()
     {
-        Image::make(public_path('uploads/testimage.jpg'))->resize(300, 200)->save(public_path('uploads/testimage.png'), 60);
+        Image::make(public_path('testimage.jpg'))->resize(300, 200)->save(public_path('testimage.png'), 60);
 
         $sermon = $this->newSermon;
-        $sermon-> addMediaToSermon(public_path('uploads/testimage.png'));
+        $sermon-> addMediaToSermon(public_path('testimage.png'));
         $sermon->title = $this->faker->sentence($nbWords = 3, $variableNbWords = true);
         $sermon->service_id = factory(Service::class)->create()->id;
         $sermon->category_id = factory(Category::class)->create()->id;
