@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use Cartalyst\Stripe\Stripe;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SettingValidationRequest;
 use App\Repositories\Setting\SettingRepository;
+use Cartalyst\Stripe\Stripe;
+use Illuminate\Http\Request;
 
 class AdminSettingsApiController extends Controller
 {
-
     protected $setting;
 
     public function __construct(SettingRepository $setting)
@@ -32,9 +31,10 @@ class AdminSettingsApiController extends Controller
             return response($setting->getErrors(), 422);
         }
     }
+
     /**
      * Get the app name, email, and stripe key
-     * to display in the settings page
+     * to display in the settings page.
      */
     public function details()
     {
@@ -68,6 +68,7 @@ class AdminSettingsApiController extends Controller
             'interval'             => $request->plan_interval,
             'statement_descriptor' => $request->plan_description,
         ]);
+
         return response()->json(['status', 200]);
     }
 

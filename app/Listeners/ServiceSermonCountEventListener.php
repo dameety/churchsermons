@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\ServiceSermonCountEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ServiceSermonCountEventListener
 {
@@ -21,15 +19,16 @@ class ServiceSermonCountEventListener
     /**
      * Handle the event.
      *
-     * @param  ServiceSermonCountEvent  $event
+     * @param ServiceSermonCountEvent $event
+     *
      * @return void
      */
     public function handle(ServiceSermonCountEvent $event)
     {
         $currentService = $event->service;
-        
+
         $previousServiceSermonCount = $currentService->sermonCount;
-        
+
         $currentService->sermonCount = $previousServiceSermonCount + 1;
 
         $currentService->save();

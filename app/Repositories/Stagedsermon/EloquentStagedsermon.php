@@ -2,13 +2,11 @@
 
 namespace App\Repositories\Stagedsermon;
 
-use Storage;
 use App\Models\Stagedsermon;
-use App\Repositories\Stagedsermon\StagedsermonRepository;
+use Storage;
 
 class EloquentStagedsermon implements StagedsermonRepository
 {
-
     private $stagedsermon;
 
     public function __construct(Stagedsermon $stagedsermon)
@@ -35,11 +33,12 @@ class EloquentStagedsermon implements StagedsermonRepository
     {
         $file = request()->file('file');
         $staging = $this->stagedsermon;
-        $staging-> title = $file -> getClientOriginalName();
-        $staging-> size = $file -> getClientsize();
-        $staging-> type = $file -> getClientOriginalExtension();
-        $staging-> filename = $file ->store('sermons');
+        $staging->title = $file->getClientOriginalName();
+        $staging->size = $file->getClientsize();
+        $staging->type = $file->getClientOriginalExtension();
+        $staging->filename = $file->store('sermons');
         $staging->save();
+
         return response()->json(['uploaded' => true]);
     }
 
@@ -47,6 +46,7 @@ class EloquentStagedsermon implements StagedsermonRepository
     {
         Storage::delete($filePath);
         $this->getBySlug($slug)->delete();
+
         return response()->json(['deleted' => true]);
     }
 

@@ -1,8 +1,8 @@
 <?php
 
+use App\Category;
 use App\Sermon;
 use App\Service;
-use App\Category;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
@@ -21,11 +21,11 @@ class SermonTableSeeder extends Seeder
 
         foreach (range(1, 50) as $index) {
             $sermon = Sermon::create([
-                'preacher' => $faker->name,
-                'service_id' => $faker->randomElement($services),
-                'category_id' => $faker->randomElement($categories),
-     	        'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
-                'title' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'preacher'      => $faker->name,
+                'service_id'    => $faker->randomElement($services),
+                'category_id'   => $faker->randomElement($categories),
+                 'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'title'         => $faker->sentence($nbWords = 3, $variableNbWords = true),
             ]);
         }
     }

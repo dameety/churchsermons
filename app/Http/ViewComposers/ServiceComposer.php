@@ -2,12 +2,11 @@
 
 namespace App\Http\ViewComposers;
 
-use Illuminate\View\View;
 use App\Repositories\Service\ServiceRepository;
+use Illuminate\View\View;
 
 class ServiceComposer
 {
-
     protected $service;
 
     public function __construct(ServiceRepository $service)

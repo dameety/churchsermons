@@ -20,6 +20,7 @@ class SettingValidationRequest extends FormRequest
     {
         //
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,39 +28,38 @@ class SettingValidationRequest extends FormRequest
      */
     public function rules()
     {
-
         if ($this->is('admin/setting/api/mail/update/{slug}')) {
             return [
                 'welcomeEmailHeading' => 'required|string|max:40',
-                'welcomeEmailBody' => 'required'
+                'welcomeEmailBody'    => 'required',
             ];
         } elseif ($this->is('admin/setting/api/key')) {
             return [
-                'api_key' => 'required|max:32'
+                'api_key' => 'required|max:32',
             ];
         } elseif ($this->is('admin/setting/api/plan/{slug}')) {
             return [
-                'plan_id' => 'required',
-                'plan_name' => 'required',
+                'plan_id'       => 'required',
+                'plan_name'     => 'required',
                 'plan_currency' => 'required',
-                'plan_amount' => 'required|numeric',
+                'plan_amount'   => 'required|numeric',
                 'plan_interval' => 'required',
             ];
         } elseif ($this->is('admin/setting/api/email')) {
             return [
-                'contactEmail' => 'required|email|max:30'
+                'contactEmail' => 'required|email|max:30',
             ];
         } elseif ($this->is('admin/setting/api/name')) {
             return [
-                'churchName' => 'required|max:50'
+                'churchName' => 'required|max:50',
             ];
         } elseif ($this->is('admin/setting/api/slider/upload')) {
             return [
-                'file.*' => 'required|image'
+                'file.*' => 'required|image',
             ];
         } elseif ($this->is('admin/setting/applogo')) {
             return [
-                'appLogo' => 'required|mimes:jpg,jpeg,png'
+                'appLogo' => 'required|mimes:jpg,jpeg,png',
             ];
         }
     }

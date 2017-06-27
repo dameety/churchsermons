@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Admin;
-use App\Models\Category;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class ServiceCrudTest extends TestCase
 {
@@ -18,9 +16,9 @@ class ServiceCrudTest extends TestCase
         $name = $this->faker->text($maxNbChars = 15);
 
         $request = [
-            'name' => $name,
+            'name'        => $name,
             'description' => $this->faker->sentence($nbWords = 30, $variableNbWords = true),
-            'slug' => str_slug($name)
+            'slug'        => str_slug($name),
         ];
 
         //create it
@@ -28,7 +26,7 @@ class ServiceCrudTest extends TestCase
         $response->assertStatus(200)->assertJson(['created' => true]);
 
         //delete it
-        $then = $this->call('DELETE', '/admin/service/api/delete/'. $request['slug']);
+        $then = $this->call('DELETE', '/admin/service/api/delete/'.$request['slug']);
         $then->assertStatus(200)->assertjson(['deleted' => true]);
     }
 
@@ -38,9 +36,9 @@ class ServiceCrudTest extends TestCase
         $name = $this->faker->text($maxNbChars = 15);
 
         $request = [
-            'name' => $name,
+            'name'        => $name,
             'description' => $this->faker->sentence($nbWords = 30, $variableNbWords = true),
-            'slug' => str_slug($name)
+            'slug'        => str_slug($name),
         ];
 
         //create it
@@ -48,9 +46,9 @@ class ServiceCrudTest extends TestCase
         $response->assertStatus(200)->assertJson(['created' => true]);
 
         //update it
-        $then = $this->call('PATCH', '/admin/service/api/update/'. $request['slug'], [
-            'name' => $this->faker->text($maxNbChars = 15),
-            'description' => $this->faker->sentence($nbWords = 10, $variableNbWords = true)
+        $then = $this->call('PATCH', '/admin/service/api/update/'.$request['slug'], [
+            'name'        => $this->faker->text($maxNbChars = 15),
+            'description' => $this->faker->sentence($nbWords = 10, $variableNbWords = true),
         ]);
 
         $then->assertStatus(200)->assertjson(['updated' => true]);

@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\lastLoginDateEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Carbon\Carbon;
-
 
 class lastLoginDateEventListener
 {
@@ -23,7 +20,8 @@ class lastLoginDateEventListener
     /**
      * Handle the event.
      *
-     * @param  lastLoginDateEvent  $event
+     * @param lastLoginDateEvent $event
+     *
      * @return void
      */
     public function handle(lastLoginDateEvent $event)
@@ -33,10 +31,9 @@ class lastLoginDateEventListener
 
         // get user
         $currentUser = $event->user;
-        
-        // save last login date
-        $currentUser -> lastLoginDate = $now;
-        $currentUser->save();
 
+        // save last login date
+        $currentUser->lastLoginDate = $now;
+        $currentUser->save();
     }
 }

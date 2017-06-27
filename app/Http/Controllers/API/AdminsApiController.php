@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Repositories\Admin\AdminRepository;
 use App\Http\Requests\AdminValidationRequest;
+use App\Repositories\Admin\AdminRepository;
 
 class AdminsApiController extends Controller
 {

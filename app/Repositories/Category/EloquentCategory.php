@@ -3,7 +3,6 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category;
-use App\Repositories\Category\CategoryRepository;
 
 class EloquentCategory implements CategoryRepository
 {
@@ -37,24 +36,27 @@ class EloquentCategory implements CategoryRepository
     public function create($request)
     {
         $category = $this->category;
-        $category -> name = $request->name;
-        $category -> description = $request->description;
-        $category ->save();
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
+
         return response()->json(['created' => true]);
     }
 
     public function update($slug, $request)
     {
         $category = $this->getBySlug($slug);
-        $category -> name = $request-> name;
-        $category -> description = $request-> description;
-        $category -> save();
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
+
         return response()->json(['updated' => true]);
     }
 
     public function delete($slug)
     {
         $this->getBySlug($slug)->delete();
+
         return response()->json(['deleted' => true]);
     }
 

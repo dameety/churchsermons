@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use App\Events\ServiceSermonCountEvent;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-
     use Sluggable;
     use SluggableScopeHelpers;
 
     public function sermons()
     {
-        return $this-> hasMany('App\Sermon');
+        return $this->hasMany('App\Sermon');
     }
 
     protected $fillable = [
@@ -27,8 +26,8 @@ class Service extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -49,7 +48,7 @@ class Service extends Model
 
     public static function countUp($servId)
     {
-        $service = Service::whereId((int)($servId))->first();
+        $service = self::whereId((int) ($servId))->first();
         event(new ServiceSermonCountEvent($service));
     }
 }

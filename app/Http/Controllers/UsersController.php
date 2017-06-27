@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Session;
-use Redirect;
-use Exception;
-use App\Models\User;
-use Stripe\Error\Card;
 use App\Models\Setting;
-use Illuminate\Http\Request;
-use Cartalyst\Stripe\Stripe;
+use App\Models\User;
 use App\Repositories\User\UserRepository;
-use App\Http\Requests\UserValidationRequest;
+use Cartalyst\Stripe\Stripe;
+use Illuminate\Http\Request;
+use Redirect;
+use Session;
+use Stripe\Error\Card;
 
 class UsersController extends Controller
 {
@@ -39,7 +37,7 @@ class UsersController extends Controller
     public function profile()
     {
         return view('frontend.pages.profile', [
-            'user' => $this->user->authUser
+            'user' => $this->user->authUser,
         ]);
     }
 
@@ -51,13 +49,14 @@ class UsersController extends Controller
             $this->user->update($request);
         }
         flash('Your profile has been updated successfully.');
+
         return back();
     }
 
     public function getUserCards()
     {
         $cards = $this->user->authUser()->getUserCards();
-        if ($cards === "" || $cards === null) {
+        if ($cards === '' || $cards === null) {
             return view('frontend.pages.nocard');
         } else {
             return view('frontend.pages.listcards', compact('cards'));
@@ -82,9 +81,9 @@ class UsersController extends Controller
             ],
         ]);
         $this->user_card_id = $token['card']['id'];
+
         return $token['id'];
     }
-
 
     public function createACustomer()
     {
@@ -96,17 +95,15 @@ class UsersController extends Controller
         return $customer['id'];
     }
 
-
     public function createSubscription($customerId, $token)
     {
         $subscription = $this->stripe->subscriptions()->create($customerId, [
             'plan' => $this->plan,
-            'card' => $token
+            'card' => $token,
         ]);
 
         return $subscription['id'];
     }
-
 
     public function updateUserDetails($customerId, $subscription)
     {
@@ -114,7 +111,7 @@ class UsersController extends Controller
         $user->card_id = $this->user_card_id;
         $user->customer_id = $customerId;
         $user->subscription_id = $subscription;
-        $user->subscriptionStatus = "active";
+        $user->subscriptionStatus = 'active';
         $user->permission = $this->plan;
         $user->save();
     }
@@ -127,10 +124,10 @@ class UsersController extends Controller
     public function upgradeAction(Request $request)
     {
         $this->validate($request, [
-            'cardNumber' => 'required',
+            'cardNumber'  => 'required',
             'expiryMonth' => 'required|numeric',
-            'expiryYear' => 'required|digits:4',
-            'cvv' => 'required|digits:3',
+            'expiryYear'  => 'required|digits:4',
+            'cvv'         => 'required|digits:3',
         ]);
 
         try {
@@ -139,6 +136,7 @@ class UsersController extends Controller
 
             if (!isset($token)) {
                 flash('Unsuccessful Operation. The payment token was not generated correctly. Please try again.')->error()->important();
+
                 return back();
             }
 
@@ -147,6 +145,7 @@ class UsersController extends Controller
 
             if (!isset($customerId)) {
                 flash('Unsuccessful Operation. There was an issue creating your subscription accoount. Please try again.')->error()->important();
+
                 return back();
             }
 
@@ -158,22 +157,29 @@ class UsersController extends Controller
                 $this->updateUserDetails($customerId, $subscription);
 
                 flash('Successful Operation. Your account has been successfully upgraded. Enjoy.')->success()->important();
+
                 return back();
             } else {
                 flash('Unsuccessful Operation. There was an issue upgrading your account. Please try again.')->error()->important();
+
                 return back();
             }
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
             Session::flash('invalidRequest', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
+
             return back();
         }
-    } // END OF THE CONTROLLER
+    }
+
+ // END OF THE CONTROLLER
 
     public function cancelSubscription(Request $request)
     {
@@ -184,37 +190,43 @@ class UsersController extends Controller
             'deactivate' => 'required',
         ]);
 
-        if ($user->subscriptionStatus === "cancelled") {
+        if ($user->subscriptionStatus === 'cancelled') {
             flash('Unsuccessful Operation. You have no active subscription to cancel.')->error()->important();
+
             return back();
         }
-        if ($request->deactivate === "yes") {
+        if ($request->deactivate === 'yes') {
             //cancel sub
             $stripe = new Stripe($setting->api_key);
             try {
                 $subscription = $stripe->subscriptions()->cancel($user->customer_id, $user->subscription_id);
                 // upate user back to Standard user
-                $user->permission = "Standard";
-                $user->subscriptionStatus = "cancelled";
+                $user->permission = 'Standard';
+                $user->subscriptionStatus = 'cancelled';
                 //notifiy admin or
                 // use a loging package to log it
                 // show the log to admin
                 $user->save();
 
                 flash('Successful Operation. Your subscription has been canceled.')->success()->important();
+
                 return back();
             } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
                 Session::flash('cardError', $e->getMessage());
+
                 return back();
             } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
                 Session::flash('invalidRequest', $e->getMessage());
+
                 return back();
             } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
                 Session::flash('serverError', $e->getMessage());
+
                 return back();
             }
         } else {
             flash('Unsuccessful Operation. Please choose yes to cancel your subscription.')->error()->important();
+
             return back();
         }
     }
@@ -228,11 +240,11 @@ class UsersController extends Controller
         try {
             // get the subscription and check if its still active
             $subscription = $stripe->subscriptions()->find($user->customer_id, $user->subscription_id);
-            if ($subscription['status'] === "active") {
+            if ($subscription['status'] === 'active') {
                 $subscription = $stripe->subscriptions()->reactivate($user->customer_id, $user->subscription_id);
                 // upgrade user to plan
                 $user->permission = $setting->plan_name;
-                $user->subscriptionStatus = "active";
+                $user->subscriptionStatus = 'active';
                 $user->save();
             } else {
                 // create a new one if its not active how
@@ -249,14 +261,16 @@ class UsersController extends Controller
                         // update the user database
                         $user = Auth::user();
                         $user->subscription_id = $subscription['id'];
-                        $user->subscriptionStatus = "active";
+                        $user->subscriptionStatus = 'active';
                         $user->permission = $setting->plan_name;
                         $user->save();
 
                         flash('Successful Operation. Your account has been successfully reactivated. Enjoy.')->success()->important();
+
                         return back();
                     } else {
                         flash('Unsuccessful Operation. There was an issue reactivating your account. Please try again.')->error()->important();
+
                         return back();
                     }
                 } else { // do this if $cardId is not set ..
@@ -265,15 +279,19 @@ class UsersController extends Controller
             }
 
             flash('Successful Operation. Your subscription has been reactivated. Enjoy.')->success()->important();
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
             Session::flash('invalidRequest', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
+
             return back();
         }
     }
@@ -282,8 +300,8 @@ class UsersController extends Controller
     {
         // validate user input
         $this->validate($request, [
-            'exp_year' => 'required',
-            'exp_month' => 'required'
+            'exp_year'  => 'required',
+            'exp_month' => 'required',
         ]);
 
         $user = Auth::user();
@@ -293,20 +311,24 @@ class UsersController extends Controller
 
         try {
             $card = $stripe->cards()->update($user->customer_id, $id, [
-                'exp_year' => $request->exp_year,
+                'exp_year'  => $request->exp_year,
                 'exp_month' => $request->exp_month,
             ]);
 
             flash('Successful Operation. Your card details has been updated.')->success()->important();
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
             Session::flash('invalidRequest', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
+
             return back();
         }
     }
@@ -321,15 +343,19 @@ class UsersController extends Controller
         try {
             $card = $stripe->cards()->delete($user->customer_id, $id);
             flash('Successful Operation. Your card has been deleted.')->success()->important();
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
             Session::flash('invalidRequest', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
+
             return back();
         }
     }
@@ -338,16 +364,15 @@ class UsersController extends Controller
     {
         // validate user input
         $this->validate($request, [
-            'cardNumber' => 'required',
+            'cardNumber'  => 'required',
             'expiryMonth' => 'required|numeric',
-            'expiryYear' => 'required|digits:4',
-            'cvc' => 'required|digits:3',
+            'expiryYear'  => 'required|digits:4',
+            'cvc'         => 'required|digits:3',
         ]);
 
         //get stripe key from settings
         $setting = Setting::first();
         $stripe = new Stripe($setting->api_key);
-
 
         try {
             $token = $stripe->tokens()->create([
@@ -363,6 +388,7 @@ class UsersController extends Controller
 
             if (!isset($token['id'])) {
                 flash('Unsuccessful Operation. There was an issue creating your card token. Please try again.')->error()->important();
+
                 return back();
             }
 
@@ -370,16 +396,20 @@ class UsersController extends Controller
             $card = $stripe->cards()->create($user->customer_id, $token['id']);
             if (isset($card['id'])) {
                 flash('Successful Operation. Your card has been added.')->success()->important();
+
                 return back();
             }
         } catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             Session::flash('cardError', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\InvalidRequestException $e) {
             Session::flash('invalidRequest', $e->getMessage());
+
             return back();
         } catch (\Cartalyst\Stripe\Exception\ServerErrorException $e) {
             Session::flash('serverError', $e->getMessage());
+
             return back();
         }
     }

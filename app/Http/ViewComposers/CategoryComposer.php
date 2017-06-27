@@ -2,12 +2,11 @@
 
 namespace App\Http\ViewComposers;
 
-use Illuminate\View\View;
 use App\Repositories\Category\CategoryRepository;
+use Illuminate\View\View;
 
 class CategoryComposer
 {
-
     protected $category;
 
     public function __construct(CategoryRepository $category)

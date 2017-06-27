@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryValidationRequest;
+use App\Models\Category;
 use App\Repositories\Category\CategoryRepository;
 
 class CategoriesApiController extends Controller
 {
-
     protected $category;
 
     public function __construct(CategoryRepository $category)

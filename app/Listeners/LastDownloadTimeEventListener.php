@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\LastDownloadTimeEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Carbon\Carbon;
-
 
 class LastDownloadTimeEventListener
 {
@@ -23,7 +20,8 @@ class LastDownloadTimeEventListener
     /**
      * Handle the event.
      *
-     * @param  LastDownloadTimeEvent  $event
+     * @param LastDownloadTimeEvent $event
+     *
      * @return void
      */
     public function handle(LastDownloadTimeEvent $event)
@@ -32,10 +30,10 @@ class LastDownloadTimeEventListener
         $now = Carbon::now();
 
         // get sermon
-        $sermon = $event ->sermon;
+        $sermon = $event->sermon;
 
         // save last download date
-        $sermon ->lastDownloadTime = $now;
+        $sermon->lastDownloadTime = $now;
         $sermon->save();
     }
 }

@@ -7,13 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
 {
-
     public function boot()
     {
         View::composer(
             [
                 'admin.sermons.newsermon',
-                'admin.sermons.edit'
+                'admin.sermons.edit',
             ],
             'App\Http\ViewComposers\ServiceComposer'
         );
@@ -21,7 +20,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             [
                 'admin.sermons.newsermon',
-                'admin.sermons.edit'
+                'admin.sermons.edit',
             ],
             'App\Http\ViewComposers\CategoryComposer'
         );
@@ -29,7 +28,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             [
                 'frontend.partials.filters-desktop',
-                'frontend.partials.filters'
+                'frontend.partials.filters',
             ],
             'App\Http\ViewComposers\CategoryComposer@filter'
         );
@@ -37,14 +36,13 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             [
                 'frontend.partials.filters-desktop',
-                'frontend.partials.filters'
+                'frontend.partials.filters',
             ],
             'App\Http\ViewComposers\ServiceComposer@filter'
         );
 
         View::composer('emails.welcome-user', 'App\Http\ViewComposers\SettingsComposer@emailContent');
     }
-
 
     public function register()
     {

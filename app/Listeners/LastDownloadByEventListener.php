@@ -3,11 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\LastDownloadByEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
-
-
 
 class LastDownloadByEventListener
 {
@@ -24,13 +20,14 @@ class LastDownloadByEventListener
     /**
      * Handle the event.
      *
-     * @param  LastDownloadByEvent  $event
+     * @param LastDownloadByEvent $event
+     *
      * @return void
      */
     public function handle(LastDownloadByEvent $event)
     {
         $currentSermon = $event->sermon;
-        $currentSermonName = $currentSermon ->title;
+        $currentSermonName = $currentSermon->title;
         // get current authenticated use
         $user = Auth::user();
         $user->lastSermonDownloaded = $currentSermonName;
@@ -38,8 +35,7 @@ class LastDownloadByEventListener
 
         // save username to sermon
         $userName = Auth::user()->name;
-        $currentSermon ->lastDownloadBy = $userName;
+        $currentSermon->lastDownloadBy = $userName;
         $currentSermon->save();
-
     }
 }

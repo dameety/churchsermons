@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Admin;
 
-use Auth;
 use App\Models\Admin;
-use App\Repositories\Admin\AdminRepository;
+use Auth;
 
 class EloquentAdmin implements AdminRepository
 {
@@ -35,17 +34,19 @@ class EloquentAdmin implements AdminRepository
     public function create($request)
     {
         $admin = $this->admin;
-        $admin -> name = $request-> name;
-        $admin -> email = $request-> email;
-        $admin -> permission = $request-> permission;
-        $admin-> password = bcrypt($request-> password);
-        $admin -> save();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->permission = $request->permission;
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
         return response()->json(['created' => true]);
     }
 
     public function authAdmin()
     {
         $admin = $this->admin->current();
+
         return $admin->permission;
     }
 
@@ -61,14 +62,16 @@ class EloquentAdmin implements AdminRepository
     public function changePassword($slug, $request)
     {
         $admin = $this->admin->getBySlug($slug);
-        $admin -> password = bcrypt($request->password);
-        $admin -> save();
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
         return response()->json(['password change' => true]);
     }
 
     public function delete($slug)
     {
         $this->getBySlug($slug)->delete();
+
         return response()->json(['deleted' => true]);
     }
 

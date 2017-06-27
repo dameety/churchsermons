@@ -11,7 +11,6 @@ class UserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function boot()
     {
         //
@@ -22,7 +21,6 @@ class UserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function register()
     {
         $this->app->bind('App\Repositories\User\UserRepository',

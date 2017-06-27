@@ -2,12 +2,11 @@
 
 namespace App\Http\ViewComposers;
 
-use Illuminate\View\View;
 use App\Repositories\Setting\SettingRepository;
+use Illuminate\View\View;
 
 class SettingsComposer
 {
-
     protected $setting;
 
     public function __construct(SettingRepository $setting)

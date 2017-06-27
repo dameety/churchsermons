@@ -2,33 +2,32 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use App\Events\CategorySermonCountEvent;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-
     use Sluggable;
     use SluggableScopeHelpers;
 
     public function sermons()
     {
-        return $this-> hasMany('App\Sermon');
+        return $this->hasMany('App\Sermon');
     }
 
     protected $fillable = [
-        'name', 'description'
+        'name', 'description',
     ];
 
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -49,7 +48,7 @@ class Category extends Model
 
     public static function countUp($cartId)
     {
-        $category = Category::whereId((int)($cartId))->first();
+        $category = self::whereId((int) ($cartId))->first();
         event(new CategorySermonCountEvent($category));
     }
 }

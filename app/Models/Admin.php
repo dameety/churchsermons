@@ -2,27 +2,26 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Notifications\Notifiable;
 use App\Notifications\AdminResetPassword;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class Admin extends Authenticatable
 {
-
     use Sluggable;
     use Notifiable;
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'name', 'email', 'password', 'permission'
+        'name', 'email', 'password', 'permission',
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'id', 'updated_at'
+        'password', 'remember_token', 'id', 'updated_at',
 
     ];
 
@@ -35,8 +34,8 @@ class Admin extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => 'email'
-            ]
+                'source' => 'email',
+            ],
         ];
     }
 
@@ -60,6 +59,7 @@ class Admin extends Authenticatable
         if (Auth::guard()->user()->permission !== 'Super Admin') {
             return false;
         }
+
         return true;
     }
 

@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserRegisterTest extends TestCase
 {
@@ -14,10 +12,10 @@ class UserRegisterTest extends TestCase
         $password = $this->faker->text($maxNbChars = 20);
 
         $response = $this->json('POST', '/register', [
-            'password' => $password,
-            'name' => $this->faker->name,
+            'password'              => $password,
+            'name'                  => $this->faker->name,
             'password_confirmation' => $password,
-            'email' => $this->faker->unique()->safeEmail
+            'email'                 => $this->faker->unique()->safeEmail,
         ]);
 
         $response->assertRedirect('/home');
@@ -29,12 +27,12 @@ class UserRegisterTest extends TestCase
         $password = $this->faker->text($maxNbChars = 20);
 
         $response = $this->call('POST', '/register', [
-            'password' => $password,
-            'name' => $this->faker->name,
-            'password_confirmation' => $password
+            'password'              => $password,
+            'name'                  => $this->faker->name,
+            'password_confirmation' => $password,
         ]);
 
-        $response->assertSessionHasErrors(["email"]);
+        $response->assertSessionHasErrors(['email']);
     }
 
     /** @test */
@@ -43,40 +41,40 @@ class UserRegisterTest extends TestCase
         $password = $this->faker->text($maxNbChars = 20);
 
         $response = $this->call('POST', '/register', [
-            'password' => $password,
-            'name' => $this->faker->name,
-            'email' => $this->faker->name,
-            'password_confirmation' => $password
+            'password'              => $password,
+            'name'                  => $this->faker->name,
+            'email'                 => $this->faker->name,
+            'password_confirmation' => $password,
         ]);
 
-        $response->assertSessionHasErrors(["email"]);
+        $response->assertSessionHasErrors(['email']);
     }
 
     /** @test */
     public function passwordConfirmationMustMatch()
     {
         $response = $this->call('POST', '/register', [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => $this->faker->text($maxNbChars = 10),
-            'password_confirmation' => $this->faker->text($maxNbChars = 15)
+            'name'                  => $this->faker->name,
+            'email'                 => $this->faker->unique()->safeEmail,
+            'password'              => $this->faker->text($maxNbChars = 10),
+            'password_confirmation' => $this->faker->text($maxNbChars = 15),
         ]);
 
-        $response->assertSessionHasErrors(["password"]);
+        $response->assertSessionHasErrors(['password']);
     }
 
-        /** @test */
+    /** @test */
     public function passwordShouldNotBeLessThan8Chars()
     {
         $password = $this->faker->text($maxNbChars = 7);
 
         $response = $this->call('POST', '/register', [
-            'password' => $password,
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password_confirmation' => $password
+            'password'              => $password,
+            'name'                  => $this->faker->name,
+            'email'                 => $this->faker->unique()->safeEmail,
+            'password_confirmation' => $password,
         ]);
 
-        $response->assertSessionHasErrors(["password"]);
+        $response->assertSessionHasErrors(['password']);
     }
 }

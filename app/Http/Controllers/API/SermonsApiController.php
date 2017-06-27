@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller; ///
 use App\Models\Sermon; ///
-use App\Models\Stagedsermon; ///
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Stagedsermon;
 use App\Repositories\Sermon\SermonRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
+use Illuminate\Http\Request;
 
 class SermonsApiController extends Controller
 {
-
     protected $sermon;
     protected $stagedsermon;
 
@@ -54,6 +53,7 @@ class SermonsApiController extends Controller
     public function deleteSermon(Sermon $sermon)
     {
         $this->sermon->delete($sermon->slug, $sermon->filename);
+
         return response('success', 200);
     }
 

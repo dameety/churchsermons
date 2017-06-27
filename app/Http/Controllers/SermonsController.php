@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\SavesermonRequest;
-use App\Repositories\User\UserRepository;
+use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Sermon\SermonRepository;
 use App\Repositories\Service\ServiceRepository;
-use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
+use App\Repositories\User\UserRepository;
+use Illuminate\Http\Request;
 
 class SermonsController extends Controller
 {
-
     protected $user;
     protected $sermon;
     protected $service;
@@ -45,7 +44,8 @@ class SermonsController extends Controller
 
     public function newSermonForm($slug)
     {
-        $title = str_replace("-mp3", "", $slug);
+        $title = str_replace('-mp3', '', $slug);
+
         return view('admin.sermons.newsermon', compact('slug', 'title'));
     }
 
@@ -58,13 +58,14 @@ class SermonsController extends Controller
         }
         $this->category->increaseSermonCount($request->category_id);
         $this->service->increaseSermonCount($request->service_id);
+
         return redirect('/admin/sermon/upload');
     }
 
     public function editSermonPage($slug)
     {
         return view('admin.sermons.edit', [
-            'sermon' => $this->sermon->getBySlug($slug)
+            'sermon' => $this->sermon->getBySlug($slug),
         ]);
     }
 
@@ -76,35 +77,38 @@ class SermonsController extends Controller
             $this->sermon->updateWithDefaultImage($slug, $request);
         }
         flash('Update operation successful.')->success();
+
         return back();
     }
 
     public function allSermons()
     {
         return view('frontend.home', [
-            'sermons' => $this->sermon->get10Paginated()
+            'sermons' => $this->sermon->get10Paginated(),
         ]);
     }
 
     public function getCategory($slug)
     {
         $category = $this->category->getBySlug($slug);
+
         return view('frontend.sermons', [
-            'sermons' => $this->sermon->getByIdAndPaginate($category->id),
+            'sermons'     => $this->sermon->getByIdAndPaginate($category->id),
             'sermonCount' => $this->sermon->countAll(),
-            'key' => "category",
-            'slug' => "slug"
+            'key'         => 'category',
+            'slug'        => 'slug',
         ]);
     }
 
     public function getService($slug)
     {
         $service = $this->service->getBySlug($slug);
+
         return view('frontend.sermons', [
-            'sermons' => $this->sermon->getByIdAndPaginate($service->id),
+            'sermons'     => $this->sermon->getByIdAndPaginate($service->id),
             'sermonCount' => $this->sermon->countAll(),
-            'key' => "service",
-            'slug' => "slug"
+            'key'         => 'service',
+            'slug'        => 'slug',
         ]);
     }
 
@@ -116,6 +120,7 @@ class SermonsController extends Controller
             return $this->sermon->download($slug);
         } else {
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
+
             return back();
         }
     }
@@ -125,23 +130,24 @@ class SermonsController extends Controller
         $sermon = $this->sermon->getBySlug($slug);
         $this->user->attachFavourite($sermon->id);
         flash('Successful Operation. The sermon has been added to your favourites list.')->success()->important();
+
         return back();
     }
-
 
     public function favouriteRemove($slug)
     {
         $sermon = $this->sermon->getBySlug($slug);
         $this->user->detachFavourite($sermon->id);
         flash('Successful Operation. The sermon has been removed from your favourites list.')->success()->important();
+
         return back();
     }
 
     public function viewFavourites()
     {
         return view('frontend.favourites', [
-            'sermons' => $this->user->allUserFavourites(),
-            'favCount' => $this->user->allUserFavouriteCount()
+            'sermons'  => $this->user->allUserFavourites(),
+            'favCount' => $this->user->allUserFavouriteCount(),
         ]);
     }
 
@@ -153,6 +159,7 @@ class SermonsController extends Controller
             return $this->sermon->download($slug);
         } else {
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
+
             return back();
         }
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\AdminAuth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
@@ -30,7 +30,6 @@ class ResetPasswordController extends Controller
      */
     public $redirectTo = '/admin/home';
 
-
     /**
      * Create a new controller instance.
      *
@@ -46,8 +45,9 @@ class ResetPasswordController extends Controller
      *
      * If no token is present, display the link request form.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string|null  $token
+     * @param \Illuminate\Http\Request $request
+     * @param string|null              $token
+     *
      * @return \Illuminate\Http\Response
      */
     public function showResetForm(Request $request, $token = null)

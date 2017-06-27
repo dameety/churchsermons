@@ -17,7 +17,6 @@ Route::get('/settings', 'AdminSettingsController@index');
 Route::get('/settings/slider', 'AdminSettingsController@sliderPage');
 
 Route::group(['namespace' => 'API'], function () {
-
     Route::get('category/api', 'CategoriesApiController@index');
     Route::get('category/api/all', 'CategoriesApiController@all');
     Route::get('category/api/count', 'CategoriesApiController@count');
