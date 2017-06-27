@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Admin;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class AdminCreationTest extends TestCase
 {
@@ -17,10 +16,10 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'email'      => $this->faker->unique()->safeEmail,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
         $response->assertStatus(200)->assertJson(['created' => true]);
     }
@@ -31,10 +30,10 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create(['permission' => 'Standard Admin']);
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'email'      => $this->faker->unique()->safeEmail,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
         $response->assertStatus(200)->assertJson(['created' => false]);
     }
@@ -45,12 +44,12 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'email'      => $this->faker->unique()->safeEmail,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
 
-        $response->assertStatus(302)->assertSessionHasErrors(["name"]);
+        $response->assertStatus(302)->assertSessionHasErrors(['name']);
     }
 
     /** @test */
@@ -59,12 +58,12 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'email'      => $this->faker->unique()->safeEmail,
+            'permission' => 'Standard Admin',
         ]);
 
-        $response->assertStatus(302)->assertSessionHasErrors(["password"]);
+        $response->assertStatus(302)->assertSessionHasErrors(['password']);
     }
 
     /** @test */
@@ -73,12 +72,12 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
 
-        $response->assertStatus(302)->assertSessionHasErrors(["email"]);
+        $response->assertStatus(302)->assertSessionHasErrors(['email']);
     }
 
     /** @test */
@@ -87,13 +86,13 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'email' => $this->faker->name,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'email'      => $this->faker->name,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
 
-        $response->assertStatus(302)->assertSessionHasErrors(["email"]);
+        $response->assertStatus(302)->assertSessionHasErrors(['email']);
     }
 
     /** @test */
@@ -102,13 +101,13 @@ class AdminCreationTest extends TestCase
         $admin = factory(Admin::class)->create();
 
         $response = $this->actingAs($admin)->call('POST', 'admin/admin/api/new', [
-            'name' => $this->faker->name,
-            'email' => $admin->email,
-            'password' => $this->faker->text($maxNbChars = 20),
-            'permission' => 'Standard Admin'
+            'name'       => $this->faker->name,
+            'email'      => $admin->email,
+            'password'   => $this->faker->text($maxNbChars = 20),
+            'permission' => 'Standard Admin',
         ]);
 
-        $response->assertStatus(302)->assertSessionHasErrors(["email"]);
+        $response->assertStatus(302)->assertSessionHasErrors(['email']);
     }
 
     /** @test */

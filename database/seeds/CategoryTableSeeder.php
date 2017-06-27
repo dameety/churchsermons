@@ -13,5 +13,4 @@ class CategoryTableSeeder extends Seeder
     {
         factory(App\Category::class, 5)->create();
     }
-
 }

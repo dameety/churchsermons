@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\User\UserRepository;
-use App\Repositories\Admin\AdminRepository;
 use App\Http\Requests\UserValidationRequest;
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\User\UserRepository;
 
 class UsersApiController extends Controller
 {
-
     protected $user;
     protected $admin;
 
@@ -52,7 +50,6 @@ class UsersApiController extends Controller
             return response()->json(['created' => false]);
         }
     }
-
 
     public function deleteUser(User $user)
     {

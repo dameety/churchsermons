@@ -2,11 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class CategoryCreationTest extends TestCase
 {
@@ -16,7 +15,7 @@ class CategoryCreationTest extends TestCase
     public function creatingACategoryWorks()
     {
         $response = $this->call('POST', '/admin/category/api/new', [
-            'name' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
+            'name'        => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
@@ -30,7 +29,7 @@ class CategoryCreationTest extends TestCase
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        $response->assertSessionHasErrors(["name"]);
+        $response->assertSessionHasErrors(['name']);
     }
 
     /** @test */
@@ -39,32 +38,32 @@ class CategoryCreationTest extends TestCase
         $category = factory(Category::class)->create();
 
         $response = $this->call('POST', '/admin/category/api/new', [
-            'name' => $category->name,
+            'name'        => $category->name,
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        $response->assertSessionHasErrors(["name"]);
+        $response->assertSessionHasErrors(['name']);
     }
 
     /** @test */
     public function validationForNumberOfNameCharsWorks()
     {
         $response = $this->call('POST', '/admin/category/api/new', [
-            'name' => $this->faker->sentence($nbWords = 70, $variableNbWords = true),
+            'name'        => $this->faker->sentence($nbWords = 70, $variableNbWords = true),
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        $response->assertSessionHasErrors(["name"]);
+        $response->assertSessionHasErrors(['name']);
     }
 
     /** @test */
     public function validationForNumberOfDescriptionCharsWorks()
     {
         $response = $this->call('POST', '/admin/category/api/new', [
-            'name' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
+            'name'        => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
             'description' => $this->faker->text($minNbChars = 500),
         ]);
 
-        $response->assertSessionHasErrors(["description"]);
+        $response->assertSessionHasErrors(['description']);
     }
 }

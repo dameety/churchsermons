@@ -4,7 +4,6 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\User\UserRepository;
 
 class EloquentUser implements UserRepository
 {
@@ -35,11 +34,12 @@ class EloquentUser implements UserRepository
     public function create($request)
     {
         $user = $this->user;
-        $user -> name = $request-> name;
-        $user -> email = $request-> email;
-        $user -> permission = $request-> permission;
-        $user-> password = bcrypt($request-> password);
-        $user -> save();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->permission = $request->permission;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
         return response()->json(['success' => 201]);
     }
 
@@ -73,6 +73,7 @@ class EloquentUser implements UserRepository
         $user = $this->authUser();
         $user->name = $request->name;
         $user->email = $this->authUser()->email;
+
         return $user->save();
     }
 
@@ -82,20 +83,23 @@ class EloquentUser implements UserRepository
         $user->name = $request->name;
         $user->email = $this->authUser()->email;
         $user->password = bcrypt($request->password);
+
         return $user->save();
     }
 
     public function changePassword($slug, $request)
     {
         $user = $this->user->getBySlug($slug);
-        $user -> password = bcrypt($request->password);
-        $user -> save();
+        $user->password = bcrypt($request->password);
+        $user->save();
+
         return response()->json(['password change' => true]);
     }
 
     public function delete($slug)
     {
         $this->getBySlug($slug)->delete();
+
         return response()->json(['deleted' => true]);
     }
 

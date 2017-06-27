@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Auth;
-use Exception;
 use App\Setting;
+use Auth;
 use Carbon\Carbon;
-use App\Models\Sermon;
-use Stripe\Error\Card;
 use Cartalyst\Stripe\Stripe;
-use Illuminate\Notifications\Notifiable;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -34,8 +33,8 @@ class User extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => 'email'
-            ]
+                'source' => 'email',
+            ],
         ];
     }
 
@@ -62,8 +61,8 @@ class User extends Authenticatable
     public static function getUserCards()
     {
         $stripe = new Stripe(Setting::first()->api_key);
-        if (Auth::user()->customer_id === null || Auth::user()->customer_id === "") {
-            return null;
+        if (Auth::user()->customer_id === null || Auth::user()->customer_id === '') {
+            return;
         } else {
             try {
                 return $stripe->cards()->all(Auth::user()->customer_id);
@@ -76,7 +75,7 @@ class User extends Authenticatable
     {
         if (Auth::user()->permission === Setting::first()->plan_name) {
             return true;
-        } elseif (Auth::user()->permission !== $setting->plan_name && $status === "free") {
+        } elseif (Auth::user()->permission !== $setting->plan_name && $status === 'free') {
             return true;
         } else {
             return false;

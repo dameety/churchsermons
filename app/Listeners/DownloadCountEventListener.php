@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\DownloadCountEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
-
 
 class DownloadCountEventListener
 {
@@ -23,7 +20,8 @@ class DownloadCountEventListener
     /**
      * Handle the event.
      *
-     * @param  DownloadCountEvent  $event
+     * @param DownloadCountEvent $event
+     *
      * @return void
      */
     public function handle(DownloadCountEvent $event)
@@ -38,7 +36,7 @@ class DownloadCountEventListener
         // update the sermon download count
         $currentSermon = $event->sermon;
         $previousDownloadCount = $currentSermon->downloadCount;
-        $currentSermon ->downloadCount = $previousDownloadCount + 1;
+        $currentSermon->downloadCount = $previousDownloadCount + 1;
         $currentSermon->save();
     }
 }

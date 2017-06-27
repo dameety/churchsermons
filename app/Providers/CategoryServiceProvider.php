@@ -11,7 +11,6 @@ class CategoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function boot()
     {
         //
@@ -22,7 +21,6 @@ class CategoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function register()
     {
         $this->app->bind('App\Repositories\Category\CategoryRepository',

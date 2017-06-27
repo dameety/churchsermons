@@ -25,13 +25,13 @@ class AdminValidationRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'name' => 'required|max:30',
+                'name'     => 'required|max:30',
                 'password' => 'required|min:8',
-                'email' => 'required|email|unique:admins|max:30'
+                'email'    => 'required|email|unique:admins|max:30',
             ];
         } else {
             return [
-                'password' => 'required|min:8'
+                'password' => 'required|min:8',
             ];
         }
     }

@@ -10,7 +10,6 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 // admin auth routes
 Route::group(['prefix' => 'admin'], function () {
-
     Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::get('/logout', 'AdminAuth\LoginController@logout');
@@ -28,27 +27,19 @@ Route::get('/admin', function () {
     return redirect('/admin/login');
 });
 
-
 Route::group(['middleware' => 'auth'], function () {
 
     // get sermons by category
     Route::name('category')->get('/category/{slug}', 'SermonsController@getCategory');
-
-
 
     Route::name('profileUpdate')->post('/user/profile/update', 'UsersController@profileUpdate');
     Route::name('profile')->get('/user/profile', 'UsersController@profile');
     Route::name('userCards')->get('/user/cards', 'UsersController@getUserCards');
     Route::name('userSubscription')->get('/user/subscription', 'UsersController@getSubscription');
 
-
-
-
     Route::name('service')->get('/service/{slug}', 'SermonsController@getService');
     Route::name('allSermons')->get('/sermons', 'SermonsController@allSermons');
     Route::name('download')->post('/download/{slug}', 'SermonsController@downloadSermon');
-
-
 
     Route::name('favourite')->post('/favourite/{slug}', 'SermonsController@favouriteSermon2');
     Route::name('viewFavourite')->get('/sermons/favourites', 'SermonsController@viewFavourites');
@@ -56,7 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('favouriteDownload')->post('/myfavourites/download/{slug}', 'SermonsController@favouriteDownload');
     Route::name('upgradeAccount')->get('/user/upgrade', 'UsersController@upgradeAccount');
     Route::name('upgradeAction')->post('/user/upgrade/action', 'UsersController@upgradeAction');
-
 
     Route::name('cancelSubscription')->post('/subscription/cancel', 'UsersController@cancelSubscription');
     Route::name('reactivateSubscription')->post('/user/subscription/reactivate', 'UsersController@reactivateSubscription');

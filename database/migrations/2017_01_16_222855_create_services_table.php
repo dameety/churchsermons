@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateServicesTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateServicesTable extends Migration
             $table->text('description')->nullable();
             $table->integer('sermonCount')->nullable();
             $table->string('slug');
-            
+
             $table->timestamps();
         });
     }

@@ -16,11 +16,11 @@ $factory->define(App\Models\Admin::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'name'           => $faker->name,
+        'email'          => $faker->unique()->safeEmail,
+        'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'permission' => 'Super Admin'
+        'permission'     => 'Super Admin',
     ];
 });
 
@@ -28,34 +28,31 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'name'           => $faker->name,
+        'email'          => $faker->unique()->safeEmail,
+        'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });
 
 $factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
-
     return [
-        'name' => $faker->text($maxNbChars = 15),
-        'description' => $faker->sentence($nbWords = 500, $variableNbWords = true)
+        'name'        => $faker->text($maxNbChars = 15),
+        'description' => $faker->sentence($nbWords = 500, $variableNbWords = true),
     ];
 });
 
 $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
-
     return [
-        'name' => $faker->sentence($nbWords = 2, $variableNbWords = true),
+        'name'        => $faker->sentence($nbWords = 2, $variableNbWords = true),
         'description' => $faker->text($maxNbChars = 200),
     ];
 });
 
 $factory->define(App\Models\Sermon::class, function (Faker\Generator $faker) {
-
     return [
-        'title' => $faker->sentence($nbWords = 4, $variableNbWords = true),
-        'preacher' => $faker->name,
+        'title'      => $faker->sentence($nbWords = 4, $variableNbWords = true),
+        'preacher'   => $faker->name,
         'service_id' => function () {
             return factory(App\Models\Service::class)->create()->id;
         },
@@ -63,6 +60,6 @@ $factory->define(App\Models\Sermon::class, function (Faker\Generator $faker) {
             return factory(App\Models\Category::class)->create()->id;
         },
         'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'size' => $faker->randomDigitNotNull,
+        'size'         => $faker->randomDigitNotNull,
     ];
 });

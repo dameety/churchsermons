@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Brotzka\DotenvEditor\DotenvEditor;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Setting extends Model implements HasMediaConversions
@@ -15,7 +14,6 @@ class Setting extends Model implements HasMediaConversions
     use Sluggable;
     use HasMediaTrait;
     use SluggableScopeHelpers;
-
 
     protected $hidden = [
         'id',
@@ -30,8 +28,8 @@ class Setting extends Model implements HasMediaConversions
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -45,10 +43,11 @@ class Setting extends Model implements HasMediaConversions
 
     public static function createUploadsFolder()
     {
-        $folder  = 'uploads/';
+        $folder = 'uploads/';
         if (!file_exists(public_path($folder))) {
             mkdir(public_path($folder), @755, true);
         }
+
         return public_path($folder);
     }
 
@@ -56,7 +55,7 @@ class Setting extends Model implements HasMediaConversions
     {
         $env = new DotenvEditor();
         $env->changeEnv([
-            'STRIPE_KEY'   => $key
+            'STRIPE_KEY'   => $key,
         ]);
     }
 
@@ -64,7 +63,7 @@ class Setting extends Model implements HasMediaConversions
     {
         $env = new DotenvEditor();
         $env->changeEnv([
-            'APP_NAME'   => $name
+            'APP_NAME'   => $name,
         ]);
     }
 
@@ -72,7 +71,7 @@ class Setting extends Model implements HasMediaConversions
     {
         $env = new DotenvEditor();
         $env->changeEnv([
-            'APP_EMAIL'   => $email
+            'APP_EMAIL'   => $email,
         ]);
     }
 
@@ -80,6 +79,7 @@ class Setting extends Model implements HasMediaConversions
     {
         $keys = collect(['stripeKey', 'name', 'email']);
         $details = $keys->combine([env('STRIPE_KEY'), env('APP_NAME'), env('APP_EMAIL')]);
+
         return $details;
     }
 }

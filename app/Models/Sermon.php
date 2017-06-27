@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Intervention\Image\ImageManagerStatic as Image;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
+use Intervention\Image\ImageManagerStatic as Image;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
 class Sermon extends Model implements HasMedia
 {
@@ -31,15 +31,15 @@ class Sermon extends Model implements HasMedia
     ];
 
     protected $hidden = [
-        'id', 'created_at', 'updated_at', 'deleted_at'
+        'id', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
@@ -65,27 +65,29 @@ class Sermon extends Model implements HasMedia
 
     public static function createUploadsFolder()
     {
-        $folder  = 'uploads/';
+        $folder = 'uploads/';
         if (!file_exists(public_path($folder))) {
             mkdir(public_path($folder), @755, true);
         }
+
         return public_path($folder);
     }
 
     public static function saveSermonImage($request)
     {
-        $folder  = Sermon::createUploadsFolder();
+        $folder = self::createUploadsFolder();
 
         $sermonImage = request()->file('sermonImage');
-        $fileName = uniqid() . '.' . $sermonImage->getClientOriginalExtension();
+        $fileName = uniqid().'.'.$sermonImage->getClientOriginalExtension();
 
         $savedFile = Image::make($sermonImage)
             ->resize(400, null, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             })
-            ->save(public_path($folder) . $fileName);
-        return public_path($folder) . $fileName;
+            ->save(public_path($folder).$fileName);
+
+        return public_path($folder).$fileName;
     }
 
     public function removeMediaFromSermon()
@@ -100,16 +102,18 @@ class Sermon extends Model implements HasMedia
             return false;
         }
         $this->addMedia($path)->toMediaCollection('sermon_image');
+
         return true;
     }
 
     public static function addImageUrlToSermon($slug)
     {
-        $sermon = Sermon::findBySlug($slug);
+        $sermon = self::findBySlug($slug);
         if ($sermon->imageurl === null) {
             $image = $sermon->getMedia('sermon_image');
             $sermon->imageurl = $image[0]->getUrl();
             $sermon->save();
+
             return true;
         } else {
             return false;
@@ -118,10 +122,11 @@ class Sermon extends Model implements HasMedia
 
     public static function addImageUrlToUpdatedSermon($slug)
     {
-        $sermon = Sermon::findBySlug($slug);
+        $sermon = self::findBySlug($slug);
         $image = $sermon->getMedia('sermon_image');
         $sermon->imageurl = $image[0]->getUrl();
         $sermon->save();
+
         return true;
     }
 

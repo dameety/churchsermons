@@ -3,7 +3,6 @@
 namespace App\Repositories\Service;
 
 use App\Models\Service;
-use App\Repositories\Service\ServiceRepository;
 
 class EloquentService implements ServiceRepository
 {
@@ -37,24 +36,27 @@ class EloquentService implements ServiceRepository
     public function create($request)
     {
         $service = $this->service;
-        $service -> name = $request->name;
-        $service -> description = $request->description;
-        $service ->save();
+        $service->name = $request->name;
+        $service->description = $request->description;
+        $service->save();
+
         return response()->json(['created' => true]);
     }
 
     public function update($slug, $request)
     {
         $service = $this->getBySlug($slug);
-        $service -> name = $request-> name;
-        $service -> description = $request-> description;
-        $service -> save();
+        $service->name = $request->name;
+        $service->description = $request->description;
+        $service->save();
+
         return response()->json(['updated' => true]);
     }
 
     public function delete($slug)
     {
         $this->getBySlug($slug)->delete();
+
         return response()->json(['deleted' => true]);
     }
 

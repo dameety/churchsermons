@@ -25,13 +25,13 @@ class ServiceValidationRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'name' => 'required|max:30|unique:services',
-                'description' => 'max:300'
+                'name'        => 'required|max:30|unique:services',
+                'description' => 'max:300',
             ];
         } else {
             return [
-                'name' => 'required|max:30',
-                'description' => 'max:300'
+                'name'        => 'required|max:30',
+                'description' => 'max:300',
             ];
         }
     }

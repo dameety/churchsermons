@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\AdminAuth;
 
-use Validator;
-use App\Models\Admin;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class RegisterController extends Controller
 {
@@ -43,15 +43,16 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:admins',
-            'password' => 'required|min:6|confirmed',
+            'name'       => 'required|max:255',
+            'email'      => 'required|email|max:255|unique:admins',
+            'password'   => 'required|min:6|confirmed',
             'permission' => 'required',
         ]);
     }
@@ -59,15 +60,16 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return Admin
      */
     protected function create(array $data)
     {
         return Admin::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name'       => $data['name'],
+            'email'      => $data['email'],
+            'password'   => bcrypt($data['password']),
             'permission' => $data['permission'],
         ]);
     }

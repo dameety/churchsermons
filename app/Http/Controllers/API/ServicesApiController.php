@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Service;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Service\ServiceRepository;
 use App\Http\Requests\ServiceValidationRequest;
+use App\Models\Service;
+use App\Repositories\Service\ServiceRepository;
 
 class ServicesApiController extends Controller
 {
-
     protected $service;
 
     public function __construct(ServiceRepository $service)

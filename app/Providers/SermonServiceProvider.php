@@ -11,7 +11,6 @@ class SermonServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function boot()
     {
         //
@@ -22,7 +21,6 @@ class SermonServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function register()
     {
         $this->app->bind('App\Repositories\Sermon\SermonRepository',

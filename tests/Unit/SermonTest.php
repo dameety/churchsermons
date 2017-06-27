@@ -2,15 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use App\Models\Category;
 use App\Models\Sermon;
 use App\Models\Service;
-use App\Models\Category;
-use Faker\Factory as Faker;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class SermonTest extends TestCase
 {
@@ -43,11 +40,11 @@ class SermonTest extends TestCase
         Image::make(public_path('testimage.jpg'))->resize(300, 200)->save(public_path('testimage.png'), 60);
 
         $sermon = $this->newSermon;
-        $sermon-> addMediaToSermon(public_path('testimage.png'));
+        $sermon->addMediaToSermon(public_path('testimage.png'));
         $sermon->title = $this->faker->sentence($nbWords = 3, $variableNbWords = true);
         $sermon->service_id = factory(Service::class)->create()->id;
         $sermon->category_id = factory(Category::class)->create()->id;
-        $sermon -> save();
+        $sermon->save();
 
         $result = Sermon::addImageUrlToSermon($sermon->slug);
         $this->assertTrue($result);
