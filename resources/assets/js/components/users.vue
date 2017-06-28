@@ -1,6 +1,6 @@
 <template>
     <main class="main">
-        
+
 
         <!-- bread crumb -->
         <div class="breadcrumb">
@@ -9,12 +9,12 @@
             <li> <button class="newButton breadcrumb-item uk-button uk-button-primary uk-button-small" @click="newUserForm = true">Add New User</button></li>
 
             <!-- right top pagination-->
-            <li id="pagination" class="breadcrumb-menu hidden-md-down">   
+            <li id="pagination" class="breadcrumb-menu hidden-md-down">
                 <button class="btn btn-default btn-sm" @click="fetchUsers(pagination.prev_page_url)"
                         :disabled="!pagination.prev_page_url">
                     Previous
-                </button> &nbsp; 
-                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                </button> &nbsp;
+                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                 <button class="btn btn-default btn-sm" @click="fetchUsers(pagination.next_page_url)"
                         :disabled="!pagination.next_page_url">Next
                 </button>
@@ -24,7 +24,7 @@
 
 
         <div class="container-fluid">
-            <div class="animated fadeIn">  
+            <div class="animated fadeIn">
 
 
                 <!-- new user form -->
@@ -52,7 +52,7 @@
                                     <label for="Permission">Permission</label>
                                     <select v-model="newUser.permission" name="permission" class="form-control">
                                         <option>Standard</option>
-                                        <option>Premium</option>                        
+                                        <option>Premium</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -75,17 +75,17 @@
                 <!-- search inputs -->
                 <div class="card-block" v-show="!newUserForm">
                     <div id="searchForm" class="col-lg-12 uk-animation-slide-top-medium">
-                        <div class="card">    
+                        <div class="card">
                             <div class="row card-header">
                                 <div class="col-sm-5">
-                                    <label for="Filter by User Type">Filter by User Type</label> 
+                                    <label for="Filter by User Type">Filter by User Type</label>
                                     <select class="form-control input-sm" v-model="userTypeSelected" @change="userTypeFilter(userTypeSelected)">
                                         <option>Standard</option>
-                                        <option>Premium</option>                        
+                                        <option>Premium</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-7">
-                                    <label for="Search">Search</label> 
+                                    <label for="Search">Search</label>
                                     <input type="text" class="form-control input-sm" v-model="searchWord">
                                 </div>
                             </div>
@@ -142,14 +142,14 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="pagination pull-right">
                                 <button class="btn btn-default btn-sm" @click="fetchUsers(pagination.prev_page_url)"
                                         :disabled="!pagination.prev_page_url">
                                     Previous
-                                </button> &nbsp; 
-                                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp; 
+                                </button> &nbsp;
+                                <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span> &nbsp;
                                 <button class="btn btn-default btn-sm" @click="fetchUsers(pagination.next_page_url)"
                                         :disabled="!pagination.next_page_url">Next
                                 </button>
@@ -157,8 +157,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- END OF ALL SERMONS -->
-            
+
 
                 <!-- user details modal -->
                 <div id="userDetailsModal" uk-modal>
@@ -168,7 +167,7 @@
                             <h2 class="uk-modal-title">User Details</h2>
                         </div>
                         <div class="uk-modal-body" uk-overflow-auto>
-                            
+
                             <div class="row modalRowTop">
                                 <div class="col-md-4">
                                     <strong class="pull-right">Name:</strong>
@@ -225,14 +224,14 @@
                                     {{ oneUser.lastSermonDownloaded }}
                                 </div>
                             </div>
-                                
+
                         </div>
                     </div>
                 </div>
                 <!-- user details modal -->
 
 
-        
+
                 <!-- change password modal -->
                 <div id="changePasswordModal" uk-modal>
                     <div class="uk-modal-dialog">
@@ -265,7 +264,7 @@
 
 <script>
     export default {
-        
+
         data: function() {
 
             return {
@@ -293,7 +292,7 @@
         },
 
         mounted: function () {
-            this.fetchUsers();      
+            this.fetchUsers();
             this.fetchUsersCount();
             this.fetchCurrentAdmin();
         },
@@ -350,7 +349,6 @@
                 });
 
             },
-
 
             // make new user
             saveNewUser: function () {
@@ -449,10 +447,8 @@
 
                 }
 
-               
+
             },
-
-
 
         } /*methods end here*/
 

@@ -44,7 +44,6 @@ class EloquentSetting implements SettingRepository
     public function getStripeKey()
     {
         $key = env('STRIPE_KEY');
-
         return $key;
     }
 

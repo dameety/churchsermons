@@ -26,8 +26,8 @@ class UserValidationRequest extends FormRequest
         if ($this->isMethod('post')) {
             return [
                 'name' => 'required|max:30',
-                'password' => 'required|min:8'
-                'email' => 'required|email|unique:users|max:30',
+                'password' => 'required|min:8',
+                'email' => 'required|email|unique:users|max:30'
             ];
         } else {
             return [
