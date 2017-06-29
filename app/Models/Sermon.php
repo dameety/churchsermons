@@ -9,12 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Sermon extends Model implements HasMedia
 {
+    use LogsActivity;
     use Sluggable;
     use HasMediaTrait;
     use SluggableScopeHelpers;
+
+    protected static $logAttributes = ['title', 'preacher'];
 
     public function category()
     {
