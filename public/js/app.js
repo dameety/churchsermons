@@ -2293,7 +2293,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 cancelButtonText: "No, don't!"
 
             }).then(function () {
-                vm.$http.delete('/admin/service/api/delete/' + service.name).then(function (response) {
+                vm.$http.delete('/admin/service/api/delete/' + service.slug).then(function (response) {
                     var index = vm.services.indexOf(service);
                     vm.$delete(vm.services, index);
                     vm.servicesCount--;
@@ -3717,7 +3717,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
     data: function data() {
 
         return {
@@ -3744,16 +3743,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             searchWord: "",
 
             filterWord: ""
-
         };
     },
-
     mounted: function mounted() {
         this.fetchSermons(); //saved in the sermons: []
         this.fetchCategories(); //saved in the  categories: []
         this.fetchServices(); //saved in the services: []
         this.fetchSermonsCount();
     },
+
 
     methods: {
         fetchSermonsCount: function fetchSermonsCount() {
@@ -3827,8 +3825,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this4.services = response.data;
             });
         },
-
-
         serviceSermonsFilter: function serviceSermonsFilter(serviceSelected) {
             var _this5 = this;
 
@@ -3837,7 +3833,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this5.filterWord = serviceSelected;
             });
         },
-
         categorySermonsFilter: function categorySermonsFilter(categorySelected) {
             var _this6 = this;
 
@@ -3853,10 +3848,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         closefilterResult: function closefilterResult() {
             location.reload(true);
         }
-    } /*methods end here*/
-
-    /*compoent ends here */
-
+    }
 });
 
 /***/ }),
@@ -4314,7 +4306,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -39545,7 +39536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.fetchUsers(_vm.pagination.prev_page_url)
       }
     }
-  }, [_vm._v("\n                Previous\n            ")]), _vm._v("   \n            "), _c('span', [_vm._v("Page " + _vm._s(_vm.pagination.current_page) + " of " + _vm._s(_vm.pagination.last_page))]), _vm._v("   \n            "), _c('button', {
+  }, [_vm._v("\n                Previous\n            ")]), _vm._v("  \n            "), _c('span', [_vm._v("Page " + _vm._s(_vm.pagination.current_page) + " of " + _vm._s(_vm.pagination.last_page))]), _vm._v("  \n            "), _c('button', {
     staticClass: "btn btn-default btn-sm",
     attrs: {
       "disabled": !_vm.pagination.next_page_url
@@ -39888,7 +39879,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.fetchUsers(_vm.pagination.prev_page_url)
       }
     }
-  }, [_vm._v("\n                                Previous\n                            ")]), _vm._v("   \n                            "), _c('span', [_vm._v("Page " + _vm._s(_vm.pagination.current_page) + " of " + _vm._s(_vm.pagination.last_page))]), _vm._v("   \n                            "), _c('button', {
+  }, [_vm._v("\n                                Previous\n                            ")]), _vm._v("  \n                            "), _c('span', [_vm._v("Page " + _vm._s(_vm.pagination.current_page) + " of " + _vm._s(_vm.pagination.last_page))]), _vm._v("  \n                            "), _c('button', {
     staticClass: "btn btn-default btn-sm",
     attrs: {
       "disabled": !_vm.pagination.next_page_url

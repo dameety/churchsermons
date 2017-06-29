@@ -263,8 +263,8 @@
                     confirmButtonText: "Yes, delete it!",
                     cancelButtonText: "No, don't!",
 
-                }).then(function() {
-                    vm.$http.delete('/admin/service/api/delete/' + service.name).then((response) => {
+                }).then(() => {
+                    vm.$http.delete('/admin/service/api/delete/' + service.slug).then((response) => {
                         let index = vm.services.indexOf(service);
                         vm.$delete(vm.services, index);
                         vm.servicesCount--
