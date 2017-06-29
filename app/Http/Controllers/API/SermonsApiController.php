@@ -22,12 +22,12 @@ class SermonsApiController extends Controller
 
     public function index()
     {
-        $this->sermon->get30Paginated();
+        return $this->sermon->get30Paginated();
     }
 
     public function count()
     {
-        $this->sermon->countAll();
+        return $this->sermon->countAll();
     }
 
     public function stagedsermonCount()

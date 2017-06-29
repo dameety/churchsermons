@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "Dameety/Churchsermons",
+    "description": "App for churches to make available the messages preached in church for all members.",
+    "keywords": ["download", "mp3", "sermon", "church"],
     "license": "MIT",
     "type": "project",
     "require": {

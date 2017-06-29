@@ -244,7 +244,7 @@
 
     export default {
 
-        data: function() {
+        data () {
 
             return {
 
@@ -270,13 +270,11 @@
                 searchWord: "",
 
                 filterWord: "",
-
-
             }
         },
 
 
-        mounted: function () {
+        mounted () {
             this.fetchSermons();        //saved in the sermons: []
             this.fetchCategories();     //saved in the  categories: []
             this.fetchServices();       //saved in the services: []
@@ -302,7 +300,7 @@
 
             },
 
-            makePagination (data){
+            makePagination (data) {
 
                 let pagination = {
                     current_page: data.current_page,
@@ -363,7 +361,7 @@
                     });
             },
 
-            serviceSermonsFilter: function (serviceSelected) {
+            serviceSermonsFilter (serviceSelected) {
                 this.$http.get('/admin/sermon/api/service/' + serviceSelected).then((response) => {
                     this.sermons = response.data;
                     this.filterWord = serviceSelected;
@@ -386,12 +384,8 @@
             closefilterResult () {
                 location.reload(true);
             },
-
-
-        } /*methods end here*/
-
-
-    } /*compoent ends here */
+        }
+    }
 </script>
 
 <style>

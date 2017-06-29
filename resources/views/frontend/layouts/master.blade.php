@@ -9,7 +9,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }} - @yield('title')</title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link href="{{ URL::asset('/css/simple-line-icons.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ URL::asset('/css/uikit.min.css') }}" rel="stylesheet">
@@ -40,7 +40,6 @@
         <script src="{{ URL::asset('/js/frontend/welcome.js') }}"></script>
 
         @yield('scripts')
-
 
     </body>
 
