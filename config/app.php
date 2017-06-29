@@ -177,7 +177,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Spatie\Activitylog\ActivitylogServiceProvider::class
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
 
         /*
          * Application Service Providers...
