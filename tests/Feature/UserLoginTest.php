@@ -3,25 +3,20 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UserLoginTest extends TestCase
 {
-    /** @test */
+    use WithoutMiddleware;
+
     public function loginWorks()
     {
-        $email = $this->faker->unique()->safeEmail;
-        $password = $this->faker->text($maxNbChars = 20);
+        $user = factory(User::class)->create();
 
-        $register = $this->json('POST', '/register', [
-            'email'                 => $email,
-            'password'              => $password,
-            'name'                  => $this->faker->name,
-            'password_confirmation' => $password,
-        ]);
-
-        $response = $this->json('POST', '/login', [
-            'email'    => $email,
-            'password' => $password,
+        $response = $this->call('POST', '/login', [
+            'email'    => $user->email,
+            'password' => $user->password,
         ]);
 
         $response->assertRedirect('/home');

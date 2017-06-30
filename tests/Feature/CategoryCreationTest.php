@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Tests\TestCase;
 
 class CategoryCreationTest extends TestCase
 {
@@ -29,7 +29,7 @@ class CategoryCreationTest extends TestCase
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        $response->assertSessionHasErrors(['name']);
+        $response->assertStatus(302)->assertSessionHasErrors(['name']);
     }
 
     /** @test */

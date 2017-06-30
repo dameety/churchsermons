@@ -3,19 +3,22 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UserRegisterTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /** @test */
     public function userCanRegistser()
     {
         $password = $this->faker->text($maxNbChars = 20);
 
-        $response = $this->json('POST', '/register', [
+        $response = $this->call('POST', '/register', [
             'password'              => $password,
-            'name'                  => $this->faker->name,
             'password_confirmation' => $password,
-            'email'                 => $this->faker->unique()->safeEmail,
+            'name'                  => $this->faker->name,
+            'email'                 => $this->faker->unique()->safeEmail
         ]);
 
         $response->assertRedirect('/home');
@@ -28,8 +31,8 @@ class UserRegisterTest extends TestCase
 
         $response = $this->call('POST', '/register', [
             'password'              => $password,
-            'name'                  => $this->faker->name,
             'password_confirmation' => $password,
+            'name'                  => $this->faker->name
         ]);
 
         $response->assertSessionHasErrors(['email']);

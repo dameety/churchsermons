@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use App\Models\Category;
+use Tests\TestCase;
 use App\Models\Sermon;
 use App\Models\Service;
+use App\Models\Category;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\ImageManagerStatic as Image;
-use Tests\TestCase;
 
 class SermonTest extends TestCase
 {

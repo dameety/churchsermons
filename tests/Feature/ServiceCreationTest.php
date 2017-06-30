@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Admin;
 use App\Models\Service;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Tests\TestCase;
 
 class ServiceCreationTest extends TestCase
 {

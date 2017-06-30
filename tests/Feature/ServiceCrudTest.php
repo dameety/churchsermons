@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Admin;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Tests\TestCase;
 
 class ServiceCrudTest extends TestCase
 {
