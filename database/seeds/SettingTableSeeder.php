@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SermonTableSeeder extends Seeder
+class SettingTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class SermonTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Sermon::class, 5)->create();
+        factory(App\Models\Setting::class)->create();
     }
 }
