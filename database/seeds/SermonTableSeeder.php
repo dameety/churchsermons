@@ -1,8 +1,8 @@
 <?php
 
-use App\Category;
-use App\Sermon;
-use App\Service;
+use App\Models\Sermon;
+use App\Models\Service;
+use App\Models\Category;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
