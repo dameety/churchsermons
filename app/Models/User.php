@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use App\Setting;
 use Auth;
+use Exception;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Cartalyst\Stripe\Stripe;
-
+use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {

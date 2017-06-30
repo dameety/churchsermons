@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
-use App\Models\User;
-use App\Repositories\User\UserRepository;
-use Cartalyst\Stripe\Stripe;
-use Illuminate\Http\Request;
-use Redirect;
 use Session;
+use Redirect;
+use App\Models\User;
 use Stripe\Error\Card;
+use App\Models\Setting;
+use Illuminate\Http\Request;
+use Cartalyst\Stripe\Stripe;
+use App\Repositories\User\UserRepository;
 
 class UsersController extends Controller
 {
@@ -37,7 +37,7 @@ class UsersController extends Controller
     public function profile()
     {
         return view('frontend.pages.profile', [
-            'user' => $this->user->authUser,
+            'user' => $this->user->authUser(),
         ]);
     }
 

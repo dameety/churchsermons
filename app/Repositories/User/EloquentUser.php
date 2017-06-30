@@ -8,12 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class EloquentUser implements UserRepository
 {
     private $user;
-    private $auth;
 
-    public function __construct(User $user, Auth $auth)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->auth = $auth;
     }
 
     public function getAll()
@@ -45,7 +43,7 @@ class EloquentUser implements UserRepository
 
     public function authUser()
     {
-        return $this->auth->user();
+        return Auth::user();
     }
 
     public function attachFavourite($id)

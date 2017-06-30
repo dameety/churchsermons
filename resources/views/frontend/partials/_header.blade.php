@@ -37,7 +37,7 @@
                     @if( Auth::user()->subscriptionStatus === null )
 
                         <li class="{{ isActiveURL('/user/upgrade') }}">
-                            <a href="{{ route('upgradeAccount') }}">Upgrade</a>
+                            <a href="#">Upgrade</a>
                         </li>
 
                     @endif
@@ -57,13 +57,13 @@
 
                     @endif
                     <li class="{{ isActiveURL('/sermons') }}">
-                        <a href="{{ route('allSermons') }}">Sermons</a>
+                        <a href="#">Sermons</a>
                     </li>
                     <li class="{{ isActiveURL('/sermons/favourites') }}">
-                        <a href="{{ route('viewFavourite') }}">My Favourites</a>
+                        <a href="#">My Favourites</a>
                     </li>
                     <li class="{{ isActiveURL('/user/profile') }}">
-                        <a href="{{ route('profile') }}">My Profile</a>
+                        <a href="#">My Profile</a>
                     </li>
                     <li>
                         <a href="{{ route('logout') }}">Logout</a>
@@ -93,13 +93,13 @@
                                 </li>
                             @elseif (Auth::check())
                                 <li class="{{ isActiveURL('/sermons') }}">
-                                    <a href="{{ route('allSermons') }}">Sermons</a>
+                                    <a href="#">Sermons</a>
                                 </li>
                                 <li class="{{ isActiveURL('/sermons/myfavourites') }}">
-                                    <a href="{{ route('viewFavourite') }}">My Favourites</a>
+                                    <a href="#">My Favourites</a>
                                 </li>
                                 <li class="{{ isActiveURL('/user/profile') }}">
-                                    <a href="{{ route('profile') }}">My Profile</a>
+                                    <a href="#">My Profile</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('logout') }}">Logout</a>
@@ -110,8 +110,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.fullscreen -->
-
-        {{-- end --}}
 
     </div>
 </nav>
