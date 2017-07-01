@@ -3274,44 +3274,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
 
-            // for dropzone
             uploadOptions: {
                 maxFiles: 5,
                 dictDefaultMessage: "Step 1: Drop sermon files here to begin upload",
                 maxFileSizeInMB: 500,
                 uploadMultiple: true,
                 parallelUploads: true,
-                acceptedFiles: 'audio/*',
+                acceptedFileTypes: 'audio/*',
                 headers: { 'X-CSRF-TOKEN': Laravel.csrfToken }
-
             },
-
+            pagination: {},
             sermonsCount: "",
             stagedSermons: [],
-            pagination: {},
             sermonToComplete: "",
-
-            services: [], /*used in the select input*/
-            categories: [], /*using the getAllCategories() and select input*/
-
-            newSermon: {
-                title: "",
-                preacher: "",
-                service_id: "",
-                category_id: "",
-                datepreached: "",
-                status: "",
-                slug: "",
-                filename: "",
-                sermonImage: ""
-            },
-            newSermonForm: false,
-
-            formErrors: [],
-
-            galleryImages: [],
-            imgeSrc: ""
-
+            newSermonForm: false
         };
     },
 
@@ -3366,31 +3342,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.pagination = pagination;
         },
 
-        completeSermonUpload: function completeSermonUpload() {
-            var _this2 = this;
-
-            var sermon = this.newSermon;
-            this.formErrors = '';
-
-            this.$http.post('/admin/sermon/api/upload/fill', sermon).then(function (response) {
-                _this2.newSermon = {
-                    title: "", preacher: "", service_id: "", category_id: "", datepreached: "", status: "", slug: "", filename: "", image: ""
-                };
-                _this2.fetchStagedSermons();
-                _this2.fetchSermonsCount();
-                _this2.newSermonForm = false;
-                _this2.$swal({
-                    title: 'Great!',
-                    text: 'New Sermon Creation Successful',
-                    type: 'success',
-                    timer: 1500
-                });
-            }).catch(function (errors) {
-                _this2.formErrors = errors.response.data;
-                console.log(errors.response.data);
-            });
-        },
-
         deleteStagedSermon: function deleteStagedSermon(sermon) {
             var vm = this;
             this.$swal({
@@ -3410,60 +3361,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         showSuccess: function showSuccess(file) {
             this.fetchStagedSermons();
-        },
-
-        // get all categories
-        fetchCategories: function fetchCategories() {
-            var _this3 = this;
-
-            this.$http.get('/admin/category/api/all').then(function (response) {
-                _this3.categories = response.data;
-            });
-        },
-
-        // get all services
-        fetchServices: function fetchServices() {
-            var _this4 = this;
-
-            this.$http.get('/admin/service/api/all').then(function (response) {
-                _this4.services = response.data;
-            });
-        },
-
-        // get all gallery images
-        fetchGalleryImages: function fetchGalleryImages() {
-            var _this5 = this;
-
-            this.$http.get('/admin/gallery/api').then(function (response) {
-                _this5.galleryImages = response.data;
-            });
-        },
-
-
-        //set the sermon image
-        setSermonImage: function setSermonImage(galleryImage) {
-            this.newSermon.sermonImage = galleryImage;
-        },
-
-
-        previewThumbnail: function previewThumbnail(event) {
-            var input = event.target;
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                var vm = this;
-
-                reader.onload = function (e) {
-                    vm.imageSrc = e.target.result;
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
         }
-
     }
-
 });
 
 /***/ }),

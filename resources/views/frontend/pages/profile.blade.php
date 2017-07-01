@@ -16,23 +16,20 @@
     </div>
 
     <div id="container" class="container container-mobile">
-        
 
-        <div class="row content-block">           
+        <div class="row content-block">
 
             <div class="col-sm-2 filter-boxx">
-                    
+
                 <a href="{{ route('userCards') }}" class="filters">
-                    <h4> Cards </h4> 
+                    <h4> Cards </h4>
                 </a>
                 <hr>
                 <a href="{{ route('userSubscription') }}" class="filters">
-                    <h4> Subscription </h4> 
+                    <h4> Subscription </h4>
                 </a>
 
             </div>
-
-
 
             {{-- right part --}}
             <div class="col-sm-10 sermon-col">
@@ -43,14 +40,14 @@
                     @include('flash::message')
                     {{-- the filter for responsive view --}}
                     @include('frontend.partials.filters')
-                
+
                 </div>
-                
+
 
                 {{-- profile form --}}
                 <form role="form" method="POST" action="{{ route('profileUpdate', [$user->slug]) }}">
                 {{ csrf_field() }}
-                    
+
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" value="{{ $user->name }}" required autofocus>
@@ -91,14 +88,10 @@
 
                 </form>
 
-                
             </div>
 
-
         </div>
-            
 
     </div>
-
 
 @endsection

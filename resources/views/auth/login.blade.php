@@ -5,21 +5,19 @@
 @section('content')
 
     <div  class="container-fluid login-container-body">
-        
-        <div class="container">
-                
-            <div class="login-body">
-            
-                <div class="row page-heeding-row">
-                    <h1 class="login-heading"> Login </h1>     
-                </div>           
 
+        <div class="container">
+
+            <div class="login-body">
+
+                <div class="row page-heeding-row">
+                    <h1 class="login-heading"> Login </h1>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
 
                         @include('frontend.partials._errors')
-
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -30,7 +28,7 @@
                                 <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                                     {{ csrf_field() }}
 
-                        
+
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
                                         <div class="col-md-12">
@@ -65,22 +63,17 @@
                                     <a class="btn btn-block btn-primary" id="forgot-password" href="{{ route('password.request') }}" role="button"> Forgot Your Password? Click here </a>
 
                                 </form>
-                                    
+
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-
             </div>
-
 
         </div>
 
-
     </div>
-
-
 
 @endsection

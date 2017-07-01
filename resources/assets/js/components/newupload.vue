@@ -1,7 +1,6 @@
 <template>
 	<main class="main">
 
-		<!-- Breadcrumb -->
         <div uk-sticky="offset: 54; show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom" class="breadcrumb">
             <li><span class="breadcrumb-item uk-badge"> &nbsp; Total Sermons: {{sermonsCount}} &nbsp;</span></li>
         </div>
@@ -9,10 +8,7 @@
 		<div class="col-sm-7 uk-margin-auto">
 	   		<div class="animated fadeIn">
 
-
-                <!-- the dropzone area -->
 	    		<div class="row">
-
 	    			<div id="uploadForm" class="col-lg-12" v-show="!newSermonForm">
 	                    <div class="card">
 	                        <div class="card-header">
@@ -31,11 +27,8 @@
 	                        </div>
 	                    </div>
 	                </div>
-
 	        	</div>
 
-
-                <!-- list of all staged sermons -->
 	        	<div class="row">
 	        		<div class="col-lg-12" v-show="!newSermonForm">
 
@@ -49,7 +42,6 @@
                                     </tr>
                                 </thead>
                                 <tbody v-for="sermon in stagedSermons">
-
                                     <tr>
                                         <td>
                                             <div class="avatar">
@@ -73,8 +65,6 @@
                             </table>
                         </div>
 
-
-                        <!-- pagination -->
 	                	<div class="card card-header" v-show="!sermonsCount">
                             <div class="paginationn float-right">
                                 <button class="btn btn-default btn-sm" @click="fetchStagedSermons(pagination.prev_page_url)"
@@ -90,8 +80,8 @@
 
                     </div>
 	        	</div>
-
 	    	</div>
+
 	    </div>
 
 	</main>
@@ -99,7 +89,7 @@
 
 <script>
 
-import Dropzone from 'vue2-dropzone'
+    import Dropzone from 'vue2-dropzone'
 
 	export default {
 
@@ -109,55 +99,29 @@ import Dropzone from 'vue2-dropzone'
 
 	    },
 
-		data: function() {
+		data () {
 			return {
 
-				// for dropzone
 				uploadOptions: {
 					maxFiles: 5,
                     dictDefaultMessage: "Step 1: Drop sermon files here to begin upload",
 					maxFileSizeInMB: 500,
 					uploadMultiple: true,
 					parallelUploads: true,
-					acceptedFiles: 'audio/*',
+					acceptedFileTypes: 'audio/*',
 					headers: {'X-CSRF-TOKEN': Laravel.csrfToken},
-
 				},
-
-                sermonsCount: "",
-				stagedSermons: [],
 				pagination: {},
+                sermonsCount: "",
+                stagedSermons: [],
 				sermonToComplete: "",
-
-                services: [],           /*used in the select input*/
-				categories: [],         /*using the getAllCategories() and select input*/
-
-	            newSermon: {
-	            	title: "",
-	            	preacher: "",
-	            	service_id: "",
-	            	category_id: "",
-	            	datepreached: "",
-	            	status: "",
-	            	slug: "",
-                    filename:"",
-                    sermonImage: ""
-	            },
                 newSermonForm: false,
-
-	            formErrors:[],
-
-                galleryImages: [],
-                imgeSrc: "",
-
 			};
 		},
 
-		mounted: function () {
+		mounted () {
             this.fetchSermonsCount();
             this.fetchStagedSermons();
-            this.fetchCategories();         //saved in the  categories: []
-            this.fetchServices();           //saved in the services: []
         },
 
 		methods: {
@@ -166,17 +130,17 @@ import Dropzone from 'vue2-dropzone'
                 return `/admin/sermon/${sermon.slug}/new`;
             },
 
-            fetchSermonsCount: function () {
+            fetchSermonsCount () {
                 this.$http.get('/admin/stagedsermon/api/count').then((response) => {
                     this.sermonsCount = response.data;
                 });
             },
 
-			fetchStagedSermons: function (page_url) {
+			fetchStagedSermons (page_url) {
                 let vm = this;
                 page_url = page_url || '/admin/stagedsermon/api'
                 this.$http.get(page_url)
-                    .then(function (response) {
+                    .then((response) => {
                         vm.makePagination(response.data)
                         vm.stagedSermons = response.data.data;
                     });
@@ -185,16 +149,16 @@ import Dropzone from 'vue2-dropzone'
 
 			// fill the form with the sermon title to
 			// be completed
-			fillStagedSermon: function (sermon) {
+			fillStagedSermon (sermon) {
 				this.newSermonForm = true;
-				var titleString = sermon.title;
+				let titleString = sermon.title;
                 this.newSermon.filename = sermon.filename;
 				this.newSermon.slug = sermon.slug;
 				this.newSermon.title = titleString.replace("." + sermon.type, "");
 
 			},
 
-			makePagination: function(data){
+			makePagination (data){
                 let pagination = {
                     current_page: data.current_page,
                     last_page: data.last_page,
@@ -206,33 +170,8 @@ import Dropzone from 'vue2-dropzone'
 
             },
 
-            completeSermonUpload: function () {
-                var sermon = this.newSermon
-                this.formErrors = '';
-
-
-                this.$http.post('/admin/sermon/api/upload/fill', sermon).then((response) => {
-                    this.newSermon = {
-                    title: "", preacher: "", service_id: "", category_id: "", datepreached: "", status: "", slug: "", filename: "", image: ""
-                };
-                    this.fetchStagedSermons();
-                    this.fetchSermonsCount();
-                    this.newSermonForm = false;
-                    this.$swal({
-                        title: 'Great!',
-                        text: 'New Sermon Creation Successful',
-                        type: 'success',
-                        timer: 1500,
-                    })
-                }).catch( errors => {
-                    this.formErrors = errors.response.data;
-                    console.log(errors.response.data);
-                });
-
-            },
-
-            deleteStagedSermon: function (sermon) {
-            	var vm = this;
+            deleteStagedSermon (sermon) {
+            	const vm = this;
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'This sermon will be deleted if you continue',
@@ -246,57 +185,12 @@ import Dropzone from 'vue2-dropzone'
                         vm.fetchSermonsCount();
                     });
                 });
-
             },
 
-			showSuccess: function (file) {
+			showSuccess (file) {
 		        this.fetchStagedSermons();
 		    },
-
-			// get all categories
-            fetchCategories: function () {
-                this.$http.get('/admin/category/api/all').then((response) => {
-                    this.categories = response.data;
-                });
-            },
-
-            // get all services
-            fetchServices: function () {
-                this.$http.get('/admin/service/api/all').then((response) => {
-                    this.services = response.data;
-                });
-            },
-
-            // get all gallery images
-            fetchGalleryImages () {
-                this.$http.get('/admin/gallery/api').then((response) => {
-                    this.galleryImages = response.data;
-                });
-            },
-
-            //set the sermon image
-            setSermonImage (galleryImage) {
-                this.newSermon.sermonImage = galleryImage;
-            },
-
-                previewThumbnail: function(event) {
-              var input = event.target;
-
-              if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                var vm = this;
-
-                reader.onload = function(e) {
-                  vm.imageSrc = e.target.result;
-                }
-
-                reader.readAsDataURL(input.files[0]);
-              }
-            }
-
 		}
-
 	}
 
 </script>
@@ -329,6 +223,5 @@ import Dropzone from 'vue2-dropzone'
         height: 100%;
         width: 100%;
     }
-
 
 </style>
