@@ -7,10 +7,12 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Category extends Model
 {
     use Sluggable;
+    use LogsActivity;
     use SluggableScopeHelpers;
 
     public function sermons()
