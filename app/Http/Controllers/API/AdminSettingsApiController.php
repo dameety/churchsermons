@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\SettingValidationRequest;
-use App\Repositories\Setting\SettingRepository;
-use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
+use Cartalyst\Stripe\Stripe;
+use App\Services\StripeService;
+use App\Http\Controllers\Controller;
+use App\Repositories\Setting\SettingRepository;
+use App\Http\Requests\SettingValidationRequest;
 
 class AdminSettingsApiController extends Controller
 {
     protected $setting;
+    protected $stripeService;
 
-    public function __construct(SettingRepository $setting)
+    public function __construct(SettingRepository $setting, Stripe $stripeService)
     {
         $this->setting = $setting;
+        $this->stripeService = $stripeService;
     }
 
     public function index()
@@ -59,17 +62,9 @@ class AdminSettingsApiController extends Controller
     public function saveStripePlan($slug, SettingValidationRequest $request)
     {
         $this->setting->stripePlan($slug, $request);
-        $stripe = new Stripe($setting->api_key);
-        $plan = $stripe->plans()->create([
-            'id'                   => $request->plan_id,
-            'name'                 => $request->plan_name,
-            'amount'               => $request->plan_amount,
-            'currency'             => $request->plan_currency,
-            'interval'             => $request->plan_interval,
-            'statement_descriptor' => $request->plan_description,
-        ]);
+        $this->stripeService->createPlan($request);
 
-        return response()->json(['status', 200]);
+        return response()->json(['created', true]);
     }
 
     public function saveContactEmail(SettingValidationRequest $request)
