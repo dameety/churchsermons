@@ -18,7 +18,7 @@
 
         <link rel="stylesheet" href="{{ URL::asset('/css/frontend/responsive.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('/css/frontend/style.css') }}">
-
+        @yield('styles')
     </head>
 
     <body>

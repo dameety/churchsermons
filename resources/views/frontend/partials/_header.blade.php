@@ -3,7 +3,6 @@
 
         <div class="navbar-header">
 
-            <!-- Collapsed Hamburger -->
             <button type="button" class="btn btn-link navbar-toggle collapsed" data-toggle="modal" data-target="#menuModal">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
@@ -11,19 +10,17 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <!-- Branding Image -->
             <a class="navbar-brand churchBrand" href="{{ url('/') }}">
                 {{ config('app.name') }}
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
+
             <ul class="nav navbar-nav">
                 &nbsp;
             </ul>
 
-            <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
@@ -37,7 +34,7 @@
                     @if( Auth::user()->subscriptionStatus === null )
 
                         <li class="{{ isActiveURL('/user/upgrade') }}">
-                            <a href="#">Upgrade</a>
+                            <a href="{{ route('upgradeAccount') }}">Upgrade</a>
                         </li>
 
                     @endif
