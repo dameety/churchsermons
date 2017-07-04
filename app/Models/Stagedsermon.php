@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Stagedsermon extends Model
 {

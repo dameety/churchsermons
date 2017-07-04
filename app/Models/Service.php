@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Events\ServiceSermonCountEvent;
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use App\Events\ServiceSermonCountEvent;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Service extends Model
 {

@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Auth;
 use Exception;
-use App\Models\Setting;
 use Carbon\Carbon;
+use App\Models\Setting;
 use Cartalyst\Stripe\Stripe;
+use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use Billable;
     use Sluggable;
     use Notifiable;
     use SluggableScopeHelpers;

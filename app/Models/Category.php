@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Events\CategorySermonCountEvent;
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\CategorySermonCountEvent;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Category extends Model
 {

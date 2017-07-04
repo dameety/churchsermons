@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
-use Intervention\Image\ImageManagerStatic as Image;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Intervention\Image\ImageManagerStatic as Image;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Sermon extends Model implements HasMedia
 {

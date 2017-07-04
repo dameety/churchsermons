@@ -9,6 +9,7 @@ use Stripe\Error\Card;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Cartalyst\Stripe\Stripe;
+use App\Services\StripeService;
 use App\Repositories\User\UserRepository;
 
 class UsersController extends Controller
