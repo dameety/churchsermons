@@ -26,26 +26,32 @@
 
         <div class="col-md-8 col-md-offset-2">
 
-            <form>
+            <form role="form" method="POST" action="{{ route('upgradeAction') }}">
+            {{ csrf_field() }}
+
+                <input name="stripeToken" type="hidden" type="text"/>
+
                 <div class="group">
                     <label>
-                        <span>Name</span>
-                        <input name="cardholder-name" class="field" placeholder="Jane Doe" />
+                        <span>Name on card</span>
+                        <input name="cardholder-name" class="field" placeholder="Jane Doe" required/>
                     </label>
                 </div>
+
                 <div class="group">
                     <label>
-                        <span>Card</span>
+                        <span>Card Details</span>
                         <div id="card-element" class="field"></div>
                     </label>
                 </div>
-                <button type="submit">Pay $25</button>
+
                 <div class="outcome">
                     <div class="error" role="alert"></div>
-                    <div class="success">
-                        Success! Your Stripe token is <span class="token"></span>
-                    </div>
                 </div>
+
+                <button id="pay-button" type="submit">Pay $25</button>
+
+
             </form>
 
         </div>
