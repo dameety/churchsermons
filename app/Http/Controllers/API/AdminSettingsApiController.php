@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Cartalyst\Stripe\Stripe;
 use App\Services\StripeService;
 use App\Http\Controllers\Controller;
-use App\Repositories\Setting\SettingRepository;
 use App\Http\Requests\SettingValidationRequest;
+use App\Repositories\Setting\SettingRepository;
 
 class AdminSettingsApiController extends Controller
 {
@@ -25,20 +24,6 @@ class AdminSettingsApiController extends Controller
         return $this->setting->getAll();
     }
 
-    public function appLogo(SettingValidationRequest $request)
-    {
-        $data = Input::all();
-        if ($this->setting->validate($data, 'churchLogo')) {
-            return response('success', 200);
-        } else {
-            return response($setting->getErrors(), 422);
-        }
-    }
-
-    /**
-     * Get the app name, email, and stripe key
-     * to display in the settings page.
-     */
     public function details()
     {
         return $this->setting->getDetails();
@@ -61,10 +46,7 @@ class AdminSettingsApiController extends Controller
 
     public function saveStripePlan($slug, SettingValidationRequest $request)
     {
-        $this->setting->stripePlan($slug, $request);
-        $this->stripeService->createPlan($request);
-
-        return response()->json(['created', true]);
+        return $this->stripeService->createPlan($slug, $request);
     }
 
     public function saveContactEmail(SettingValidationRequest $request)
