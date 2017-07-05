@@ -29,7 +29,6 @@ Route::get('/admin', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-    // get sermons by category
     Route::name('category')->get('/category/{slug}', 'SermonsController@getCategory');
 
     Route::name('profileUpdate')->post('/user/profile/update', 'UsersController@profileUpdate');
@@ -45,12 +44,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('viewFavourite')->get('/sermons/favourites', 'SermonsController@viewFavourites');
     Route::name('favouriteRemove')->post('/myfavourites/remove/{slug}', 'SermonsController@favouriteRemove');
     Route::name('favouriteDownload')->post('/myfavourites/download/{slug}', 'SermonsController@favouriteDownload');
+
     Route::name('upgradeAccount')->get('/user/upgrade', 'UsersController@upgradeAccount');
     Route::name('upgradeAction')->post('/user/upgrade/action', 'UsersController@upgradeAction');
 
     Route::name('cancelSubscription')->post('/subscription/cancel', 'UsersController@cancelSubscription');
+
     Route::name('reactivateSubscription')->post('/user/subscription/reactivate', 'UsersController@reactivateSubscription');
+
     Route::name('updateCard')->post('/user/card/update/{id}', 'UsersController@updateCard');
+
     Route::name('deleteCard')->post('/user/card/delete/{id}', 'UsersController@deleteCard');
+
     Route::name('newCard')->post('/user/card/new', 'UsersController@newCard');
 });
