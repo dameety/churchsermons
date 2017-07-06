@@ -1,3 +1,4 @@
+<div class="topmost-bar-design"></div>
 <nav id="navbarx" class="navbar navbar-default">
     <div class="container navbar-container">
 
@@ -22,7 +23,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
+
                 @if (Auth::guest())
                     <li class="{{ isActiveURL('login') }}">
                         <a href="{{ route('login') }}">Login</a>
@@ -71,13 +72,12 @@
         </div>
 
 
-        {{-- start --}}
         <div class="modal fade fullscreen" id="menuModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" >
                     <div class="modal-header">
-                            <button type="button" class="close btn btn-link" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close fa-lg" style="color:#999;"></i></button>
-                            <h4 class="modal-title text-center"><span class="sr-only">main navigation</span></h4>
+                        <button type="button" class="close btn btn-link" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close fa-lg" style="color:#999;"></i></button>
+                        <h4 class="modal-title text-center"><span class="sr-only">main navigation</span></h4>
                     </div>
                     <div class="modal-body text-center">
                         <ul class="uk-list">
@@ -104,9 +104,9 @@
                             @endif
                         </ul>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.fullscreen -->
+                </div>
+            </div>
+        </div>
 
     </div>
 </nav>

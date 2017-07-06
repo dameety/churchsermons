@@ -16,9 +16,9 @@ class AdminSettingsController extends Controller
 
     public function index()
     {
-        $setting = $this->setting;
-
-        return view('admin.settings.admin', compact('setting'));
+        return view('admin.settings.admin', [
+            'setting' => $this->setting;
+        ]);
     }
 
     public function sliderPage()

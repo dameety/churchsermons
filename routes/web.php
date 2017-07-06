@@ -1,6 +1,5 @@
 <?php
 
-
 Route::get('/', 'HomeController@welcome');
 
 Route::get('/home', 'HomeController@welcome');
