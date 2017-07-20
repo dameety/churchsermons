@@ -16,15 +16,15 @@ class CreateAdminsTable extends Migration
             $table->increments('id');
 
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('permission')->default('Standard Admin');
             $table->string('slug');
-            $table->timestamp('lastLoginDate')->nullable();
+            $table->string('password');
+            $table->string('email')->unique();
             $table->integer('downloadCount')->default(0);
+            $table->timestamp('lastLoginDate')->nullable();
             $table->string('lastSermonDownloaded')->nullable();
-
+            $table->string('permission')->default('Standard Admin');
             $table->rememberToken();
+
             $table->timestamps();
         });
     }

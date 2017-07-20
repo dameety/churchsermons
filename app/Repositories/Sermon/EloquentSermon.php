@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Sermon;
 
+use Storage;
+use App\Models\Sermon;
+use App\Models\Stagedsermon;
 use App\Events\DownloadCountEvent;
 use App\Events\LastDownloadByEvent;
 use App\Events\LastDownloadTimeEvent;
-use App\Models\Sermon;
-use App\Models\Stagedsermon;
-use Storage;
 
 class EloquentSermon implements SermonRepository
 {
@@ -28,6 +28,11 @@ class EloquentSermon implements SermonRepository
     public function get10Paginated()
     {
         return $this->sermon->latest('created_at')->paginate(10);
+    }
+
+    public function latestThree()
+    {
+        return $this->sermon->latest('created_at')->take(3)->get();
     }
 
     public function get30Paginated()

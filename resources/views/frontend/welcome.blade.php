@@ -48,12 +48,47 @@
         </ul>
     </div>
 
+    
     {{-- latest uploads --}}
     <div id="latest-uploads" class="uk-section uk-section-large uk-section-default">
         <div class="uk-container">
 
             <h1>Latest Uploads...</h1>
             <br>
+
+            <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
+                
+                @foreach($sermons as $sermon)
+                <div>
+                    <div>
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="/uploads/2.jpg" alt="">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">Media Top</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                            </div>
+                            <!-- <div class="uk-card-footer uk-card-hover uk-flex uk-flex-center"> -->
+                            <div class="uk-card-footer uk-card-hover uk-flex">
+
+                                    
+                                    
+    <div class="uk-align-center">
+        <i class="fa fa-download fa-2x clickable" aria-hidden="true"></i>        
+    </div>
+
+    <div class="uk-align-center uk-margin-left">
+        <i class="fa fa-heart fa-2x clickable" aria-hidden="true"></i>
+    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                
+            </div>
 
             <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
                 <div>
@@ -108,6 +143,7 @@
 
         </div>
     </div>
+
 
     {{-- testimonials --}}
     <div id="testimonials" class="uk-section uk-section-large uk-light uk-section-primary">

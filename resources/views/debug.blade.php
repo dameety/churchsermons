@@ -4,26 +4,26 @@
 
 @section('content')
 
-		<main class="main">
+        <main class="main">
 
-		<!-- Breadcrumb -->
+        <!-- Breadcrumb -->
         <div class="breadcrumb">
-	        <li class="breadcrumb-item">Someting here</li>	        
-	    </div>
-		
-		<div class="col-sm-7 uk-margin-auto">
-	   		<div class="aanimated fadeIn">
+            <li class="breadcrumb-item">Someting here</li>          
+        </div>
+        
+        <div class="col-sm-7 uk-margin-auto">
+            <div class="aanimated fadeIn">
 
 
                  <!-- the form to fill sermon info -->
-		   		<div id="newSermonForm">
+                <div id="newSermonForm">
                     <div class="card">
                         <div class="card-header">
                             Fill in the sermon details
                         </div>
                         <div class="card-block">
                             <form method="POST" action="{{ url('/admin/sermon/new') }}">
-                            	{{ csrf_field() }}
+                                {{ csrf_field() }}
 
                                 <div class="">
 
@@ -103,7 +103,7 @@
                                 <div>
                                     <hr>
                                     <button type="submit" class="btn btn-block btn-primary">
-                                    	Save Sermon
+                                        Save Sermon
                                     </button>
                                 </div>
 
@@ -113,9 +113,9 @@
                 </div>
 
 
-	    	</div>
-	    </div>
-	    
-	</main>
+            </div>
+        </div>
+        
+    </main>
 
 @endsection

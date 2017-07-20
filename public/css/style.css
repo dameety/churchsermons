@@ -5,6 +5,10 @@
 /*---- fonts ----*/
 
 
+.clickable {
+  cursor: pointer;
+}
+
 .sermon-bg-img {
     height: 250px;
     background-size: 100% 100%;
@@ -24,15 +28,19 @@
 .hidden {
   display: none;
 }
+
 .is-clickable {
   cursor: pointer;
 }
+
 #pagination {
   padding-top: 5px;
 }
+
 .totalCategories {
   font-size: 15px;
 }
+
 .pencil {
   color: red;
   background-color: red;
@@ -41,8 +49,6 @@
 .help-block {
   color: red;
 }
-
-
 
 
 html {

@@ -126,14 +126,18 @@ class EloquentSetting implements SettingRepository
     public function sliderImages()
     {
         $images = $this->setting->first();
-        $sliderImages = $images->getMedia('slider_image');
-        // array to keep the urls
-        $allImageUrls = [];
-        foreach ($sliderImages as $file) {
-            $getFileUrl = $file->getUrl('gallery_size');
-            array_unshift($allImageUrls, $getFileUrl);
-        }
+        if($images) {        
+            $sliderImages = $images->getMedia('slider_image');
+            // array to keep the urls
+            $allImageUrls = [];
+            foreach ($sliderImages as $file) {
+                $getFileUrl = $file->getUrl('gallery_size');
+                array_unshift($allImageUrls, $getFileUrl);
+            }
 
-        return $allImageUrls;
+            return $allImageUrls;
+        } else {
+            //
+        }
     }
 }

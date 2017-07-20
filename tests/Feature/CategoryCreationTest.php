@@ -36,11 +36,14 @@ class CategoryCreationTest extends TestCase
     public function categoryNameMustBeUnique()
     {
         $category = factory(Category::class)->create();
+        // words($nb = 3, $asText = false)
 
-        $response = $this->call('POST', '/admin/category/api/new', [
-            'name'        => $category->name,
+        $response = $this->json('POST', '/admin/category/api/new', [
+            'name' => $category->name,
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
+
+        dd($response->getContent());
 
         $response->assertSessionHasErrors(['name']);
     }

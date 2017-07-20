@@ -19,7 +19,7 @@ $factory->define(App\Models\Admin::class, function (Faker\Generator $faker) {
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'permission'     => 'Super Admin',
+        'permission'     => 'Super Admin'
     ];
 });
 
@@ -29,21 +29,21 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'name'           => $faker->name,
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'remember_token' => str_random(10)
     ];
 });
 
 $factory->define(App\Models\Service::class, function (Faker\Generator $faker) {
     return [
         'name'        => $faker->text($maxNbChars = 15),
-        'description' => $faker->sentence($nbWords = 10, $variableNbWords = true),
+        'description' => $faker->sentence($nbWords = 10, $variableNbWords = true)
     ];
 });
 
 $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name'        => $faker->text($maxNbChars = 15),
-        'description' => $faker->sentence($nbWords = 10, $variableNbWords = true),
+        'description' => $faker->sentence($nbWords = 10, $variableNbWords = true)
     ];
 });
 
@@ -58,7 +58,7 @@ $factory->define(App\Models\Sermon::class, function (Faker\Generator $faker) {
             return factory(App\Models\Category::class)->create()->id;
         },
         'datepreached' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'size'         => $faker->randomDigitNotNull,
+        'size'         => $faker->randomDigitNotNull
     ];
 });
 
@@ -73,6 +73,6 @@ $factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
         'plan_id' => "premium-01",
         'plan_name' => "Premium-01",
         'plan_amount' => 300,
-        'plan_interval' => 1,
+        'plan_interval' => 1
     ];
 });

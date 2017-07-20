@@ -16,11 +16,13 @@ class ServiceCrudTest extends TestCase
         $name = $this->faker->text($maxNbChars = 15);
 
         $request = [
-            'name'        => $name,
+            'name' => $name,
             'description' => $this->faker->sentence($nbWords = 30, $variableNbWords = true),
-            'slug'        => str_slug($name),
+            'slug' => str_slug($name)
         ];
 
+        // dd($request->getContent());
+        dd($request);
         //create it
         $response = $this->call('POST', '/admin/service/api/new', $request);
         $response->assertStatus(200)->assertJson(['created' => true]);
@@ -36,9 +38,9 @@ class ServiceCrudTest extends TestCase
         $name = $this->faker->text($maxNbChars = 15);
 
         $request = [
-            'name'        => $name,
+            'name' => $name,
             'description' => $this->faker->sentence($nbWords = 30, $variableNbWords = true),
-            'slug'        => str_slug($name),
+            'slug' => str_slug($name),
         ];
 
         //create it

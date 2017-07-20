@@ -178,8 +178,8 @@ return [
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Activitylog\ActivitylogServiceProvider::class,
-        RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

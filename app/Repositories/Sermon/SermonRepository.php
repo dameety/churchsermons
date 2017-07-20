@@ -10,6 +10,8 @@ interface SermonRepository
 
     public function get10Paginated();
 
+    public function latestThree();
+
     public function getBySlug($slug);
 
     public function create($request);

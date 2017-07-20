@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+lara@extends('frontend.layouts.master')
 
 @section('title', 'Register')
 
