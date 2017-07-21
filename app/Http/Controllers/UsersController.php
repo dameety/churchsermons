@@ -13,20 +13,18 @@ use App\Http\Requests\StripeServiceRequest;
 
 class UsersController extends Controller
 {
-    protected $plan;
-    protected $user;
-    protected $email;
-    protected $stripe;
-    protected $setting;
-    protected $user_card_id;
 
-    public function __construct(UserRepository $user)
+    protected $user;
+    protected $setting;
+    protected $stripeService;
+
+    public function __construct(UserRepository $user, StripeService $stripeService)
     {
+        \Debugbar::disable();
+        
         $this->user = $user;
-        $setting = Setting::first();
-        $this->plan = $setting->plan_id;
         $this->setting = Setting::first();
-        $this->stripe = new Stripe($setting->api_key);
+        $this->stripeService = $stripeService;
     }
 
     public function usersPage()

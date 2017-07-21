@@ -25,7 +25,7 @@ class StripeService
             'amount'               => $request->plan_amount,
             'currency'             => $request->plan_currency,
             'interval'             => $request->plan_interval
-        );
+        )); 
 
         $this->setting->stripePlan($slug, $request);
 
@@ -48,7 +48,7 @@ class StripeService
         if (Auth::user()->subscription('main')->onGracePeriod()) {
             Auth::user()->subscription('main')->resume();
         } else {
-            return redirect()->('/upgradeAccount');
+            return redirect()->to('/upgradeAccount');
         }
     }
 

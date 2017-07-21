@@ -27,6 +27,5 @@ class HomeController extends Controller
             'sliderImages' => $this->setting->sliderImages(),
             'testimonials' => $this->setting->getTestimonials()
         ]);
-
     }
 }
