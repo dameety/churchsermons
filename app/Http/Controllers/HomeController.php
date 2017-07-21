@@ -29,6 +29,5 @@ class HomeController extends Controller
             'sliderImages' => $this->setting->sliderImages()
         ]);
 
-
     }
 }

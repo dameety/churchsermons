@@ -4,15 +4,26 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 /*---- fonts ----*/
 
+.center-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-nav {
+  background-color: red;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 .clickable {
   cursor: pointer;
 }
 
 .sermon-bg-img {
-    height: 250px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+  height: 250px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .sermon-image-container {

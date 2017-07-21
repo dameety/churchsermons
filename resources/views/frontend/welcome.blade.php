@@ -5,6 +5,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{ URL::asset('/css/frontend/unslider.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/css/frontend/unslider-dots.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/css/frontend/welcome.css') }}">
 @endsection
 
 @section('content')
@@ -61,26 +62,25 @@
                 @foreach($sermons as $sermon)
                 <div>
                     <div>
+                        <div class="topmost-bar-design"></div>
                         <div class="uk-card uk-card-default">
                             <div class="uk-card-media-top">
                                 <img src="/uploads/2.jpg" alt="">
                             </div>
                             <div class="uk-card-body">
-                                <h3 class="uk-card-title">Media Top</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+
+                                <h3 class="uk-card-title">@truncate($sermon->title, 21) <br> <small>Preached on: {{$sermon->created_at}}</small></h3>
+                            
                             </div>
-                            <!-- <div class="uk-card-footer uk-card-hover uk-flex uk-flex-center"> -->
-                            <div class="uk-card-footer uk-card-hover uk-flex">
+                            <div class="uk-card-footer">
+                          
+                                <div class="col-sm-6 clickable" style="display:flex;justify-content:center;align-items:center;">
+                                    <i class="fa fa-download fa-2x" aria-hidden="true"></i>        
+                                </div>
 
-                                    
-                                    
-    <div class="uk-align-center">
-        <i class="fa fa-download fa-2x clickable" aria-hidden="true"></i>        
-    </div>
-
-    <div class="uk-align-center uk-margin-left">
-        <i class="fa fa-heart fa-2x clickable" aria-hidden="true"></i>
-    </div>
+                                <div class="col-sm-6 clickable" style="display:flex;justify-content:center;align-items:center;">
+                                    <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                                </div>
 
                             </div>
                         </div>
@@ -88,57 +88,6 @@
                 </div>
                 @endforeach
                 
-            </div>
-
-            <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-                <div>
-                    <div>
-                        <div class="uk-card uk-card-default">
-                            <div class="uk-card-media-top">
-                                <img src="/uploads/2.jpg" alt="">
-                            </div>
-                            <div class="uk-card-body">
-                                <h3 class="uk-card-title">Media Top</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                            </div>
-                            <div class="uk-card-footer uk-card-hover">
-                                <a href="#" class="uk-button uk-button-text">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <div class="uk-card uk-card-default">
-                            <div class="uk-card-media-top">
-                                <img src="/uploads/2.jpg" alt="">
-                            </div>
-                            <div class="uk-card-body">
-                                <h3 class="uk-card-title">Media Top</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                            </div>
-                            <div class="uk-card-footer uk-card-hover">
-                                <a href="#" class="uk-button uk-button-text">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <div class="uk-card uk-card-default">
-                            <div class="uk-card-media-top">
-                                <img src="/uploads/2.jpg" alt="">
-                            </div>
-                            <div class="uk-card-body">
-                                <h3 class="uk-card-title">Media Top</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                            </div>
-                            <div class="uk-card-footer uk-card-hover">
-                                <a href="#" class="uk-button uk-button-text">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
