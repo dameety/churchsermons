@@ -54,7 +54,7 @@
     <div id="latest-uploads" class="uk-section uk-section-large uk-section-default">
         <div class="uk-container">
 
-            <h1>Latest Uploads...</h1>
+            <h1>Recent Uploads...</h1>
             <br>
 
             <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
@@ -62,27 +62,35 @@
                 @foreach($sermons as $sermon)
                 <div>
                     <div>
-                        <div class="topmost-bar-design"></div>
                         <div class="uk-card uk-card-default">
                             <div class="uk-card-media-top">
                                 <img src="/uploads/2.jpg" alt="">
                             </div>
+                            <div class="topmost-bar-design"></div>
                             <div class="uk-card-body">
 
-                                <h3 class="uk-card-title">@truncate($sermon->title, 21) <br> <small>Preached on: {{$sermon->created_at}}</small></h3>
+                                <p class="uk-card-title">@truncate($sermon->title, 21) <br> <small>Preached on: {{$sermon->created_at}}</small></p>
                             
                             </div>
                             <div class="uk-card-footer">
                           
                                 <div class="col-sm-6 clickable" style="display:flex;justify-content:center;align-items:center;">
-                                    <i class="fa fa-download fa-2x" aria-hidden="true"></i>        
+                                        <a href="{{ route('download', [ $sermon->slug]) }}"><i class="fa fa-download fa-2x" aria-hidden="true"></i></a>
+                                    </form>
+                                
                                 </div>
 
-                                <div class="col-sm-6 clickable" style="display:flex;justify-content:center;align-items:center;">
-                                    <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                                <div onclick="favouriteSermon()" class="col-sm-6 clickable" style="display:flex;justify-content:center;align-items:center;">
+                                    <form method="POST" action="{{ route('favourite', [ $sermon->slug]) }}">
+                                    {{ csrf_field() }}
+
+                                        <i class="favourite fa fa-heart fa-2x" aria-hidden="true"></i>                                    
+                                    </form>
                                 </div>
 
                             </div>
+                            <div class="topmost-bar-design"></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -102,24 +110,15 @@
             <br>
             <div class="testimonials">
                 <ul>
-                    <li>
-                        <blockquote cite="#">
-                            <p class="uk-margin-small-bottom">The blockquote element represents content that blockquote element represents content that is quoted from another source, optionally with a citation which must be within a footer or cite element.</p>
-                            <footer>Someone famous in <cite><a href="#">Source Title</a></cite></footer>
-                        </blockquote>
-                    </li>
-                    <li>
-                        <blockquote cite="#">
-                            <p class="uk-margin-small-bottom">The blockquote element represents content blockquote element represents content that that is quoted from another source, optionally with a citation which must be within a footer or cite element.</p>
-                            <footer>Someone famous in <cite><a href="#">Source Title</a></cite></footer>
-                        </blockquote>
-                    </li>
-                    <li>
-                        <blockquote cite="#">
-                            <p class="uk-margin-small-bottom">The blockquote element represents content that blockquote element represents content that is quoted from another source, optionally with a citation which must be within a footer or cite element.</p>
-                            <footer>Someone famous in <cite><a href="#">Source Title</a></cite></footer>
-                        </blockquote>
-                    </li>
+                    @foreach($testimonials as $testimonial)
+                        <li>
+                            <blockquote cite="#">
+                                <p class="uk-margin-small-bottom">
+                                {{ $testimonial->body }}</p>
+                                <footer> {{$testimonial->name}} <cite><a href="#">{{ $testimonial->location }}</a></cite></footer>
+                            </blockquote>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 

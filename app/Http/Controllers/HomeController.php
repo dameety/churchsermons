@@ -20,13 +20,12 @@ class HomeController extends Controller
 
     public function welcome()
     {
-
-        // return $this->sermon->latestThree();
-        // return $this->setting->sliderImages();
+        \Debugbar::disable();
 
         return view('frontend.welcome', [
             'sermons' => $this->sermon->latestThree(),
-            'sliderImages' => $this->setting->sliderImages()
+            'sliderImages' => $this->setting->sliderImages(),
+            'testimonials' => $this->setting->getTestimonials()
         ]);
 
     }

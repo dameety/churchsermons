@@ -37,7 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::name('service')->get('/service/{slug}', 'SermonsController@getService');
     Route::name('allSermons')->get('/sermons', 'SermonsController@allSermons');
-    Route::name('download')->post('/download/{slug}', 'SermonsController@downloadSermon');
+    
+    Route::name('download')->get('/download/{slug}', 'SermonsController@downloadSermon');
 
     Route::name('favourite')->post('/favourite/{slug}', 'SermonsController@favouriteSermon2');
     Route::name('viewFavourite')->get('/sermons/favourites', 'SermonsController@viewFavourites');

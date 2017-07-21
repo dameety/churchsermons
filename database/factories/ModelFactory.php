@@ -76,3 +76,13 @@ $factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
         'plan_interval' => 1
     ];
 });
+
+
+$factory->define(App\Models\Testimonial::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'location' => $faker->state,
+        'body' => $faker->sentence($nbWords = 50, $variableNbWords = true),
+        'subject' => $faker->sentence($nbWords = 4, $variableNbWords = true)
+    ];
+});

@@ -14,6 +14,10 @@ $(function() {
         nav: false
     })
 
-
-
 });
+
+
+function favouriteSermon() {
+    var form = document.querySelector('form');
+    form.submit();
+}

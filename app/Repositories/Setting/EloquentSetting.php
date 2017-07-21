@@ -3,20 +3,28 @@
 namespace App\Repositories\Setting;
 
 use App\Models\Setting;
+use App\Models\Testimonial;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class EloquentSetting implements SettingRepository
 {
     private $setting;
+    private $testimonial;
 
-    public function __construct(Setting $setting)
+    public function __construct(Setting $setting, Testimonial $testimonial)
     {
         $this->setting = $setting;
+        $this->testimonial = $testimonial;
     }
 
     public function getAll()
     {
         return $this->setting->first();
+    }
+
+    public function getTestimonials()
+    {
+        return $this->testimonial->all();
     }
 
     public function getBySlug($slug)

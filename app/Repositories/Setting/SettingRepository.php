@@ -6,6 +6,8 @@ interface SettingRepository
 {
     public function getAll();
 
+    public function getTestimonials();
+
     public function getBySlug($slug);
 
     public function emailContent($slug, $request);

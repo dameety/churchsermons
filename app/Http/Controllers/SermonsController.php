@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\SavesermonRequest;
-use App\Repositories\Category\CategoryRepository;
+use App\Repositories\User\UserRepository;
 use App\Repositories\Sermon\SermonRepository;
 use App\Repositories\Service\ServiceRepository;
+use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Stagedsermon\StagedsermonRepository;
-use App\Repositories\User\UserRepository;
-use Illuminate\Http\Request;
 
 class SermonsController extends Controller
 {
@@ -114,6 +114,7 @@ class SermonsController extends Controller
 
     public function downloadSermon($slug)
     {
+
         $sermonStatus = $this->sermon->getBySlug($slug)->status;
         $user = $this->user->checkPersmision($sermonStatus);
         if ($user) {
