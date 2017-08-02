@@ -17,7 +17,7 @@ class AdminSettingsController extends Controller
     public function index()
     {
         return view('admin.settings.admin', [
-            'setting' => $this->setting;
+            'setting' => $this->setting
         ]);
     }
 

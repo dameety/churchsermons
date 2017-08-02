@@ -399,7 +399,7 @@
                     })
                     return;
                 } else {
-                    var user = this.userPasswordToChange
+                    let user = this.userPasswordToChange
                     this.$http.patch('/admin/user/api/password/change/' + slug, user)
                         .then((response) => {
                             this.fetchUsers()
@@ -427,7 +427,7 @@
                     })
                     return;
                 } else {
-                    var vm = this;
+                    const vm = this;
                     this.$swal({
 
                         title: 'Are you sure?',
@@ -446,8 +446,6 @@
                     });
 
                 }
-
-
             },
 
         } /*methods end here*/

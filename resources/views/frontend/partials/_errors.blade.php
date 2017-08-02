@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span></button>
         @foreach ($errors -> all() as $error)
-            <strong> <li class="error"> {{$error}} </li> </strong>
+            <strong> <li class="help is-danger"> {{$error}} </li> </strong>
         @endforeach
     </div>
         
@@ -19,6 +19,7 @@
     </div>
 
 @endif
+
 
 @if(Session::has('invalidRequest'))
 
@@ -44,4 +45,17 @@
     <div class="alert alert-success">
         {{ session('status') }}
     </div>
+@endif
+
+@if(Session('demoMessage'))
+
+    
+    <div class="notification is-danger">
+        <div class="uk-container">
+
+            {{ Session('demoMessage') }}
+        
+        </div>
+    </div>
+
 @endif

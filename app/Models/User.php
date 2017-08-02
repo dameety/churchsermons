@@ -76,7 +76,7 @@ class User extends Authenticatable
     {
         if (Auth::user()->permission === Setting::first()->plan_name) {
             return true;
-        } elseif (Auth::user()->permission !== $setting->plan_name && $status === 'free') {
+        } elseif (Auth::user()->permission !== Setting::first()->plan_name && $status === 'free') {
             return true;
         } else {
             return false;

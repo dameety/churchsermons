@@ -105,7 +105,7 @@
 				uploadOptions: {
 					maxFiles: 5,
                     dictDefaultMessage: "Step 1: Drop sermon files here to begin upload",
-					maxFileSizeInMB: 500,
+					maxFileSizeInMB: 5000,
 					uploadMultiple: true,
 					parallelUploads: true,
 					acceptedFileTypes: 'audio/*',

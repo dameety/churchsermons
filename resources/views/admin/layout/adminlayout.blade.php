@@ -7,20 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>ChurchAudiox - @yield('title')</title>
-    <link rel="shortcut icon" href="{{ URL::asset('/img/favicon/png') }}">
+    <title>Churchsermons - @yield('title')</title>
+    <link rel="shortcut icon" href="{{ asset('/img/favicon/png') }}">
 
-    <link href="{{ URL::asset('/css/simple-line-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/simple-line-icons.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{ URL::asset('/css/uikit.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/uikit.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
-    window.Laravel = {!! json_encode([
-        'csrfToken' => csrf_token(),
-    ]) !!};
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
     </script>
+
+    @yield('styles')
 
 </head>
 
@@ -69,15 +71,18 @@
 
 
     <footer class="app-footer">
-        <a href="http://pointlogix.io">ChurchAudiox</a> © 2017.
+        <span>
+        
+            <a href="http://pointlogix.io">ChurchAudiox</a> © 2017.
+        
         </span>
     </footer>
 
-    <script src="{{ URL::asset('/js/app.js') }}"></script>
-    <script src="{{ URL::asset('/js/tether.min.js') }}"></script>
-    <script src="{{ URL::asset('/js/pace.js') }}"></script>
-    <script src="{{ URL::asset('/js/coreui/app.js') }}"></script>
-    <script src="{{ URL::asset('/js/uikit.min.js') }}"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ asset('/js/tether.min.js') }}"></script>
+    <script src="{{ asset('/js/pace.js') }}"></script>
+    <script src="{{ asset('/js/coreui/app.js') }}"></script>
+    <script src="{{ asset('/js/uikit.min.js') }}"></script>
 
     @yield('scripts')
 

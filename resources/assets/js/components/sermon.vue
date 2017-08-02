@@ -276,8 +276,8 @@
 
         mounted () {
             this.fetchSermons();        //saved in the sermons: []
-            this.fetchCategories();     //saved in the  categories: []
             this.fetchServices();       //saved in the services: []
+            this.fetchCategories();     //saved in the  categories: []
             this.fetchSermonsCount();
         },
 
@@ -293,10 +293,10 @@
 
                 let vm = this;
                 page_url = page_url || '/admin/sermon/api'
-                this.$http.get(page_url).then((response)=> {
-                        vm.makePagination(response.data)
-                        vm.sermons = response.data.data;
-                    });
+                this.$http.get(page_url).then((response) => {
+                    vm.makePagination(response.data)
+                    vm.sermons = response.data.data;
+                });
 
             },
 

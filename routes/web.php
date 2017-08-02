@@ -26,12 +26,14 @@ Route::get('/admin', function () {
     return redirect('/admin/login');
 });
 
+Route::get('auth-check', 'HomeController@authCheck');
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::name('category')->get('/category/{slug}', 'SermonsController@getCategory');
 
     Route::name('profileUpdate')->post('/user/profile/update', 'UsersController@profileUpdate');
-    Route::name('profile')->get('/user/profile', 'UsersController@profile');
+    Route::name('profile')->get('/user/account', 'UsersController@profile');
     Route::name('userCards')->get('/user/cards', 'UsersController@getUserCards');
     Route::name('userSubscription')->get('/user/subscription', 'UsersController@getSubscription');
 

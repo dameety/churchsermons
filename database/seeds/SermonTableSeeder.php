@@ -11,6 +11,6 @@ class SermonTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Sermon::class, 5)->create();
+        factory(App\Models\Sermon::class, 10)->create();
     }
 }

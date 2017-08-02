@@ -1,96 +1,74 @@
-@extends('frontend.layouts.master')
+@extends('frontend.layouts.base')
 
 @section('title', 'Sermons')
 
 @section('content')
-    <link rel="stylesheet" href="{{ URL::asset('/css/frontend/home.css') }}">
 
-    <div class="container page-heading-container">
-
-        <div class="row page-heading-box">
-            @if($key === "category")
-                <h2 class="page-heading">
-
-                Browsing Category: {{ $slug }}
-
-                </h2>
-            @elseif($key === "service")
-                <h2 class="page-heading">
-                    Browsing Service: {{ $slug }}
-                </h2>
-            @endif
-        </div>
-
-    </div>
-
-    <div id="container" class="container container-mobile">
-        
-
-        <div class="row content-block">
+    <div class="uk-section uk-section-small uk-section-muted">
+        <div class="uk-container">
             
-            {{-- left part --}}
-            @include('frontend.partials.filters-desktop')
-            
-
-
-            {{-- right part --}}
-            <div class="col-sm-10 sermon-col">
-
-                <div class="form-group">
-
-
-                    {{-- flash messages --}}
-                    @include('flash::message')
-                    {{-- the filter for responsive view --}}
-                    @include('frontend.partials.filters')
-                
-
+            <div class="columns">
+                <div class="column is-10 rm-margin-bottom">
+                    <h1><strong>Sermons</strong></h1>
                 </div>
-
-                @if($sermonCount === 0)
-
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
-                            <span uk-icon="icon: info; ratio: 5"></span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                            @if($key === "category")
-                            <p class="no-sermon">
-                                No sermons in this category
-                            </p>
-                            @elseif($key === "service")
-                            <p class="no-sermon">
-                                No sermons for this service
-                            </p>
-                            @endif
-                        </div>
-                    </div>
-                            
-                @endif
-
-                @foreach ($sermons as $sermon)
-
-                    @include('frontend.partials.sermonbox')
-
-
-                @endforeach
-
-                <div class="pagination">
-                    {{ $sermons->links() }}
-                </div>
-                
             </div>
-
-
-        </div>
             
-
+        </div>
     </div>
 
+    @include('frontend.partials._errors')
 
+    <div id="pattern-bg" class="uk-section uk-section-medium uk-section-default">
+        <div class="uk-container">
+            
+            <div class="columns">
+                <div class="column is-10 uk-align-center">
 
+                    <div class="uk-grid-match uk-child-width-1-3@m" uk-grid uk-grid-parallax>
+                        
+                        @foreach($sermons as $sermon)
+                        <div>
+                            <div uk-scrollspy="cls:uk-animation-fade; repeat: true">
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="/uploads/2.jpg" alt="">
+                                    </div>
+
+                                    <div class="topmost-bar-design"></div>
+                                    <div class="uk-card-body">
+                                        <p class="uk-card-title card-title">@truncate($sermon->title, 21)
+                                        </p>
+                                        <p class="card-date">
+                                            <small class="uk-text-muted">Preached on: {{$sermon->created_at}}</small>
+                                        </p>
+                                    </div>
+
+                                    <div class="uk-card-footer">
+                                        <div class="columns">
+
+                                            <div class="column">
+                                                <a href="{{ route('download', [ $sermon->slug]) }}"><i class="fa fa-download fa-2x uk-align-center uk-margin-small-bottom uk-margin-small-top" aria-hidden="true"></i></a>
+                                            </div>
+                                            <div class="column">
+                                                <fav-button
+                                                    sermon = {{ $sermon->slug }}
+                                                ></fav-button>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="topmost-bar-design"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
 
 @endsection

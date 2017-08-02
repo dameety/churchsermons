@@ -10,7 +10,7 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="{{ URL::asset('/css/simple-line-icons.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('/css/app.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('/css/uikit.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('/css/frontend/responsive.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('/css/frontend/style.css') }}">
@@ -23,7 +23,7 @@
         <div id="app">
 
             @include('frontend.partials._header')
-
+            
             @yield('content')
 
             @include('frontend.partials._footer')

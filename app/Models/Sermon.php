@@ -13,8 +13,8 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Sermon extends Model implements HasMedia
 {
-    use LogsActivity;
     use Sluggable;
+    use LogsActivity;
     use HasMediaTrait;
     use SluggableScopeHelpers;
 

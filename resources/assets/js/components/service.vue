@@ -262,7 +262,6 @@
                     showCancelButton: true,
                     confirmButtonText: "Yes, delete it!",
                     cancelButtonText: "No, don't!",
-
                 }).then(() => {
                     vm.$http.delete('/admin/service/api/delete/' + service.slug).then((response) => {
                         let index = vm.services.indexOf(service);
@@ -280,9 +279,7 @@
 </script>
 
 <style>
-    /*  style the add new service and category button
-        this will work for the components even thought its only here
-    */
+
     .newButton {
         border-radius: 20px;
         margin-left: 10px;

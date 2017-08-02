@@ -1,85 +1,74 @@
-@extends('frontend.layouts.master')
+@extends('frontend.layouts.base')
 
 @section('title', 'Reset Form')
 
 
 @section('content')
 
-
-    <div class="container-fluid reset-container-body">
         
-        <div class="container">
-                
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container">
 
-            <div class="resets-body">
-
-                <div class="row page-heeding-row">    
-                    <h1 class="reset-heading"> Reset Password </h1>
+                <div class="column has-text-centered">
+                    <h1 class="title is-3 uk-text-success">
+                        Fill the form below to reset your passwor
+                    </h1>
                 </div>
 
+                <div class="column is-8 uk-align-center">
 
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    @include('frontend.partials._errors')
 
+                    <form role="form" method="POST" action="{{ route('password.request') }}">
+                    {{ csrf_field() }}
 
-                        @include('frontend.partials._errors')
-
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Fill the form below to reset your password.
-                            </div>
-                            
-                            <div class="panel-body">
-                                <form class="form-horizontal" role="form" method="POST" action="{{ route('password.request') }}">
-                                    {{ csrf_field() }}
-
-                                    <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="token" value="{{ $token }}">
 
 
-                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                        <div class="col-md-12">
-                                            <input id="email" type="email" class="form-control" name="email" placeholder="email address" value="{{ $email or old('email') }}" required autofocus>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <div class="col-md-12">
-                                            <input id="password" type="password" class="form-control" name="password" placeholder="password" required>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                        <div class="col-md-12">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm password" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-block btn-primary register-btn">
-                                                Reset Password
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left">
+                                <input class="input {{ $errors->has('email') ? ' is-danger' : '' }}" type="email" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                <span class="icon is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
                             </div>
                         </div>
 
-                    </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input {{ $errors->has('password') ? ' has-error' : '' }}" type="password" name="password" required>
+                                <span class="icon is-left">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Confirm Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input {{ $errors->has('password_confirmation') ? ' has-error' : '' }}" type="password" name="password_confirmation" required>
+                                <span class="icon is-left">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="field is-grouped uk-margin-top">
+                            <div class="control">
+                                <button type="submit" class="button is-primary uk-margin-small-right">Reset Password</button>
+                            </div>
+                        </div>
+
+                    </form>
+
                 </div>
-            
-
             </div>
-
         </div>
-
-
-    </div>
-
+    </section>
 
 
 @endsection

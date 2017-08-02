@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\AdminAuth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -38,6 +38,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        \Debugbar::disable();
         $this->middleware('admin.guest', ['except' => 'logout']);
     }
 

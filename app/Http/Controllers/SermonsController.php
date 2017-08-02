@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\SavesermonRequest;
 use App\Repositories\User\UserRepository;
@@ -25,6 +26,7 @@ class SermonsController extends Controller
         CategoryRepository $category,
         StagedsermonRepository $stagedsermon
     ) {
+        \Debugbar::disable();
         $this->user = $user;
         $this->sermon = $sermon;
         $this->service = $service;
@@ -83,7 +85,7 @@ class SermonsController extends Controller
 
     public function allSermons()
     {
-        return view('frontend.home', [
+        return view('frontend.sermons', [
             'sermons' => $this->sermon->get10Paginated(),
         ]);
     }
@@ -91,7 +93,6 @@ class SermonsController extends Controller
     public function getCategory($slug)
     {
         $category = $this->category->getBySlug($slug);
-
         return view('frontend.sermons', [
             'sermons'     => $this->sermon->getByIdAndPaginate($category->id),
             'sermonCount' => $this->sermon->countAll(),
@@ -114,6 +115,8 @@ class SermonsController extends Controller
 
     public function downloadSermon($slug)
     {
+        Session::flash('demoMessage', 'You need to upgrade your account before you can do that. Thank you.');
+        return back();
 
         $sermonStatus = $this->sermon->getBySlug($slug)->status;
         $user = $this->user->checkPersmision($sermonStatus);
@@ -121,7 +124,6 @@ class SermonsController extends Controller
             return $this->sermon->download($slug);
         } else {
             flash('Please upgrade your account to be able to download this sermon. Thank You')->error()->important();
-
             return back();
         }
     }
@@ -148,12 +150,15 @@ class SermonsController extends Controller
     {
         return view('frontend.favourites', [
             'sermons'  => $this->user->allUserFavourites(),
-            'favCount' => $this->user->allUserFavouriteCount(),
+            // 'favCount' => $this->user->allUserFavouriteCount(),
         ]);
     }
 
     public function favouriteDownload($slug)
     {
+        Session::flash('demoMessage', 'You need to upgrade your account before you can do that. Thank you.');
+        return back();
+
         $sermonStatus = $this->sermon->getBySlug($slug)->status;
         $user = $this->user->checkPersmision($sermonStatus);
         if ($user) {

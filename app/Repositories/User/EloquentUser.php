@@ -46,6 +46,20 @@ class EloquentUser implements UserRepository
         return Auth::user();
     }
 
+    public function checkPersmision($status)
+    {
+        return $this->user->checkPersmision($status);
+    }
+
+    public function authCheck()
+    {
+        if(Auth::check()) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     public function attachFavourite($id)
     {
         return $this->authUser()->favourites()->attach($id);
