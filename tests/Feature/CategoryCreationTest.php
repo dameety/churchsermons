@@ -32,7 +32,6 @@ class CategoryCreationTest extends TestCase
         $response->assertStatus(302)->assertSessionHasErrors(['name']);
     }
 
-    /** @test */
     public function categoryNameMustBeUnique()
     {
         $category = factory(Category::class)->create();
@@ -43,12 +42,9 @@ class CategoryCreationTest extends TestCase
             'description' => $this->faker->text($maxNbChars = 200),
         ]);
 
-        dd($response->getContent());
-
         $response->assertSessionHasErrors(['name']);
     }
 
-    /** @test */
     public function validationForNumberOfNameCharsWorks()
     {
         $response = $this->call('POST', '/admin/category/api/new', [

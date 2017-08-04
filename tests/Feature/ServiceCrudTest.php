@@ -21,8 +21,6 @@ class ServiceCrudTest extends TestCase
             'slug' => str_slug($name)
         ];
 
-        // dd($request->getContent());
-        dd($request);
         //create it
         $response = $this->call('POST', '/admin/service/api/new', $request);
         $response->assertStatus(200)->assertJson(['created' => true]);

@@ -10,7 +10,6 @@ class AdminCreationTest extends TestCase
 {
     use WithoutMiddleware;
 
-    /** @test */
     public function adminCanBeCreated()
     {
         $admin = factory(Admin::class)->create();
@@ -21,6 +20,7 @@ class AdminCreationTest extends TestCase
             'password'   => $this->faker->text($maxNbChars = 20),
             'permission' => 'Standard Admin',
         ]);
+        
         $response->assertStatus(200)->assertJson(['created' => true]);
     }
 
@@ -95,7 +95,6 @@ class AdminCreationTest extends TestCase
         $response->assertStatus(302)->assertSessionHasErrors(['email']);
     }
 
-    /** @test */
     public function emailMustBeUniqueValidCheck()
     {
         $admin = factory(Admin::class)->create();
@@ -110,7 +109,6 @@ class AdminCreationTest extends TestCase
         $response->assertStatus(302)->assertSessionHasErrors(['email']);
     }
 
-    /** @test */
     public function adminDeleteWorks()
     {
         $admin = factory(Admin::class)->create();

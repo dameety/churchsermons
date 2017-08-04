@@ -7,7 +7,7 @@ before_script:
   - mysql -e 'create database churchsermons_testing_db;'
   - cp .env.travis .env
   - composer self-update
-  - composer update --no-interaction
+  - composer install --no-interaction
   - php artisan migrate
 
 script:
