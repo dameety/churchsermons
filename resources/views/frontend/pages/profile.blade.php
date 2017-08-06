@@ -57,19 +57,87 @@
     </section>
 
 
-    <section class="section is-small">
+    <section class="section is-medium">
         <div class="container">
             <div class="columns">
 
                 <div class="column is-3">
-                    <p>Menu wll be here
-                    </p>
+
+                    <nav class="panel">
+                      <a class="panel-block is-active">
+                        <span class="panel-icon">
+                          <i class="fa fa-book"></i>
+                        </span>
+                        Profile Info
+                      </a>
+                      <a class="panel-block">
+                        <span class="panel-icon">
+                          <i class="fa fa-book"></i>
+                        </span>
+                        Upgrade account
+                      </a>
+                      <label class="panel-block">
+                        <input type="checkbox">
+                        remember me
+                      </label>
+                    </nav>
+
                 </div>
 
                 <div class="column">
-                    <div class="columns">
+                    <div class="containerd">
 
-                        <h1>all content will be here</h1>
+                        <form role="form" method="POST" action="{{ route('profileUpdate') }}">
+                        {{ csrf_field() }}
+
+                            <div class="field">
+                                <label class="label uk-text-muted">Name</label>
+                                <div class="control has-icons-left">
+                                    <input class="input {{ $errors->has('name') ? ' is-danger' : '' }}" type="text" name="name" value="{{ $user->name }}" required autofocus>
+                                    <span class="icon is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label uk-text-muted">Email</label>
+                                <div class="control has-icons-left">
+                                    <input class="input {{ $errors->has('email') ? ' is-danger' : '' }}" type="email" name="email" value="{{ $user->email }}" required autofocus>
+                                    <span class="icon is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label uk-text-muted">Old Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input {{ $errors->has('old_password') ? ' has-error' : '' }}" type="password" name="old_password" required>
+                                    <span class="icon is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label uk-text-muted">New Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input {{ $errors->has('new_password') ? ' has-error' : '' }}" type="password" name="new_password" required>
+                                    <span class="icon is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="field is-grouped uk-margin-top">
+                                <div class="control">
+                                    <button type="submit" class="button is-primary uk-margin-small-right">Update Info</button>
+                                </div>
+                            </div>
+
+                        </form>
 
                     </div>
                 </div>
@@ -79,16 +147,5 @@
     </section>
 
 
-    <div id="pattern-bg" class="uk-section uk-section-medium uk-section-default uk-margin-large-bottom">
-        <div class="uk-container uk-margin-large-bottom">
-            
-            <div class="columns uk-margin-bottom">
-                <div class="column is-10 uk-align-center">
-
-                </div>
-            </div>
-            
-        </div>
-    </div>
 
 @endsection

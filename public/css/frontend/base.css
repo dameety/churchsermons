@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:100,600');
 
 
+form {
+  font-family: 'Maven Pro', sans-serif !important;
+  
+}
+
 div.profile-img-box {
   width: 200px;
   height: 150px;
@@ -19,6 +24,7 @@ img.profile-img {
   border: solid;
   border-color: #ffffff #ffffff #4FADFE !important;
   border-width: 1px;
+  font-family: 'Maven Pro', sans-serif !important;
 }
 
 .user-metrics .metric {
