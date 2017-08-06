@@ -1,4 +1,5 @@
 $(function() {
+    
     $('.banner').unslider({
         animation: 'vertical',
         autoplay: true,
@@ -15,9 +16,3 @@ $(function() {
     })
 
 });
-
-
-function favouriteSermon() {
-    var form = document.querySelector('form');
-    form.submit();
-}
