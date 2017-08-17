@@ -269,7 +269,7 @@
                 categorySelected: "",
                 searchWord: "",
 
-                filterWord: "",
+                // filterWord: "",
             }
         },
 
@@ -386,6 +386,7 @@
             },
         }
     }
+    
 </script>
 
 <style>

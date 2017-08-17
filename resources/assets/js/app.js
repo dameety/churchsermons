@@ -43,8 +43,10 @@ const app = new Vue({
         };
     },
 
+
     methods: {
     	turnFilter: function () {
+            
     		var keep = this.filterParams;
             if (keep) {
                 this.filterParams = false;

@@ -31,7 +31,6 @@
 
 	        	<div class="row">
 	        		<div class="col-lg-12" v-show="!newSermonForm">
-
                         <div class="card">
                             <table class="table table-hover table-outline mb-0">
                                 <thead class="thead-default">
@@ -77,13 +76,10 @@
                                 </button>
                             </div>
                         </div>
-
                     </div>
 	        	</div>
 	    	</div>
-
 	    </div>
-
 	</main>
 </template>
 

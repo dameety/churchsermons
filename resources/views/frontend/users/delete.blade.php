@@ -1,6 +1,6 @@
 @extends('frontend.layouts.base')
 
-@section('title', 'My Account')
+@section('title', 'Delete')
 
 @section('content')
 
@@ -64,7 +64,7 @@
                 <div class="column is-3">
 
                     <nav class="panel">
-                        <a href="{{ route('profile') }}" class="panel-block is-active">
+                        <a href="{{ route('profile') }}" class="panel-block">
                             <span class="panel-icon">
                                 <i class="fa fa-book"></i>
                             </span>
@@ -76,7 +76,7 @@
                             </span>
                             Upgrade account
                         </a>
-                        <a href="{{ route('deleteAccount') }}">
+                        <a href="{{ route('deleteAccount') }}" class="panel-block is-active">
                             <span class="panel-icon">
                                 <i class="fa fa-book"></i>
                             </span>
@@ -89,59 +89,21 @@
                 <div class="column">
                     <div class="containerd">
 
-                        <form role="form" method="POST" action="{{ route('profileUpdate') }}">
+                        <div class="">
+                            <p>
+                                A lot of information. about account deleton. The user data will be deleted and this action is not reversible.
+
+                                A lot of information. about account deleton. The user data will be deleted and this action is not reversible.
+
+                            </p>
+                        </div>
+
+                        <form role="form" method="POST" action="{{ route('deleteAccountAction') }}">
                         {{ csrf_field() }}
-
-                            <div class="field">
-                                <label class="label uk-text-muted">Name</label>
-                                <div class="control has-icons-left">
-                                    <input class="input {{ $errors->has('name') ? ' is-danger' : '' }}" type="text" name="name" value="{{ $user->name }}" required autofocus>
-                                    <span class="icon is-left">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label uk-text-muted">Email</label>
-                                <div class="control has-icons-left">
-                                    <input class="input {{ $errors->has('email') ? ' is-danger' : '' }}" type="email" name="email" value="{{ $user->email }}" required autofocus>
-                                    <span class="icon is-left">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label uk-text-muted">
-                                    Old Password
-                                    <small>Leave empty if you don't want to change password.</small>
-                                </label>
-                                <div class="control has-icons-left">
-                                    <input class="input {{ $errors->has('old_password') ? ' has-error' : '' }}" type="password" name="old_password" required>
-                                    <span class="icon is-left">
-                                        <i class="fa fa-lock"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label uk-text-muted">
-                                    New Password
-                                    <small>Leave empty if you don't want to change password.</small>
-                                </label>
-                                <div class="control has-icons-left">
-                                    <input class="input {{ $errors->has('new_password') ? ' has-error' : '' }}" type="password" name="new_password" required>
-                                    <span class="icon is-left">
-                                        <i class="fa fa-lock"></i>
-                                    </span>
-                                </div>
-                            </div>
-
 
                             <div class="field is-grouped uk-margin-top">
                                 <div class="control">
-                                    <button type="submit" class="button is-primary uk-margin-small-right">Update Info</button>
+                                    <button type="submit" class="button is-primary uk-margin-small-right">Delete account</button>
                                 </div>
                             </div>
 

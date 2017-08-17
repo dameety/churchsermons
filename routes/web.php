@@ -33,7 +33,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('category')->get('/category/{slug}', 'SermonsController@getCategory');
 
     Route::name('profileUpdate')->post('/user/profile/update', 'UsersController@profileUpdate');
+    
     Route::name('profile')->get('/user/account', 'UsersController@profile');
+
     Route::name('userCards')->get('/user/cards', 'UsersController@getUserCards');
     Route::name('userSubscription')->get('/user/subscription', 'UsersController@getSubscription');
 
@@ -48,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('favouriteDownload')->post('/myfavourites/download/{slug}', 'SermonsController@favouriteDownload');
 
     Route::name('upgradeAccount')->get('/user/upgrade', 'UsersController@upgradeAccount');
+    Route::name('deleteAccount')->get('/user/delete', 'UsersController@deleteAccount');
+    Route::name('deleteAccountAction')->get('/user/delete', 'UsersController@deleteAccountAction');
     Route::name('upgradeAction')->post('/user/upgrade/action', 'UsersController@upgradeAction');
 
     Route::name('cancelSubscription')->post('/subscription/cancel', 'UsersController@cancelSubscription');

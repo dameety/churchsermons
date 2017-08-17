@@ -1,4 +1,4 @@
-<div class="hero-head is-10" uk-sticky="show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom">
+<div class="hero-head is-10" uk-sticky="show-on-up;">
     <div class="topmost-bar-design"></div>
     <header class="nav">
         <div id="nav" class="container">

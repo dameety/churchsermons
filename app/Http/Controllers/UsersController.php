@@ -68,7 +68,9 @@ class UsersController extends Controller
 
     public function upgradeAccount()
     {
-        return view('frontend.payment.form');
+        return view('frontend.payment.form', [
+            'user' => $this->user->authUser(),
+        ]);
     }
 
     public function upgradeAction(StripeServiceRequest $request)
@@ -130,5 +132,12 @@ class UsersController extends Controller
 
             return back();
         }
+    }
+
+    public function deleteAccount()
+    {
+        return view('frontend.users.delete', [
+            'user' => $this->user->authUser(),
+        ]);
     }
 }

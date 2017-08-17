@@ -43,7 +43,6 @@
         <script src="{{ asset('/js/uikit.min.js') }}"></script>        
         <script src="{{ asset('/js/frontend/base.js') }}"></script>
         
-
         @yield('scripts')
         
     </body>

@@ -184,8 +184,13 @@
                 });
             },
 
-          	fetchCategories (page_url) {
+            let action = function () {
+                return new Promise( function (resolve, reject) {
+                    resolve('Cleaning the room');
+                });
+            }
 
+          	fetchCategories (page_url) {
                 let vm = this;
                 page_url = page_url || '/admin/category/api'
                 this.$http.get(page_url).then((response) => {
@@ -207,24 +212,22 @@
             },
 
           	addNewCategory () {
-
 	            var category = this.newCategory
   				this.newCategory = { name: "", description: ""}
   				this.$http.post('/admin/category/api/new', category).then((response) => {
 
-                        this.categories.unshift(category);
-                        this.categoriesCount++;
-                        this.$swal({
-                            title: 'Great!',
-                            text: 'New Category Creation Successful',
-                            type: 'success',
-                            timer: 1500,
-                        })
+                    this.categories.unshift(category);
+                    this.categoriesCount++;
+                    this.$swal({
+                        title: 'Great!',
+                        text: 'New Category Creation Successful',
+                        type: 'success',
+                        timer: 1500,
+                    })
 
-    			    }).catch( errors => {
-                        this.formErrors = errors.response.data;
-                    });
-
+			    }).catch( errors => {
+                    this.formErrors = errors.response.data;
+                });
 			},
 
 			editCategory (category) {
